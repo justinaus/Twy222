@@ -13,6 +13,7 @@
 		E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */; };
 		E26C5F4E21DF03B10061FF86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4D21DF03B10061FF86 /* Assets.xcassets */; };
 		E26C5F5121DF03B20061FF86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */; };
+		E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E26C5F4D21DF03B10061FF86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E26C5F5021DF03B20061FF86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E26C5F5221DF03B20061FF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2EF048921DF1E9A005C00EB /* FronteerKr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FronteerKr.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,10 +63,19 @@
 				E26C5F4721DF03B00061FF86 /* Main.storyboard */,
 				E26C5F4D21DF03B10061FF86 /* Assets.xcassets */,
 				E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */,
+				E2EF048821DF1E9A005C00EB /* FronteerKr */,
 				E26C5F5221DF03B20061FF86 /* Info.plist */,
 				E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */,
 			);
 			path = Twy222;
+			sourceTree = "<group>";
+		};
+		E2EF048821DF1E9A005C00EB /* FronteerKr */ = {
+			isa = PBXGroup;
+			children = (
+				E2EF048921DF1E9A005C00EB /* FronteerKr.swift */,
+			);
+			path = FronteerKr;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */,
+				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
 				E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */,
 			);
