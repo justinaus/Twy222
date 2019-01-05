@@ -63,32 +63,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         dateLastCalled = now;
         
-        getGridModelByLonLat( lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude );
+        getGridModelByLonLat( lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude, dateNow: now );
     }
     
-    func getGridModelByLonLat( lon: Double, lat: Double ) {
+    func getGridModelByLonLat( lon: Double, lat: Double, dateNow: Date ) {
         KakaoApiService.shared.getGridModelByLonLat(lon: lon, lat: lat) { ( gridModel: GridModel? ) in
             if( gridModel == nil ) {
                 return;
             }
             
-            print(gridModel!.dongName)
+            GridManager.shared.setCurrentGridModel( gridModel: gridModel! );
+
+            let result = FronteerKr.convertGRID_GPS( toGrid: true, lat_X: lat, lng_Y: lon );
             
-//            GridManager.shared.addGrid(model: model);
-//
-//            let result = FronteerKr.convertGRID_GPS( toGrid: true, lat_X: lat, lng_Y: lon );
-//            model.setKmaXY(nX: result.x, nY: result.y);
-//
-//            // 기상청 기준 좌표 :  62, 122
-//
-//            let dateNow = Date();
-//
-//            guard let gridModel = GridManager.shared.getCurrentGridModel() else {
+            let kmaX = result.x;
+            let kmaY = result.y;
+            // 기상청 기준 좌표 :  62, 122
+
+            print( kmaX, kmaY )
+            
+            self.getForecastVeryShortModel(dateNow: dateNow, gridModel: gridModel!);
+        }
+    }
+    
+    func getForecastVeryShortModel( dateNow:Date, gridModel:GridModel ) {
+//        KmaApiVeryShort.shared.getData(dateNow: dateNow, kmaX: gridModel.kmaX, kmaY: gridModel.kmaY) { (model:KmaApiForecastModel?) in
+//            guard let model = model else {
 //                return;
 //            }
-//
-//            self.getForecastVeryShortModel(dateNow: dateNow, gridModel: gridModel)
-        }
+//            
+//            print(model)
+//        }
     }
 }
 

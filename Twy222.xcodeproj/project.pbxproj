@@ -17,6 +17,7 @@
 		E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048C21DF2124005C00EB /* GridModel.swift */; };
 		E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049321DF2562005C00EB /* KakaoApiService.swift */; };
 		E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049721DF265A005C00EB /* ServiceConfig.swift */; };
+		E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049921E090A8005C00EB /* GridManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E2EF048C21DF2124005C00EB /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		E2EF049321DF2562005C00EB /* KakaoApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiService.swift; sourceTree = "<group>"; };
 		E2EF049721DF265A005C00EB /* ServiceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceConfig.swift; sourceTree = "<group>"; };
+		E2EF049921E090A8005C00EB /* GridManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				E2EF048821DF1E9A005C00EB /* FronteerKr */,
 				E26C5F5221DF03B20061FF86 /* Info.plist */,
 				E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */,
+				E2EF049921E090A8005C00EB /* GridManager.swift */,
 			);
 			path = Twy222;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */,
 				E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
+				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
 				E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */,
 			);
