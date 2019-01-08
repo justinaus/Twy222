@@ -11,7 +11,7 @@ import Foundation
 final class KakaoApiService {
     static let shared = KakaoApiService();
     
-    public func getGridModelByLonLat( lon: Double, lat: Double, callback:@escaping ( GridModel? ) -> Void ) {
+    public func getGridModel( lon: Double, lat: Double, callback:@escaping ( GridModel? ) -> Void ) {
         let url = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=\(lon)&y=\(lat)";
         
         guard let urlObjct = URL(string: url) else {

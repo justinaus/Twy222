@@ -67,12 +67,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getGridModelByLonLat( lon: Double, lat: Double, dateNow: Date ) {
-        KakaoApiService.shared.getGridModelByLonLat(lon: lon, lat: lat) { ( gridModel: GridModel? ) in
-            if( gridModel == nil ) {
+        KakaoApiService.shared.getGridModel(lon: lon, lat: lat) { ( model: GridModel? ) in
+            if( model == nil ) {
                 return;
             }
             
-            GridManager.shared.setCurrentGridModel( gridModel: gridModel! );
+            GridManager.shared.setCurrentGridModel( gridModel: model! );
 
             let result = FronteerKr.convertGRID_GPS( toGrid: true, lat_X: lat, lng_Y: lon );
             
@@ -80,20 +80,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let kmaY = result.y;
             // 기상청 기준 좌표 :  62, 122
 
-            print( kmaX, kmaY )
-            
-            self.getForecastVeryShortModel(dateNow: dateNow, gridModel: gridModel!);
+            self.getNowModel(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
         }
     }
     
-    func getForecastVeryShortModel( dateNow:Date, gridModel:GridModel ) {
-//        KmaApiVeryShort.shared.getData(dateNow: dateNow, kmaX: gridModel.kmaX, kmaY: gridModel.kmaY) { (model:KmaApiForecastModel?) in
-//            guard let model = model else {
-//                return;
-//            }
-//            
-//            print(model)
-//        }
+    func getNowModel( dateNow: Date, kmaX: Int, kmaY: Int ) {
+        KmaApiService.shared.getNowModel( dateNow: dateNow, kmaX: kmaX, kmaY: kmaY ) { ( model: WeatherHourlyModel? ) in
+            if( model == nil ) {
+                return;
+            }
+            
+            print( "got now model" );
+        }
     }
 }
 
