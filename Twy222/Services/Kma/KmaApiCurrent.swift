@@ -2,8 +2,6 @@
 //  KmaApiCurrent.swift
 //  Twy222
 //  초단기 실황 조회.
-//  공통적인 부분은 KmaApiBase에.
-//  여기엔 특화 된 부분. (base time 기준, 파싱 등)
 //
 //  Created by Bonkook Koo on 09/01/2019.
 //  Copyright © 2019 justinaus. All rights reserved.
@@ -17,7 +15,7 @@ final class KmaApiCurrent: KmaApiBase {
     public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiCurrentModel? ) -> Void ) {
         let URL_SERVICE = "ForecastGrib";
         
-        let baseDate = getBaseDate( dateNow: dateNow );
+        let dateBase = getBaseDate( dateNow: dateNow );
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
@@ -26,14 +24,13 @@ final class KmaApiCurrent: KmaApiBase {
             }
             
             let model = makeModel( arrItem: arrItem! );
-            
-            print(model)
+            callback( model );
         }
         
-        makeCall(serviceName: URL_SERVICE, baseDate: baseDate, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
+        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
     }
     
-    public func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiCurrentModel? {
+    private func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiCurrentModel? {
         let len = arrItem.count;
 
         var dateBase: Date?;
@@ -51,7 +48,7 @@ final class KmaApiCurrent: KmaApiBase {
                 guard let obsrValue = obj[ "obsrValue" ] as? Double else {
                     return nil;
                 }
-                guard let dateBaseTemp = KmaUtils.getDateBase(obj: obj) else {
+                guard let dateBaseTemp = KmaUtils.getDateByDateAndTime(anyDate: obj[ "baseDate" ], anyTime: obj[ "baseTime" ]) else {
                     return nil;
                 }
                 
@@ -72,8 +69,6 @@ final class KmaApiCurrent: KmaApiBase {
 
         return model;
     }
-    
-    
     
     private func getBaseDate( dateNow: Date ) -> Date {
         let LIMIT_MINUTES = 40;

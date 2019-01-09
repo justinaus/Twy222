@@ -49,7 +49,7 @@ class KmaApiBase {
         
         let baseDateAndBaseTime = KmaUtils.getBaseDateAndBaseTime(date: baseDate);
         
-        let url = "\(KmaApiStruct.URL_ROOT)\(KmaApiStruct.URL_MID_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&base_date=\(baseDateAndBaseTime.baseDate)&base_time=\(baseDateAndBaseTime.baseTime)&nx=\(kmaX)&ny=\(kmaY)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
+        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_MID_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&base_date=\(baseDateAndBaseTime.baseDate)&base_time=\(baseDateAndBaseTime.baseTime)&nx=\(kmaX)&ny=\(kmaY)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
         
         return url;
     }

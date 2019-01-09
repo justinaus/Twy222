@@ -32,70 +32,70 @@ class KmaUtils {
         return ( baseDate: baseDate, baseTime: baseTime );
     }
     
-    public static func getDateBase( obj: [ String : Any ] ) -> Date? {
-        var strBaseDate: String?;
-        var strBaseTime: String?;
+    public static func getDateByDateAndTime( anyDate: Any?, anyTime: Any? ) -> Date? {
+        var strDate: String?;
+        var strTime: String?;
         
         // string으로 들어오는지 int로 들어오는지 뭔가 이상함. 둘 다 대응하겠다.
-        if let baseDate = obj[ "baseDate" ] as? String {
-            strBaseDate = baseDate;
-        } else if let baseDate = obj[ "baseDate" ] as? Int {
-            strBaseDate = String(baseDate);
+        if let baseDate = anyDate as? String {
+            strDate = baseDate;
+        } else if let baseDate = anyDate as? Int {
+            strDate = String(baseDate);
         } else {
             return nil;
         }
         
-        if let baseTime = obj[ "baseTime" ] as? String {
-            strBaseTime = baseTime;
-        } else if let baseTime = obj[ "baseTime" ] as? Int {
-            strBaseTime = String(baseTime);
+        if let baseTime = anyTime as? String {
+            strTime = baseTime;
+        } else if let baseTime = anyTime as? Int {
+            strTime = String(baseTime);
         } else {
             return nil;
         }
         
-        if( strBaseDate == nil || strBaseTime == nil ) {
+        if( strDate == nil || strTime == nil ) {
             return nil;
         }
         
-        guard let dateBase = KmaUtils.createDate(kmaDate: strBaseDate!, kmaTime: strBaseTime!) else {
+        guard let dateBase = KmaUtils.createDate(kmaDate: strDate!, kmaTime: strTime!) else {
             return nil;
         }
 
         return dateBase;
     }
     
-    public static func getStatusImageName( skyType: Int, ptyType: Int, isDay:Bool ) -> String {
-        switch ptyType {
-        case KmaPtyEnum.RAINY.rawValue:
-            if( skyType == KmaSkyEnum.GOOD.rawValue || skyType == KmaSkyEnum.LITTLE_CLOUDY.rawValue ) {
+    public static func getStatusImageName( skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum, isDay:Bool ) -> String {
+        switch ptyEnum {
+        case KmaPtyEnum.RAINY:
+            if( skyEnum == KmaSkyEnum.GOOD || skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
                 return isDay ? "12" : "40";
-            } else if( skyType == KmaSkyEnum.QUITE_CLOUDY.rawValue ) {
+            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
                 return "21";
             } else {
                 return "36";
             }
-        case KmaPtyEnum.SNOWY.rawValue:
-            if( skyType == KmaSkyEnum.GOOD.rawValue || skyType == KmaSkyEnum.LITTLE_CLOUDY.rawValue ) {
+        case KmaPtyEnum.SNOWY:
+            if( skyEnum == KmaSkyEnum.GOOD || skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
                 return isDay ? "13" : "41";
-            } else if( skyType == KmaSkyEnum.QUITE_CLOUDY.rawValue ) {
+            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
                 return "32";
             } else {
                 return "37";
             }
-        case KmaPtyEnum.RAINY_AND_SNOWY.rawValue:
-            if( skyType == KmaSkyEnum.GOOD.rawValue || skyType == KmaSkyEnum.LITTLE_CLOUDY.rawValue ) {
+        case KmaPtyEnum.RAINY_AND_SNOWY:
+            if( skyEnum == KmaSkyEnum.GOOD || skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
                 return isDay ? "14" : "42";
-            } else if( skyType == KmaSkyEnum.QUITE_CLOUDY.rawValue ) {
+            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
                 return "04";
             } else {
                 return "39";
             }
         default:
-            if( skyType == KmaSkyEnum.GOOD.rawValue ) {
+            if( skyEnum == KmaSkyEnum.GOOD ) {
                 return isDay ? "01" : "08";
-            } else if( skyType == KmaSkyEnum.LITTLE_CLOUDY.rawValue ) {
+            } else if( skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
                 return isDay ? "02" : "09";
-            } else if( skyType == KmaSkyEnum.QUITE_CLOUDY.rawValue ) {
+            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
                 return isDay ? "03" : "10";
             } else {
                 return "18";

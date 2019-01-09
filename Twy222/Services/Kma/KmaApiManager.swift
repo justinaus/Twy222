@@ -18,7 +18,7 @@ final class KmaApiManager {
         // api 3개 호출 해야 됨...
         // 실황 기온, 예보 skystatus, 어제 기온.
         
-        func onCompleteApiCurrent( model : KmaApiCurrentModel? ) {
+        func onCompleteApiCurrent( model: KmaApiCurrentModel? ) {
             if( model == nil ) {
                 callback( retNowModel );
                 return;
@@ -26,35 +26,24 @@ final class KmaApiManager {
             
             retNowModel.setTemperature(value: model!.temperature)
             
-            // call forecast api
+            KmaApiForecastTimeVeryShort.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiForecastTimeVeryShort);
+        }
+        
+        func onCompleteApiForecastTimeVeryShort( model: KmaApiForecastTimeVeryShortModel? ) {
+            guard let modelNotNil = model else {
+                callback( NowModel() );
+                return;
+            }
+            
+            let hour = Calendar.current.component(.hour, from: modelNotNil.dateForecast)
+            
+            let skyStatusImageName = KmaUtils.getStatusImageName(skyEnum: modelNotNil.skyEnum, ptyEnum: modelNotNil.ptyEnum, isDay: Utils.getIsDay(hour: hour));
+            
+            retNowModel.setSkyStatusImageName(value: skyStatusImageName);
+            
+            // call yesterday ..
         }
         
         KmaApiCurrent.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiCurrent);
-        
-        
-        
-        
-//        let url = KmaApiForecastTimeVeryShort.shared.getUrl(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
-//
-//        func onComplete( json: Any? ) {
-//            if( json == nil ) {
-//                callback( nil );
-//                return;
-//            }
-//
-//            guard let arrItem = getItemArray( anyJson: json! ) else {
-//                callback( nil );
-//                return;
-//            }
-//
-//            guard let model = KmaApiForecastTimeVeryShort.shared.makeModel(arrItem: arrItem) else {
-//                callback( nil );
-//                return;
-//            }
-//
-//            callback( model );
-//        }
-//
-//        getData( url: url, callback: onComplete );
     }
 }
