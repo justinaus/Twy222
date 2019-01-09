@@ -17,11 +17,19 @@ class GridModel {
     
     public private(set) var dongName: String;
     
+    public private(set) var nowModel: NowModel;
+    
     init( id: String, lat: String, lon: String, dongName: String ) {
         self.id = id;
         self.latitude = lat;
         self.longitude = lon;
         self.dongName = dongName;
+        
+        nowModel = NowModel();
+    }
+    
+    public func resetAll() {
+        nowModel = NowModel();
     }
     
     

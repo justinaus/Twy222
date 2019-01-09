@@ -16,13 +16,18 @@
 		E27AD5BB21E342E900CD67B6 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5BA21E342E900CD67B6 /* Utils.swift */; };
 		E27AD5BD21E345CB00CD67B6 /* KmaSkyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5BC21E345CA00CD67B6 /* KmaSkyEnum.swift */; };
 		E27AD5BF21E3473100CD67B6 /* KmaPtyEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5BE21E3473100CD67B6 /* KmaPtyEnum.swift */; };
+		E27AD5C321E5A2C100CD67B6 /* KmaApiCurrentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */; };
+		E27AD5C521E5A35000CD67B6 /* KmaApiCurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C421E5A35000CD67B6 /* KmaApiCurrent.swift */; };
+		E27AD5C721E5A5E500CD67B6 /* KmaApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */; };
+		E27AD5C921E5AAD400CD67B6 /* KmaApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */; };
+		E27AD5CB21E5B40900CD67B6 /* NowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5CA21E5B40900CD67B6 /* NowModel.swift */; };
+		E27AD5CD21E5B92B00CD67B6 /* ForecastHourlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5CC21E5B92B00CD67B6 /* ForecastHourlyModel.swift */; };
+		E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5CE21E5B94900CD67B6 /* HourlyModel.swift */; };
 		E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048C21DF2124005C00EB /* GridModel.swift */; };
 		E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049321DF2562005C00EB /* KakaoApiService.swift */; };
 		E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049721DF265A005C00EB /* ServiceConfig.swift */; };
 		E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049921E090A8005C00EB /* GridManager.swift */; };
-		E2EF049C21E09709005C00EB /* WeatherHourlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049B21E09709005C00EB /* WeatherHourlyModel.swift */; };
-		E2EF049E21E09B5D005C00EB /* WeatherDailyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049D21E09B5D005C00EB /* WeatherDailyModel.swift */; };
 		E2EF04A421E2F585005C00EB /* KmaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A321E2F585005C00EB /* KmaApiService.swift */; };
 		E2EF04A621E301A7005C00EB /* KmaCategoryCodeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A521E301A7005C00EB /* KmaCategoryCodeEnum.swift */; };
 		E2EF04A821E30C4E005C00EB /* KmaUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A721E30C4E005C00EB /* KmaUtils.swift */; };
@@ -41,13 +46,18 @@
 		E27AD5BA21E342E900CD67B6 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		E27AD5BC21E345CA00CD67B6 /* KmaSkyEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaSkyEnum.swift; sourceTree = "<group>"; };
 		E27AD5BE21E3473100CD67B6 /* KmaPtyEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaPtyEnum.swift; sourceTree = "<group>"; };
+		E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiCurrentModel.swift; sourceTree = "<group>"; };
+		E27AD5C421E5A35000CD67B6 /* KmaApiCurrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiCurrent.swift; sourceTree = "<group>"; };
+		E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiBase.swift; sourceTree = "<group>"; };
+		E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiManager.swift; sourceTree = "<group>"; };
+		E27AD5CA21E5B40900CD67B6 /* NowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowModel.swift; sourceTree = "<group>"; };
+		E27AD5CC21E5B92B00CD67B6 /* ForecastHourlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastHourlyModel.swift; sourceTree = "<group>"; };
+		E27AD5CE21E5B94900CD67B6 /* HourlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyModel.swift; sourceTree = "<group>"; };
 		E2EF048921DF1E9A005C00EB /* FronteerKr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FronteerKr.swift; sourceTree = "<group>"; };
 		E2EF048C21DF2124005C00EB /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		E2EF049321DF2562005C00EB /* KakaoApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiService.swift; sourceTree = "<group>"; };
 		E2EF049721DF265A005C00EB /* ServiceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceConfig.swift; sourceTree = "<group>"; };
 		E2EF049921E090A8005C00EB /* GridManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridManager.swift; sourceTree = "<group>"; };
-		E2EF049B21E09709005C00EB /* WeatherHourlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHourlyModel.swift; sourceTree = "<group>"; };
-		E2EF049D21E09B5D005C00EB /* WeatherDailyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDailyModel.swift; sourceTree = "<group>"; };
 		E2EF04A321E2F585005C00EB /* KmaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiService.swift; sourceTree = "<group>"; };
 		E2EF04A521E301A7005C00EB /* KmaCategoryCodeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaCategoryCodeEnum.swift; sourceTree = "<group>"; };
 		E2EF04A721E30C4E005C00EB /* KmaUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaUtils.swift; sourceTree = "<group>"; };
@@ -100,6 +110,24 @@
 			path = Twy222;
 			sourceTree = "<group>";
 		};
+		E27AD5C021E5A28A00CD67B6 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				E2EF04A521E301A7005C00EB /* KmaCategoryCodeEnum.swift */,
+				E27AD5BC21E345CA00CD67B6 /* KmaSkyEnum.swift */,
+				E27AD5BE21E3473100CD67B6 /* KmaPtyEnum.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
+		E27AD5C121E5A29D00CD67B6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E2EF048821DF1E9A005C00EB /* FronteerKr */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,8 +140,9 @@
 			isa = PBXGroup;
 			children = (
 				E2EF048C21DF2124005C00EB /* GridModel.swift */,
-				E2EF049B21E09709005C00EB /* WeatherHourlyModel.swift */,
-				E2EF049D21E09B5D005C00EB /* WeatherDailyModel.swift */,
+				E27AD5CA21E5B40900CD67B6 /* NowModel.swift */,
+				E27AD5CC21E5B92B00CD67B6 /* ForecastHourlyModel.swift */,
+				E27AD5CE21E5B94900CD67B6 /* HourlyModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -131,12 +160,14 @@
 		E2EF04A121E2F368005C00EB /* Kma */ = {
 			isa = PBXGroup;
 			children = (
+				E27AD5C121E5A29D00CD67B6 /* Models */,
+				E27AD5C021E5A28A00CD67B6 /* Enums */,
 				E2EF04A321E2F585005C00EB /* KmaApiService.swift */,
-				E2EF04A521E301A7005C00EB /* KmaCategoryCodeEnum.swift */,
 				E2EF04A721E30C4E005C00EB /* KmaUtils.swift */,
 				E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */,
-				E27AD5BC21E345CA00CD67B6 /* KmaSkyEnum.swift */,
-				E27AD5BE21E3473100CD67B6 /* KmaPtyEnum.swift */,
+				E27AD5C421E5A35000CD67B6 /* KmaApiCurrent.swift */,
+				E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */,
+				E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */,
 			);
 			path = Kma;
 			sourceTree = "<group>";
@@ -222,18 +253,23 @@
 			files = (
 				E27AD5BD21E345CB00CD67B6 /* KmaSkyEnum.swift in Sources */,
 				E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */,
+				E27AD5C321E5A2C100CD67B6 /* KmaApiCurrentModel.swift in Sources */,
 				E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */,
 				E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */,
 				E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */,
 				E2EF04A621E301A7005C00EB /* KmaCategoryCodeEnum.swift in Sources */,
 				E27AD5BB21E342E900CD67B6 /* Utils.swift in Sources */,
-				E2EF049E21E09B5D005C00EB /* WeatherDailyModel.swift in Sources */,
+				E27AD5C921E5AAD400CD67B6 /* KmaApiManager.swift in Sources */,
+				E27AD5C721E5A5E500CD67B6 /* KmaApiBase.swift in Sources */,
+				E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
+				E27AD5C521E5A35000CD67B6 /* KmaApiCurrent.swift in Sources */,
+				E27AD5CD21E5B92B00CD67B6 /* ForecastHourlyModel.swift in Sources */,
+				E27AD5CB21E5B40900CD67B6 /* NowModel.swift in Sources */,
 				E2EF04A821E30C4E005C00EB /* KmaUtils.swift in Sources */,
 				E27AD5BF21E3473100CD67B6 /* KmaPtyEnum.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
-				E2EF049C21E09709005C00EB /* WeatherHourlyModel.swift in Sources */,
 				E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */,
 				E2EF04A421E2F585005C00EB /* KmaApiService.swift in Sources */,
 				E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */,

@@ -80,18 +80,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let kmaY = result.y;
             // 기상청 기준 좌표 :  62, 122
 
-            self.getNowModel(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
+            self.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
         }
     }
     
-    func getNowModel( dateNow: Date, kmaX: Int, kmaY: Int ) {
-        KmaApiService.shared.getNowModel( dateNow: dateNow, kmaX: kmaX, kmaY: kmaY ) { ( model: WeatherHourlyModel? ) in
-            if( model == nil ) {
-                return;
-            }
+    func getNowData( dateNow: Date, kmaX: Int, kmaY: Int ) {
+        func onComplete( nowModelTemp:NowModel ) {
+            let nowModel = GridManager.shared.getCurrentGridModel()!.nowModel;
             
-            print( "got now model" );
+            // nil이어도 값을 넣는다. 화면에 그릴 때 nil 기준으로 그릴거기 때문. 이전에 유효한 값이 남아 있지 않게.
+            nowModel.setTemperature(value: nowModelTemp.temperature);
+            nowModel.setSkyStatusImageName(value: nowModelTemp.skyStatusImageName);
+            nowModel.setDiffFromYesterday(value: nowModelTemp.diffFromYesterday);
+            
+            print(nowModelTemp.temperature, nowModelTemp.skyStatusImageName, nowModelTemp.diffFromYesterday);
+            // 화면에 표시.
         }
+        
+        KmaApiManager.shared.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
     }
 }
 

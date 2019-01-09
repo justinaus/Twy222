@@ -32,6 +32,38 @@ class KmaUtils {
         return ( baseDate: baseDate, baseTime: baseTime );
     }
     
+    public static func getDateBase( obj: [ String : Any ] ) -> Date? {
+        var strBaseDate: String?;
+        var strBaseTime: String?;
+        
+        // string으로 들어오는지 int로 들어오는지 뭔가 이상함. 둘 다 대응하겠다.
+        if let baseDate = obj[ "baseDate" ] as? String {
+            strBaseDate = baseDate;
+        } else if let baseDate = obj[ "baseDate" ] as? Int {
+            strBaseDate = String(baseDate);
+        } else {
+            return nil;
+        }
+        
+        if let baseTime = obj[ "baseTime" ] as? String {
+            strBaseTime = baseTime;
+        } else if let baseTime = obj[ "baseTime" ] as? Int {
+            strBaseTime = String(baseTime);
+        } else {
+            return nil;
+        }
+        
+        if( strBaseDate == nil || strBaseTime == nil ) {
+            return nil;
+        }
+        
+        guard let dateBase = KmaUtils.createDate(kmaDate: strBaseDate!, kmaTime: strBaseTime!) else {
+            return nil;
+        }
+
+        return dateBase;
+    }
+    
     public static func getStatusImageName( skyType: Int, ptyType: Int, isDay:Bool ) -> String {
         switch ptyType {
         case KmaPtyEnum.RAINY.rawValue:
@@ -69,7 +101,5 @@ class KmaUtils {
                 return "18";
             }
         }
-        
-        return "";
     }
 }
