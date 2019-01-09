@@ -9,8 +9,8 @@
 
 import Foundation
 
-final class KmaApiCurrent: KmaApiBase {
-    static let shared = KmaApiCurrent();
+final class KmaApiActual: KmaApiBase {
+    static let shared = KmaApiActual();
     
     public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiCurrentModel? ) -> Void ) {
         let URL_SERVICE = "ForecastGrib";

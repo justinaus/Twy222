@@ -15,7 +15,7 @@
 		E26C5F5121DF03B20061FF86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */; };
 		E27AD5BB21E342E900CD67B6 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5BA21E342E900CD67B6 /* Utils.swift */; };
 		E27AD5C321E5A2C100CD67B6 /* KmaApiCurrentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */; };
-		E27AD5C521E5A35000CD67B6 /* KmaApiCurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C421E5A35000CD67B6 /* KmaApiCurrent.swift */; };
+		E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */; };
 		E27AD5C721E5A5E500CD67B6 /* KmaApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */; };
 		E27AD5C921E5AAD400CD67B6 /* KmaApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */; };
 		E27AD5CB21E5B40900CD67B6 /* NowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5CA21E5B40900CD67B6 /* NowModel.swift */; };
@@ -44,7 +44,7 @@
 		E26C5F5221DF03B20061FF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E27AD5BA21E342E900CD67B6 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiCurrentModel.swift; sourceTree = "<group>"; };
-		E27AD5C421E5A35000CD67B6 /* KmaApiCurrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiCurrent.swift; sourceTree = "<group>"; };
+		E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiActual.swift; sourceTree = "<group>"; };
 		E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiBase.swift; sourceTree = "<group>"; };
 		E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiManager.swift; sourceTree = "<group>"; };
 		E27AD5CA21E5B40900CD67B6 /* NowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowModel.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 				E27AD5C121E5A29D00CD67B6 /* Models */,
 				E2EF04A721E30C4E005C00EB /* KmaUtils.swift */,
 				E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */,
-				E27AD5C421E5A35000CD67B6 /* KmaApiCurrent.swift */,
+				E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */,
 				E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */,
 				E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */,
 				E27AD5D521E6039E00CD67B6 /* KmaEnums.swift */,
@@ -253,7 +253,7 @@
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
 				E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */,
-				E27AD5C521E5A35000CD67B6 /* KmaApiCurrent.swift in Sources */,
+				E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */,
 				E27AD5CD21E5B92B00CD67B6 /* ForecastHourlyModel.swift in Sources */,
 				E27AD5CB21E5B40900CD67B6 /* NowModel.swift in Sources */,
 				E27AD5D621E6039E00CD67B6 /* KmaEnums.swift in Sources */,

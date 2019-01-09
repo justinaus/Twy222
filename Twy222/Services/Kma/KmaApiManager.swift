@@ -44,6 +44,6 @@ final class KmaApiManager {
             // call yesterday ..
         }
         
-        KmaApiCurrent.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiCurrent);
+        KmaApiActual.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiCurrent);
     }
 }
