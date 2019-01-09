@@ -15,25 +15,13 @@ final class KmaApiManager {
     public func getNowData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( NowModel ) -> Void ) {
         let retNowModel = NowModel();
         
-        // api 3개 호출 해야 됨...
-        // 실황 기온, 예보 skystatus, 어제 기온.
-        
-        func onCompleteApiCurrent( model: KmaApiCurrentModel? ) {
-            if( model == nil ) {
-                callback( retNowModel );
-                return;
-            }
-            
-            retNowModel.setTemperature(value: model!.temperature)
-            
-            KmaApiForecastTimeVeryShort.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiForecastTimeVeryShort);
-        }
-        
         func onCompleteApiForecastTimeVeryShort( model: KmaApiForecastTimeVeryShortModel? ) {
             guard let modelNotNil = model else {
                 callback( NowModel() );
                 return;
             }
+            
+            retNowModel.setTemperature(value: model!.temperature)
             
             let hour = Calendar.current.component(.hour, from: modelNotNil.dateForecast)
             
@@ -41,9 +29,26 @@ final class KmaApiManager {
             
             retNowModel.setSkyStatusImageName(value: skyStatusImageName);
             
-            // call yesterday ..
+            let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: modelNotNil.dateForecast)!;
+            
+            KmaApiActual.shared.getDataByDateBase(dateBase: dateYesterday, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiYesterday);
         }
         
-        KmaApiActual.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiCurrent);
+        func onCompleteApiYesterday( model: KmaApiActualModel? ) {
+            if( model == nil ) {
+                callback( retNowModel );
+                return;
+            }
+            
+            let yesterdayTemperature = model!.temperature;
+            let resultDiff = retNowModel.temperature! - yesterdayTemperature;
+            let intDiff = Int( resultDiff.rounded() );
+            
+            retNowModel.setDiffFromYesterday(value: intDiff );
+            
+            callback( retNowModel );
+        }
+        
+        KmaApiForecastTimeVeryShort.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiForecastTimeVeryShort);
     }
 }

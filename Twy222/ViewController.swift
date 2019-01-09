@@ -93,7 +93,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             nowModel.setSkyStatusImageName(value: nowModelTemp.skyStatusImageName);
             nowModel.setDiffFromYesterday(value: nowModelTemp.diffFromYesterday);
             
-            print(123);
             // 화면에 표시.
         }
         

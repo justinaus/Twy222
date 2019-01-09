@@ -12,11 +12,15 @@ import Foundation
 final class KmaApiActual: KmaApiBase {
     static let shared = KmaApiActual();
     
-    public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiCurrentModel? ) -> Void ) {
-        let URL_SERVICE = "ForecastGrib";
-        
+    let URL_SERVICE = "ForecastGrib";
+    
+    public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
         let dateBase = getBaseDate( dateNow: dateNow );
         
+        getDataByDateBase(dateBase: dateBase, kmaX: kmaX, kmaY: kmaY, callback: callback)
+    }
+    
+    public func getDataByDateBase( dateBase: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
                 callback( nil );
@@ -30,7 +34,7 @@ final class KmaApiActual: KmaApiBase {
         makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
     }
     
-    private func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiCurrentModel? {
+    private func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiActualModel? {
         let len = arrItem.count;
 
         var dateBase: Date?;
@@ -65,7 +69,7 @@ final class KmaApiActual: KmaApiBase {
             return nil;
         }
 
-        let model: KmaApiCurrentModel = KmaApiCurrentModel(date: dateBase!, temperature: temerature!);
+        let model: KmaApiActualModel = KmaApiActualModel(date: dateBase!, temperature: temerature!);
 
         return model;
     }

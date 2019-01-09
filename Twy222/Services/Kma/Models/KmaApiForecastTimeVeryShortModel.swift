@@ -11,12 +11,15 @@ import Foundation
 class KmaApiForecastTimeVeryShortModel {
     public private(set) var dateForecast:Date;
     
+    public private(set) var temperature:Double;
+    
     public private(set) var skyEnum:KmaSkyEnum;
     public private(set) var ptyEnum:KmaPtyEnum;
     
     
-    init( dateForecast: Date, skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) {
+    init( dateForecast: Date, temperature: Double, skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) {
         self.dateForecast = dateForecast;
+        self.temperature = temperature;
         self.skyEnum = skyEnum;
         self.ptyEnum = ptyEnum;
     }

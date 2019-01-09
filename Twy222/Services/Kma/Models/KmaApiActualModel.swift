@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaApiCurrentModel {
+class KmaApiActualModel {
     public private(set) var date:Date;
     
     public private(set) var temperature:Double;

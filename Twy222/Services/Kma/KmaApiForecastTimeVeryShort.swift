@@ -23,44 +23,40 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
                 return;
             }
             
-            let model = makeModel( arrItem: arrItem! );
+            let model = makeModel( dateNow: dateNow, arrItem: arrItem! );
             callback( model );
         }
         
-        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
+        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
     }
     
-    private func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
+    private func makeModel( dateNow:Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
         let len = arrItem.count;
         
-        var dateBase: Date?;
         var dateFcst: Date?;
         
+        var temperature: Double?;
         var skyEnum: KmaSkyEnum?;
         var ptyEnum: KmaPtyEnum?;
         
         for i in 0..<len {
             let obj = arrItem[ i ];
-            
-            if( i == 0 ) {
-                guard let dateBaseTemp = KmaUtils.getDateByDateAndTime(anyDate: obj["baseDate"], anyTime: obj["baseTime"]) else {
-                    return nil;
-                }
-                dateBase = dateBaseTemp;
-            }
-            
-            guard let dateKma = KmaUtils.getDateByDateAndTime(anyDate: obj["fcstDate"], anyTime: obj["fcstTime"]) else {
+
+            guard let dateForecast = KmaUtils.getDateByDateAndTime(anyDate: obj["fcstDate"], anyTime: obj["fcstTime"]) else {
                 continue;
             }
             
-            let componenets = Calendar.current.dateComponents([.hour], from: dateBase!, to: dateKma);
-            if( componenets.hour! > 0 ) {
-                // 제일 가까운 시간 정보만 사용.
+            // 지금 현재 시간의 다음 시간 ex 02:10 이면 03:00 정보, 02:50이면 03:00 정보 사용.
+            
+            let nowHour = Calendar.current.component(.hour, from: dateNow);
+            let forecastHour = Calendar.current.component(.hour, from: dateForecast);
+            
+            if( nowHour + 1 != forecastHour ) {
                 continue;
             }
             
             if( dateFcst == nil ) {
-                dateFcst = dateKma;
+                dateFcst = dateForecast;
             }
             
             guard let category = obj[ "category" ] as? String else {
@@ -68,6 +64,14 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
             }
             
             switch( category ) {
+            case KmaCategoryCodeEnum.T1H.rawValue:
+                guard let fcstValue = obj[ "fcstValue" ] as? Double else {
+                    continue;
+                }
+                
+                temperature = fcstValue;
+                
+                break;
             case KmaCategoryCodeEnum.PTY.rawValue:
                 guard let fcstValue = obj[ "fcstValue" ] as? Int else {
                     continue;
@@ -94,12 +98,12 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
             }
         }
         
-        if( dateBase == nil || dateFcst == nil || skyEnum == nil || ptyEnum == nil ) {
+        if( temperature == nil || dateFcst == nil || skyEnum == nil || ptyEnum == nil ) {
             return nil;
         }
         
-        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel(dateForecast: dateFcst!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
-        
+        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel( dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
+
         return model;
     }
     

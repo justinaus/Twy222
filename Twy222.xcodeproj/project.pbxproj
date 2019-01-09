@@ -14,7 +14,7 @@
 		E26C5F4E21DF03B10061FF86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4D21DF03B10061FF86 /* Assets.xcassets */; };
 		E26C5F5121DF03B20061FF86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */; };
 		E27AD5BB21E342E900CD67B6 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5BA21E342E900CD67B6 /* Utils.swift */; };
-		E27AD5C321E5A2C100CD67B6 /* KmaApiCurrentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */; };
+		E27AD5C321E5A2C100CD67B6 /* KmaApiActualModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C221E5A2C100CD67B6 /* KmaApiActualModel.swift */; };
 		E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */; };
 		E27AD5C721E5A5E500CD67B6 /* KmaApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */; };
 		E27AD5C921E5AAD400CD67B6 /* KmaApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */; };
@@ -43,7 +43,7 @@
 		E26C5F5021DF03B20061FF86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E26C5F5221DF03B20061FF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E27AD5BA21E342E900CD67B6 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiCurrentModel.swift; sourceTree = "<group>"; };
+		E27AD5C221E5A2C100CD67B6 /* KmaApiActualModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiActualModel.swift; sourceTree = "<group>"; };
 		E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiActual.swift; sourceTree = "<group>"; };
 		E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiBase.swift; sourceTree = "<group>"; };
 		E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiManager.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		E27AD5C121E5A29D00CD67B6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E27AD5C221E5A2C100CD67B6 /* KmaApiCurrentModel.swift */,
+				E27AD5C221E5A2C100CD67B6 /* KmaApiActualModel.swift */,
 				E27AD5D021E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift */,
 			);
 			path = Models;
@@ -241,7 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */,
-				E27AD5C321E5A2C100CD67B6 /* KmaApiCurrentModel.swift in Sources */,
+				E27AD5C321E5A2C100CD67B6 /* KmaApiActualModel.swift in Sources */,
 				E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */,
 				E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */,
 				E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */,
