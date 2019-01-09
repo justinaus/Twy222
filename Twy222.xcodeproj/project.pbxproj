@@ -24,6 +24,7 @@
 		E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5D021E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift */; };
 		E27AD5D421E6035100CD67B6 /* KmaStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5D321E6035100CD67B6 /* KmaStructs.swift */; };
 		E27AD5D621E6039E00CD67B6 /* KmaEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5D521E6039E00CD67B6 /* KmaEnums.swift */; };
+		E27AD5DA21E671DD00CD67B6 /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5D921E6710900CD67B6 /* NanumGothic.ttf */; };
 		E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048C21DF2124005C00EB /* GridModel.swift */; };
 		E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049321DF2562005C00EB /* KakaoApiService.swift */; };
@@ -53,6 +54,7 @@
 		E27AD5D021E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiForecastTimeVeryShortModel.swift; sourceTree = "<group>"; };
 		E27AD5D321E6035100CD67B6 /* KmaStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaStructs.swift; sourceTree = "<group>"; };
 		E27AD5D521E6039E00CD67B6 /* KmaEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaEnums.swift; sourceTree = "<group>"; };
+		E27AD5D921E6710900CD67B6 /* NanumGothic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumGothic.ttf; sourceTree = "<group>"; };
 		E2EF048921DF1E9A005C00EB /* FronteerKr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FronteerKr.swift; sourceTree = "<group>"; };
 		E2EF048C21DF2124005C00EB /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		E2EF049321DF2562005C00EB /* KakaoApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiService.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 		E26C5F4221DF03B00061FF86 /* Twy222 */ = {
 			isa = PBXGroup;
 			children = (
+				E27AD5D721E6709800CD67B6 /* Resources */,
 				E2EF049121DF2518005C00EB /* Services */,
 				E2EF048B21DF1F71005C00EB /* Models */,
 				E26C5F4321DF03B00061FF86 /* AppDelegate.swift */,
@@ -115,6 +118,22 @@
 				E27AD5D021E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E27AD5D721E6709800CD67B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E27AD5D821E670B000CD67B6 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E27AD5D821E670B000CD67B6 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E27AD5D921E6710900CD67B6 /* NanumGothic.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		E2EF048821DF1E9A005C00EB /* FronteerKr */ = {
@@ -227,6 +246,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E27AD5DA21E671DD00CD67B6 /* NanumGothic.ttf in Resources */,
 				E26C5F5121DF03B20061FF86 /* LaunchScreen.storyboard in Resources */,
 				E26C5F4E21DF03B10061FF86 /* Assets.xcassets in Resources */,
 				E26C5F4921DF03B00061FF86 /* Main.storyboard in Resources */,
