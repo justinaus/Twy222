@@ -17,7 +17,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var labelNowSkyStatus: UILabel!
     @IBOutlet var imageSkyStatus: UIImageView!
     
-    
+    @IBOutlet var labelToday: UILabel!
     
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
@@ -73,7 +73,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         dateLastCalled = now;
         
+        showTodayText( date: now );
+        
         getGridModelByLonLat( lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude, dateNow: now );
+    }
+    
+    func showTodayText( date: Date ) {
+        let component = Calendar.current.dateComponents([.month, .day, .weekday], from: date);
+        let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
+        
+        labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
     }
     
     func getGridModelByLonLat( lon: Double, lat: Double, dateNow: Date ) {
@@ -159,7 +168,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //
 //        btnLogo.isHidden = true;
 //
-//        labelToday.text = "";
+        labelToday.text = "";
 //
 //        labelPm10.text = "";
 //        labelPm25.text = "";
