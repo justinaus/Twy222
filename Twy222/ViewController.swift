@@ -78,13 +78,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         getGridModelByLonLat( lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude, dateNow: now );
     }
     
-    func showTodayText( date: Date ) {
-        let component = Calendar.current.dateComponents([.month, .day, .weekday], from: date);
-        let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
-        
-        labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
-    }
-    
     func getGridModelByLonLat( lon: Double, lat: Double, dateNow: Date ) {
         KakaoApiService.shared.getGridModel(lon: lon, lat: lat) { ( model: GridModel? ) in
             if( model == nil ) {
@@ -104,19 +97,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getNowData( dateNow: Date, kmaX: Int, kmaY: Int ) {
-        func onComplete( nowModelTemp:NowModel? ) {
-            if( nowModelTemp == nil ) {
+        func onComplete( model:NowModel? ) {
+            if( model == nil ) {
                 print("현재 기온, 하늘 상태 가져오기 실패. 아무것도 안함.");
                 return;
             }
             
             let gridModel = GridManager.shared.getCurrentGridModel()!;
-            gridModel.setNowModel(value: nowModelTemp!);
+            gridModel.setNowModel(value: model!);
             
-            drawNowData();
+            // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
+            
+            getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY)
         }
         
         KmaApiManager.shared.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
+    }
+    
+    func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int ) {
+        func onComplete( model: ForecastHourlyModel? ) {
+            if( model == nil ) {
+                print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
+                return;
+            }
+            
+            print( model );
+        }
+        
+        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
     }
     
     func drawNowData() {
@@ -129,13 +137,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let intTemperature = NumberUtil.roundToInt(value: nowModel.temperature);
             self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";
             
-            let intTemperatureGap = NumberUtil.roundToInt(value: nowModel.diffFromYesterday!);
-            self.labelNowCompareWithYesterday.text = self.getTextCompareWithYesterday(intTemperatureGap: intTemperatureGap);
-            
             self.labelNowSkyStatus.text = nowModel.skyStatusText;
             
             self.imageSkyStatus.image = UIImage(named: nowModel.skyStatusImageName)!
             self.imageSkyStatus.isHidden = false;
+            
+            if( nowModel.diffFromYesterday == nil ) {
+                self.labelNowCompareWithYesterday.text = "";
+            } else {
+                let intTemperatureGap = NumberUtil.roundToInt(value: nowModel.diffFromYesterday!);
+                self.labelNowCompareWithYesterday.text = self.getTextCompareWithYesterday(intTemperatureGap: intTemperatureGap);
+            }
             
 //            if let nTempMax = NumberUtil.roundToInt( model.temperatureMax ),
 //                let nTempMin = NumberUtil.roundToInt( model.temperatureMin ) {
@@ -174,5 +186,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 //        labelPm25.text = "";
 //        viewAirQuality.isHidden = true;
     }
+    
+    func showTodayText( date: Date ) {
+        let component = Calendar.current.dateComponents([.month, .day, .weekday], from: date);
+        let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
+        
+        labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
+    }
+    
+    
 }
 

@@ -83,12 +83,12 @@ final class KmaApiActual: KmaApiBase {
         var dateRet = dateNow;
         
         if( minute <= LIMIT_MINUTES ) {
-            dateRet = Calendar.current.date(byAdding: .hour, value: -1, to: dateNow)!;
+            dateRet = calendar.date(byAdding: .hour, value: -1, to: dateNow)!;
         }
         
         let hour = calendar.component(.hour, from: dateRet);
         
-        dateRet = Calendar.current.date(bySettingHour: hour, minute: 0, second: 0, of: dateRet)!
+        dateRet = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateRet)!
         
         return dateRet
     }

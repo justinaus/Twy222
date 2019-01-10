@@ -71,6 +71,8 @@
 		E27AD63821E6F95700CD67B6 /* JUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63421E6F95700CD67B6 /* JUtils.swift */; };
 		E27AD63921E6F95700CD67B6 /* SegueFromRightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63621E6F95700CD67B6 /* SegueFromRightToLeft.swift */; };
 		E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63721E6F95700CD67B6 /* SegueUnwindToRight.swift */; };
+		E27AD63C21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63B21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift */; };
+		E27AD63E21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63D21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift */; };
 		E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048C21DF2124005C00EB /* GridModel.swift */; };
 		E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049321DF2562005C00EB /* KakaoApiService.swift */; };
@@ -147,6 +149,8 @@
 		E27AD63421E6F95700CD67B6 /* JUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JUtils.swift; sourceTree = "<group>"; };
 		E27AD63621E6F95700CD67B6 /* SegueFromRightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueFromRightToLeft.swift; sourceTree = "<group>"; };
 		E27AD63721E6F95700CD67B6 /* SegueUnwindToRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueUnwindToRight.swift; sourceTree = "<group>"; };
+		E27AD63B21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiForecastSpace3hoursModel.swift; sourceTree = "<group>"; };
+		E27AD63D21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiForecastSpace3hours.swift; sourceTree = "<group>"; };
 		E2EF048921DF1E9A005C00EB /* FronteerKr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FronteerKr.swift; sourceTree = "<group>"; };
 		E2EF048C21DF2124005C00EB /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		E2EF049321DF2562005C00EB /* KakaoApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiService.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 			children = (
 				E27AD5C221E5A2C100CD67B6 /* KmaApiActualModel.swift */,
 				E27AD5D021E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift */,
+				E27AD63B21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,6 +303,17 @@
 			path = Segues;
 			sourceTree = "<group>";
 		};
+		E27AD63F21E71C4F00CD67B6 /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */,
+				E27AD63D21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift */,
+				E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */,
+				E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
 		E2EF048821DF1E9A005C00EB /* FronteerKr */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,12 +346,10 @@
 		E2EF04A121E2F368005C00EB /* Kma */ = {
 			isa = PBXGroup;
 			children = (
+				E27AD63F21E71C4F00CD67B6 /* Api */,
 				E27AD5D321E6035100CD67B6 /* KmaStructs.swift */,
 				E27AD5C121E5A29D00CD67B6 /* Models */,
 				E2EF04A721E30C4E005C00EB /* KmaUtils.swift */,
-				E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */,
-				E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */,
-				E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */,
 				E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */,
 				E27AD5D521E6039E00CD67B6 /* KmaEnums.swift */,
 			);
@@ -473,6 +487,7 @@
 				E27AD5BB21E342E900CD67B6 /* Utils.swift in Sources */,
 				E27AD5C921E5AAD400CD67B6 /* KmaApiManager.swift in Sources */,
 				E27AD5D421E6035100CD67B6 /* KmaStructs.swift in Sources */,
+				E27AD63E21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift in Sources */,
 				E27AD5C721E5A5E500CD67B6 /* KmaApiBase.swift in Sources */,
 				E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
@@ -486,6 +501,7 @@
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
 				E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */,
 				E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */,
+				E27AD63C21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift in Sources */,
 				E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */,
 				E27AD63921E6F95700CD67B6 /* SegueFromRightToLeft.swift in Sources */,
 				E27AD63821E6F95700CD67B6 /* JUtils.swift in Sources */,

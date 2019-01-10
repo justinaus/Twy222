@@ -12,6 +12,21 @@ import Foundation
 final class KmaApiManager {
     static let shared = KmaApiManager();
     
+    public func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( ForecastHourlyModel? ) -> Void ) {
+        var retHourlyModel: ForecastHourlyModel;
+        
+        func onCompleteForecastHourly( model: KmaApiForecastSpace3hours? ) {
+            guard let modelNotNil = model else {
+                callback( nil );
+                return;
+            }
+            
+            print(modelNotNil)
+        }
+        
+        KmaApiForecastSpace3hours.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteForecastHourly)
+    }
+    
     public func getNowData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( NowModel? ) -> Void ) {
         var retNowModel: NowModel?;
         
