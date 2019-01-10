@@ -102,4 +102,12 @@ class KmaUtils {
             }
         }
     }
+    
+    public static func getSkyStatusText( skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) -> String {
+        if( ptyEnum != KmaPtyEnum.NONE ) {
+            return ptyEnum.description;
+        }
+        
+        return skyEnum.description;
+    }
 }

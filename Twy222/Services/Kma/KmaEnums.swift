@@ -25,12 +25,38 @@ public enum KmaSkyEnum : Int {
     case GOOD = 1;
     // 구름조금 2 / 구름많음 3 / 흐림 4
     case LITTLE_CLOUDY, QUITE_CLOUDY, CLOUDY;
+    
+    var description: String {
+        switch self {
+        case .GOOD:
+            return "맑음"
+        case .LITTLE_CLOUDY:
+            return "구름조금"
+        case .QUITE_CLOUDY:
+            return "구름많음"
+        case .CLOUDY:
+            return "흐림"
+        }
+    }
 }
 
 
 public enum KmaPtyEnum : Int {
     // 없음
     case NONE = 0;
-    // 비 1 / 비/눈(진눈개비) 2 / 눈 3
+//    없음(0), 비(1), 비/눈(2), 눈(3)
     case RAINY, RAINY_AND_SNOWY, SNOWY;
+    
+    var description: String {
+        switch self {
+        case .NONE:
+            return "없음"
+        case .RAINY:
+            return "비"
+        case .RAINY_AND_SNOWY:
+            return "비/눈"
+        case .SNOWY:
+            return "눈"
+        }
+    }
 }

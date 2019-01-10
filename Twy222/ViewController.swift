@@ -11,6 +11,14 @@ import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
+    @IBOutlet var labelNowLocation: UILabel!
+    @IBOutlet var labelNowTemperature: UILabel!
+    @IBOutlet var labelNowCompareWithYesterday: UILabel!
+    @IBOutlet var labelNowSkyStatus: UILabel!
+    @IBOutlet var imageSkyStatus: UIImageView!
+    
+    
+    
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
     
@@ -20,6 +28,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        viewInit();
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -85,18 +95,75 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getNowData( dateNow: Date, kmaX: Int, kmaY: Int ) {
-        func onComplete( nowModelTemp:NowModel ) {
-            let nowModel = GridManager.shared.getCurrentGridModel()!.nowModel;
+        func onComplete( nowModelTemp:NowModel? ) {
+            if( nowModelTemp == nil ) {
+                print("현재 기온, 하늘 상태 가져오기 실패. 아무것도 안함.");
+                return;
+            }
             
-            // nil이어도 값을 넣는다. 화면에 그릴 때 nil 기준으로 그릴거기 때문. 이전에 유효한 값이 남아 있지 않게.
-            nowModel.setTemperature(value: nowModelTemp.temperature);
-            nowModel.setSkyStatusImageName(value: nowModelTemp.skyStatusImageName);
-            nowModel.setDiffFromYesterday(value: nowModelTemp.diffFromYesterday);
+            let gridModel = GridManager.shared.getCurrentGridModel()!;
+            gridModel.setNowModel(value: nowModelTemp!);
             
-            // 화면에 표시.
+            drawNowData();
         }
         
         KmaApiManager.shared.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
+    }
+    
+    func drawNowData() {
+        let gridModel = GridManager.shared.getCurrentGridModel()!;
+        let nowModel = gridModel.nowModel!;
+        
+        DispatchQueue.main.async {
+            self.labelNowLocation.text = gridModel.dongName;
+            
+            let intTemperature = NumberUtil.roundToInt(value: nowModel.temperature);
+            self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";
+            
+            let intTemperatureGap = NumberUtil.roundToInt(value: nowModel.diffFromYesterday!);
+            self.labelNowCompareWithYesterday.text = self.getTextCompareWithYesterday(intTemperatureGap: intTemperatureGap);
+            
+            self.labelNowSkyStatus.text = nowModel.skyStatusText;
+            
+            self.imageSkyStatus.image = UIImage(named: nowModel.skyStatusImageName)!
+            self.imageSkyStatus.isHidden = false;
+            
+//            if let nTempMax = NumberUtil.roundToInt( model.temperatureMax ),
+//                let nTempMin = NumberUtil.roundToInt( model.temperatureMin ) {
+//                self.labelNowTempMaxMin.text = String( nTempMax ) + " / " + String( nTempMin );
+//            }
+        }
+    }
+    
+    private func getTextCompareWithYesterday( intTemperatureGap: Int ) -> String {
+        let uintTemperatureGap = abs(intTemperatureGap);
+        
+        var strComment = "어제와 같음";
+        
+        if( intTemperatureGap > 0 ) {
+            strComment = "어제보다 \(uintTemperatureGap)\(CharacterStruct.TEMPERATURE) 높음"
+        } else if( intTemperatureGap < 0 ) {
+            strComment = "어제보다 \(uintTemperatureGap)\(CharacterStruct.TEMPERATURE) 낮음"
+        }
+        
+        return strComment;
+    }
+    
+    func viewInit() {
+        labelNowLocation.text = "";
+        labelNowSkyStatus.text = "";
+        labelNowTemperature.text = "";
+        labelNowCompareWithYesterday.text = "";
+//        labelNowTempMaxMin.text = "";
+        imageSkyStatus.isHidden = true;
+//
+//        btnLogo.isHidden = true;
+//
+//        labelToday.text = "";
+//
+//        labelPm10.text = "";
+//        labelPm25.text = "";
+//        viewAirQuality.isHidden = true;
     }
 }
 

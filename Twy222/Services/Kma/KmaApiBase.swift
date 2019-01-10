@@ -69,6 +69,7 @@ class KmaApiBase {
             return nil;
         }
         if( resultCode != "0000" ) {
+            print("resultCode : ", resultCode )
             return nil;
         }
         guard let body = response[ "body" ] as? [ String : Any ] else {
