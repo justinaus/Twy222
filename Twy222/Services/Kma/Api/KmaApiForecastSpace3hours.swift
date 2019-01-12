@@ -128,8 +128,6 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
         return model;
     }
     
-    
-    
     public func getBaseDate( dateNow: Date ) -> Date {
         //0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300
         let arrBaseHour = [ 2, 5, 8, 11, 14, 17, 20, 23 ];
@@ -142,26 +140,24 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
         
         var dateBaseToCall: Date?;
         
-        for hour in arrBaseHour {
-            if( nowHour > hour ) {
-                dateBaseToCall = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateNow);
+        for ( index, hour ) in arrBaseHour.enumerated() {
+            if( nowHour < hour ) {
+                if( index == 0 ) {
+                    dateBaseToCall = calendar.date(bySettingHour: arrBaseHour.last!, minute: 0, second: 0, of: dateNow);
+                    dateBaseToCall = calendar.date(byAdding: .day, value: -1, to: dateBaseToCall!);
+                } else {
+                    dateBaseToCall = calendar.date(bySettingHour: arrBaseHour[ index - 1 ], minute: 0, second: 0, of: dateNow);
+                }
+                
                 break;
             } else if( nowHour == hour ) {
                 dateBaseToCall = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateNow);
-                
+
                 if( component.minute! <= LIMIT_MINUTES ) {
                     dateBaseToCall = calendar.date(byAdding: .hour, value: -3, to: dateBaseToCall!);
                 }
                 break;
             }
-        }
-        
-        if( dateBaseToCall == nil ) {
-            // 0시, 01시.
-            let hour = arrBaseHour.last!;
-            dateBaseToCall = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateNow);
-            
-            dateBaseToCall = calendar.date(byAdding: .day, value: -1, to: dateBaseToCall!);
         }
         
         return dateBaseToCall!
