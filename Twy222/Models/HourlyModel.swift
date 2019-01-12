@@ -9,12 +9,14 @@
 import Foundation
 
 class HourlyModel {
-    public private(set) var temperature:Double;
-    public private(set) var skyStatusImageName:String;
-    public private(set) var skyStatusText:String;
-    public private(set) var diffFromYesterday:Double?;
+    public private(set) var date: Date;
+    public private(set) var temperature: Double;
+    public private(set) var skyStatusImageName: String;
+    public private(set) var skyStatusText: String;
+    public private(set) var diffFromYesterday: Double?;
     
-    init( temperature: Double, skyStatusImageName:String, skyStatusText: String ) {
+    init( date: Date, temperature: Double, skyStatusImageName:String, skyStatusText: String ) {
+        self.date = date;
         self.temperature = temperature;
         self.skyStatusImageName = skyStatusImageName;
         self.skyStatusText = skyStatusText;

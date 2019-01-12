@@ -2,6 +2,9 @@
 //  KmaApiManager.swift
 //  Twy222
 //  기상청 api 관리.
+//  서비스에 종속적이지 않게끔 하려고 한다.
+//  viewcontroller는 각 서비스의 매니져하고만 얘기하고.
+//  각 서비스의 매니져는 종속적이지 않은 데이터로 리턴을 한다.
 //
 //  Created by Bonkook Koo on 09/01/2019.
 //  Copyright © 2019 justinaus. All rights reserved.
@@ -12,19 +15,40 @@ import Foundation
 final class KmaApiManager {
     static let shared = KmaApiManager();
     
-    public func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( ForecastHourlyModel? ) -> Void ) {
-        var retHourlyModel: ForecastHourlyModel;
-        
+    public func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( ForecastHourListModel? ) -> Void ) {
         func onCompleteForecastHourly( model: KmaApiForecastSpace3hoursModel? ) {
             guard let modelNotNil = model else {
                 callback( nil );
                 return;
             }
             
-            print(modelNotNil)
+            // 일단 이거 그리는 것 부터.
+            
+            let retModelList = ForecastHourListModel();
+            
+            var model: HourlyModel;
+            
+            for kmaModel in modelNotNil.list {
+                model = changeToCommonHourlyModel(kmaModel: kmaModel);
+                retModelList.list.append(model);
+            }
+            
+            callback( retModelList );
         }
         
         KmaApiForecastSpace3hours.shared.getData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onCompleteForecastHourly)
+    }
+    
+    // 서비스에 종속적이지 않은 모델로 변환.
+    private func changeToCommonHourlyModel( kmaModel: KmaHourlyModel ) -> HourlyModel {
+        let hour = Calendar.current.component(.hour, from: kmaModel.date)
+        let skyStatusImageName = KmaUtils.getStatusImageName(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum, isDay: Utils.getIsDay(hour: hour));
+        
+        let skyStatusText = KmaUtils.getSkyStatusText(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum);
+        
+        let model = HourlyModel( date: kmaModel.date, temperature: kmaModel.temperature, skyStatusImageName: skyStatusImageName, skyStatusText: skyStatusText)
+        
+        return model;
     }
     
     public func getNowData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( NowModel? ) -> Void ) {

@@ -115,7 +115,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int ) {
-        func onComplete( model: ForecastHourlyModel? ) {
+        func onComplete( model: ForecastHourListModel? ) {
             if( model == nil ) {
                 print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
                 return;

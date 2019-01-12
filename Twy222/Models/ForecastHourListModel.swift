@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ForecastHourlyModel {
-    public private(set) var list:Array<HourlyModel> = [];
+class ForecastHourListModel {
+    public var list:Array<HourlyModel> = [];
     
 }
