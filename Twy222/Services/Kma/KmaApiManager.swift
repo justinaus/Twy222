@@ -15,14 +15,28 @@ import Foundation
 final class KmaApiManager {
     static let shared = KmaApiManager();
     
+    public func getYesterdayData( dateStandard: Date, kmaX: Int, kmaY: Int, callback:@escaping ( Double? ) -> Void ) {
+        func onCompleteApiYesterday( model: KmaApiActualModel? ) {
+            if( model == nil ) {
+                print("어제 날씨 실황 가져오기 실패.")
+                callback( nil );
+                return;
+            }
+            
+            callback( model!.temperature );
+        }
+        
+        let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: dateStandard)!;
+        
+        KmaApiActual.shared.getDataByDateBase(dateBase: dateYesterday, kmaX: kmaX, kmaY: kmaY, callback: onCompleteApiYesterday);
+    }
+    
     public func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( ForecastHourListModel? ) -> Void ) {
         func onCompleteForecastHourly( model: KmaApiForecastSpace3hoursModel? ) {
             guard let modelNotNil = model else {
                 callback( nil );
                 return;
             }
-            
-            // 일단 이거 그리는 것 부터.
             
             let retModelList = ForecastHourListModel();
             

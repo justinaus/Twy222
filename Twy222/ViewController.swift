@@ -10,68 +10,6 @@ import UIKit
 import CoreLocation
 
 class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let gridModel = GridManager.shared.getCurrentGridModel() else {
-            return 0;
-        };
-        
-        let isShortView = collectionView == collectionViewShort;
-        
-        if( isShortView ) {
-            return gridModel.forecastHourList?.list.count ?? 0;
-        }
-        
-        return 0;
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let isShortView = collectionView == collectionViewShort;
-        
-//        let cell = isShortView ? makeCollectionViewCellShort(indexPath: indexPath) : makeCollectionViewCellMid(indexPath: indexPath);
-        
-        let cell = makeCollectionViewCellShort(indexPath: indexPath);
-        
-        return cell;
-    }
-    
-    func makeCollectionViewCellShort( indexPath: IndexPath ) -> CollectionViewCellShort {
-        let reuseIdentifier = "cellShort";
-        let cell = collectionViewShort.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCellShort
-        
-        let gridModel = GridManager.shared.getCurrentGridModel()!;
-        let model = gridModel.forecastHourList!.list[indexPath.item];
-        
-        let hour = Calendar.current.component(.hour, from: model.date)
-        cell.setLabelHour(str: "\(hour)시");
-        
-        cell.setImageSkyByFileName(imageFileName: model.skyStatusImageName);
-        
-        let strTemperature = NumberUtil.roundToString(value: model.temperature);
-        
-        cell.setLabelTemperature(str: strTemperature );
-        
-        
-//        guard let skApiYesterdayModel = gridModel.skApiYesterdayModel else {
-//            return cell;
-//        }
-//
-//        guard let yesterdayHourlyModel = SKUtil.getYesterdayModel(currentHourlyModel: model, yesterdayModel: skApiYesterdayModel, dateFormat: DateFormatEnum.YYYY_MM_DD_HH_mm_SS) else {
-//            cell.setLabelTemperature(str: strTemperature);
-//
-//            return cell;
-//        }
-//
-//        let doubleTemperatureGap = Double( model.temperature )! - Double( yesterdayHourlyModel.temperature )!;
-//        let intTemperatureGap = NumberUtil.roundToInt( doubleTemperatureGap );
-//        let strGap = SKUtil.makeIntStringWithSign(temperature: intTemperatureGap);
-//
-//        cell.setLabelTemperature(str: strTemperature + " (" + strGap + ")" );
-        
-        return cell;
-    }
-    
-    
-    
     
     @IBOutlet var labelNowLocation: UILabel!
     @IBOutlet var labelNowTemperature: UILabel!
@@ -173,7 +111,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             drawNowData();
             
             // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
-            
             getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY)
         }
         
@@ -193,9 +130,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             DispatchQueue.main.async {
                 self.collectionViewShort.reloadData();
             }
+            
+            for hourlyModel in model!.list {
+                getHourlyYesterdayData(hourlyModel: hourlyModel, kmaX: kmaX, kmaY: kmaY);
+            }
         }
         
         KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
+    }
+    
+    func getHourlyYesterdayData( hourlyModel: HourlyModel, kmaX: Int, kmaY: Int ) {
+        func onCompleteYesterday( temperature: Double? ) {
+            if( temperature == nil ) {
+                return;
+            }
+            
+            let yesterdayTemperature = temperature!;
+            let resultDiff = hourlyModel.temperature - yesterdayTemperature;
+            
+            hourlyModel.setDiffFromYesterday(value: resultDiff );
+            
+            DispatchQueue.main.async {
+                self.collectionViewShort.reloadData();
+            }
+        }
+        
+        KmaApiManager.shared.getYesterdayData(dateStandard: hourlyModel.date, kmaX: kmaX, kmaY: kmaY, callback: onCompleteYesterday)
     }
     
     func drawNowData() {
@@ -263,6 +223,60 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
         
         labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let gridModel = GridManager.shared.getCurrentGridModel() else {
+            return 0;
+        };
+        
+        let isShortView = collectionView == collectionViewShort;
+        
+        if( isShortView ) {
+            return gridModel.forecastHourList?.list.count ?? 0;
+        }
+        
+        return 0;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let isShortView = collectionView == collectionViewShort;
+        
+        //        let cell = isShortView ? makeCollectionViewCellShort(indexPath: indexPath) : makeCollectionViewCellMid(indexPath: indexPath);
+        
+        let cell = makeCollectionViewCellShort(indexPath: indexPath);
+        
+        return cell;
+    }
+    
+    func makeCollectionViewCellShort( indexPath: IndexPath ) -> CollectionViewCellShort {
+        let reuseIdentifier = "cellShort";
+        let cell = collectionViewShort.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCellShort
+        
+        let gridModel = GridManager.shared.getCurrentGridModel()!;
+        let model = gridModel.forecastHourList!.list[indexPath.item];
+        
+        let hour = Calendar.current.component(.hour, from: model.date)
+        cell.setLabelHour(str: "\(hour)시");
+        
+        cell.setImageSkyByFileName(imageFileName: model.skyStatusImageName);
+        
+        let strTemperature = NumberUtil.roundToString(value: model.temperature);
+        
+        if( model.diffFromYesterday == nil ) {
+            cell.setLabelTemperature(str: strTemperature);
+        } else {
+            var strRoundedDiff = NumberUtil.roundToString(value: model.diffFromYesterday!);
+            if( strRoundedDiff == "0" ) {
+                strRoundedDiff = "=";
+            }
+                
+            let text = strTemperature + " (" + strRoundedDiff + ")"
+            
+            cell.setLabelTemperature(str: text);
+        }
+        
+        return cell;
     }
     
     
