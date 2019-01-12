@@ -15,7 +15,7 @@ final class KmaApiManager {
     public func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( ForecastHourlyModel? ) -> Void ) {
         var retHourlyModel: ForecastHourlyModel;
         
-        func onCompleteForecastHourly( model: KmaApiForecastSpace3hours? ) {
+        func onCompleteForecastHourly( model: KmaApiForecastSpace3hoursModel? ) {
             guard let modelNotNil = model else {
                 callback( nil );
                 return;

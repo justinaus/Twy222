@@ -9,19 +9,10 @@
 import Foundation
 
 class KmaApiForecastSpace3hoursModel {
-    public private(set) var dateForecast:Date;
     
-    public private(set) var temperature:Double;
-    
-    public private(set) var skyEnum:KmaSkyEnum;
-    public private(set) var ptyEnum:KmaPtyEnum;
+    public var list: Array<KmaHourlyModel> = [];
     
     
-    init( dateForecast: Date, temperature: Double, skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) {
-        self.dateForecast = dateForecast;
-        self.temperature = temperature;
-        self.skyEnum = skyEnum;
-        self.ptyEnum = ptyEnum;
-    }
+    
 }
 

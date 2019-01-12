@@ -11,7 +11,7 @@ import Foundation
 final class KmaApiForecastSpace3hours: KmaApiBase {
     static let shared = KmaApiForecastSpace3hours();
     
-    public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastSpace3hours? ) -> Void ) {
+    public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastSpace3hoursModel? ) -> Void ) {
         let URL_SERVICE = "ForecastSpaceData";
         
         let dateBase = getBaseDate( dateNow: dateNow );
@@ -29,13 +29,103 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
         makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
     }
     
-    private func makeModel( dateNow:Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastSpace3hours? {
-        // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
-        // 8개 제공하자.
+    private func makeModel( dateNow:Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastSpace3hoursModel? {
+        if( arrItem.count < 1 ) {
+            return nil;
+        }
+        let objStart = arrItem[ 0 ];
+        guard let dateStart = KmaUtils.getDateByDateAndTime(anyDate: objStart["fcstDate"], anyTime: objStart["fcstTime"]) else {
+            return nil;
+        }
         
+        var dateFcst: Date = dateStart;
         
+        let modelList = KmaApiForecastSpace3hoursModel();
         
-        return nil;
+        var arrTemp: Array<[ String : Any ]> = [];
+        
+        for obj in arrItem {
+            guard let dateForecast = KmaUtils.getDateByDateAndTime(anyDate: obj["fcstDate"], anyTime: obj["fcstTime"]) else {
+                continue;
+            }
+            
+            if( dateFcst != dateForecast ) {
+                // 날짜가 달라짐.
+                // 지금까지 모은 데이터로 모델 만들기.
+                let model = makeHourlyModel(dateFcst: dateFcst, arrItem: arrTemp);
+                
+                if( model != nil ) {
+                    modelList.list.append( model! );
+                    
+                    // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
+                    // 8개 제공하자.
+                    if( modelList.list.count >= Settings.HOURLY_DATA_COUNT ) {
+                        break;
+                    }
+                }
+                
+                dateFcst = dateForecast;
+                arrTemp = [];
+            }
+            
+            arrTemp.append(obj);
+        }
+        
+        return modelList;
+    }
+    
+    private func makeHourlyModel( dateFcst:Date, arrItem: Array<[ String : Any ]> ) -> KmaHourlyModel? {
+        var temperature: Double?;
+        var skyEnum: KmaSkyEnum?;
+        var ptyEnum: KmaPtyEnum?;
+        
+        for obj in arrItem {
+            guard let category = obj[ "category" ] as? String else {
+                continue;
+            }
+            
+            switch( category ) {
+            case KmaCategoryCodeEnum.T3H.rawValue:
+                guard let fcstValue = obj[ "fcstValue" ] as? Double else {
+                    continue;
+                }
+                
+                temperature = fcstValue;
+                
+                break;
+            case KmaCategoryCodeEnum.PTY.rawValue:
+                guard let fcstValue = obj[ "fcstValue" ] as? Int else {
+                    continue;
+                }
+                guard let ptyEnumTemp = KmaPtyEnum(rawValue: fcstValue) else {
+                    continue;
+                }
+                
+                ptyEnum = ptyEnumTemp;
+                
+                break;
+            case KmaCategoryCodeEnum.SKY.rawValue:
+                guard let fcstValue = obj[ "fcstValue" ] as? Int else {
+                    continue;
+                }
+                guard let skyEnumTemp = KmaSkyEnum(rawValue: fcstValue) else {
+                    continue;
+                }
+                
+                skyEnum = skyEnumTemp;
+                break;
+            default:
+                continue;
+            }
+        }
+        
+        if( temperature == nil || skyEnum == nil || ptyEnum == nil ) {
+            return nil;
+        }
+        
+        let model: KmaHourlyModel = KmaHourlyModel(date: dateFcst, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
+        
+        return model;
     }
     
     
@@ -73,8 +163,6 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
             
             dateBaseToCall = calendar.date(byAdding: .day, value: -1, to: dateBaseToCall!);
         }
-        
-        print(dateBaseToCall)
         
         return dateBaseToCall!
     }
