@@ -9,7 +9,69 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard let gridModel = GridManager.shared.getCurrentGridModel() else {
+            return 0;
+        };
+        
+        let isShortView = collectionView == collectionViewShort;
+        
+        if( isShortView ) {
+            return gridModel.forecastHourList?.list.count ?? 0;
+        }
+        
+        return 0;
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let isShortView = collectionView == collectionViewShort;
+        
+//        let cell = isShortView ? makeCollectionViewCellShort(indexPath: indexPath) : makeCollectionViewCellMid(indexPath: indexPath);
+        
+        let cell = makeCollectionViewCellShort(indexPath: indexPath);
+        
+        return cell;
+    }
+    
+    func makeCollectionViewCellShort( indexPath: IndexPath ) -> CollectionViewCellShort {
+        let reuseIdentifier = "cellShort";
+        let cell = collectionViewShort.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCellShort
+        
+        let gridModel = GridManager.shared.getCurrentGridModel()!;
+        let model = gridModel.forecastHourList!.list[indexPath.item];
+        
+        let hour = Calendar.current.component(.hour, from: model.date)
+        cell.setLabelHour(str: "\(hour)시");
+        
+        cell.setImageSkyByFileName(imageFileName: model.skyStatusImageName);
+        
+        let strTemperature = NumberUtil.roundToString(value: model.temperature);
+        
+        cell.setLabelTemperature(str: strTemperature );
+        
+        
+//        guard let skApiYesterdayModel = gridModel.skApiYesterdayModel else {
+//            return cell;
+//        }
+//
+//        guard let yesterdayHourlyModel = SKUtil.getYesterdayModel(currentHourlyModel: model, yesterdayModel: skApiYesterdayModel, dateFormat: DateFormatEnum.YYYY_MM_DD_HH_mm_SS) else {
+//            cell.setLabelTemperature(str: strTemperature);
+//
+//            return cell;
+//        }
+//
+//        let doubleTemperatureGap = Double( model.temperature )! - Double( yesterdayHourlyModel.temperature )!;
+//        let intTemperatureGap = NumberUtil.roundToInt( doubleTemperatureGap );
+//        let strGap = SKUtil.makeIntStringWithSign(temperature: intTemperatureGap);
+//
+//        cell.setLabelTemperature(str: strTemperature + " (" + strGap + ")" );
+        
+        return cell;
+    }
+    
+    
+    
     
     @IBOutlet var labelNowLocation: UILabel!
     @IBOutlet var labelNowTemperature: UILabel!
@@ -18,6 +80,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var imageSkyStatus: UIImageView!
     
     @IBOutlet var labelToday: UILabel!
+    
+    @IBOutlet var collectionViewShort: UICollectionView!
     
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
@@ -106,6 +170,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let gridModel = GridManager.shared.getCurrentGridModel()!;
             gridModel.setNowModel(value: model!);
             
+            drawNowData();
+            
             // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
             
             getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY)
@@ -121,7 +187,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 return;
             }
             
-            print( model );
+            let gridModel = GridManager.shared.getCurrentGridModel()!;
+            gridModel.setForecastHourListModel(value: model!);
+            
+            DispatchQueue.main.async {
+                self.collectionViewShort.reloadData();
+            }
         }
         
         KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);

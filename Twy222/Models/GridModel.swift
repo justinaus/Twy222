@@ -18,6 +18,7 @@ class GridModel {
     public private(set) var dongName: String;
     
     public private(set) var nowModel: NowModel?;
+    public private(set) var forecastHourList: ForecastHourListModel?;
     
     init( id: String, lat: String, lon: String, dongName: String ) {
         self.id = id;
@@ -28,6 +29,9 @@ class GridModel {
     
     public func setNowModel( value: NowModel ) {
         nowModel = value;
+    }
+    public func setForecastHourListModel( value: ForecastHourListModel ) {
+        forecastHourList = value;
     }
     
 //    public func resetAll() {

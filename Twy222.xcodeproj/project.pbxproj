@@ -75,6 +75,7 @@
 		E27AD63E21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63D21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift */; };
 		E29552B321E998470097480E /* KmaHourlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29552B221E998470097480E /* KmaHourlyModel.swift */; };
 		E29552B521E9A1550097480E /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29552B421E9A1550097480E /* Settings.swift */; };
+		E29552B821E9AAEA0097480E /* CollectionViewCellShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29552B721E9AAEA0097480E /* CollectionViewCellShort.swift */; };
 		E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048C21DF2124005C00EB /* GridModel.swift */; };
 		E2EF049421DF2562005C00EB /* KakaoApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049321DF2562005C00EB /* KakaoApiService.swift */; };
@@ -155,6 +156,7 @@
 		E27AD63D21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiForecastSpace3hours.swift; sourceTree = "<group>"; };
 		E29552B221E998470097480E /* KmaHourlyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaHourlyModel.swift; sourceTree = "<group>"; };
 		E29552B421E9A1550097480E /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		E29552B721E9AAEA0097480E /* CollectionViewCellShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellShort.swift; sourceTree = "<group>"; };
 		E2EF048921DF1E9A005C00EB /* FronteerKr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FronteerKr.swift; sourceTree = "<group>"; };
 		E2EF048C21DF2124005C00EB /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		E2EF049321DF2562005C00EB /* KakaoApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiService.swift; sourceTree = "<group>"; };
@@ -194,6 +196,7 @@
 		E26C5F4221DF03B00061FF86 /* Twy222 */ = {
 			isa = PBXGroup;
 			children = (
+				E29552B621E9AAA40097480E /* Views */,
 				E27AD63321E6F95700CD67B6 /* Justinaus */,
 				E27AD5D721E6709800CD67B6 /* Resources */,
 				E2EF049121DF2518005C00EB /* Services */,
@@ -318,6 +321,14 @@
 				E27AD5C621E5A5E500CD67B6 /* KmaApiBase.swift */,
 			);
 			path = Api;
+			sourceTree = "<group>";
+		};
+		E29552B621E9AAA40097480E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E29552B721E9AAEA0097480E /* CollectionViewCellShort.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E2EF048821DF1E9A005C00EB /* FronteerKr */ = {
@@ -511,6 +522,7 @@
 				E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */,
 				E27AD63C21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift in Sources */,
 				E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */,
+				E29552B821E9AAEA0097480E /* CollectionViewCellShort.swift in Sources */,
 				E27AD63921E6F95700CD67B6 /* SegueFromRightToLeft.swift in Sources */,
 				E27AD63821E6F95700CD67B6 /* JUtils.swift in Sources */,
 			);
