@@ -114,6 +114,20 @@ public enum DateFormatEnum : String {
 }
 
 public class DateUtil {
+    public static func getIsSameDateAndMinute( date0: Date, date1: Date ) -> Bool {
+        let component = Calendar.current.dateComponents([.minute], from: date0, to: date1);
+        
+        return component.minute != 0;
+    }
+    
+    public static func getStringByDate( date: Date ) -> String {
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date);
+        
+        let strDate = "\(components.year ?? -1)/\(components.month ?? -1)/\(components.day ?? -1) \(components.hour ?? -1):\(components.minute ?? -1)";
+        
+        return strDate;
+    }
+    
     // 일요일:1, 월요일:2 ... 토요일:7로 파악됨.
     public static func getWeekdayString( _ weekday:Int, _ showType:WeekdayShowTypeEnum ) -> String {
         var strRet:String;

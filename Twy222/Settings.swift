@@ -10,5 +10,7 @@ import Foundation
 
 struct Settings {
     static let HOURLY_DATA_COUNT = 8;
+    
+    static let PRINTABLE = true;
 }
 
