@@ -14,7 +14,7 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
     public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastSpace3hoursModel? ) -> Void ) {
         let URL_SERVICE = "ForecastSpaceData";
         
-        print( "3시간 예보 call base time", DateUtil.getStringByDate(date: dateBase) );
+//        print( "3시간 예보 call base time", DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
@@ -166,8 +166,8 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
             return nil;
         }
         
-        print( "3시간 예보 받은 값", DateUtil.getStringByDate(date: dateFcst) );
-        print( temperature!, skyEnum!, ptyEnum! )
+//        print( "3시간 예보 받은 값", DateUtil.getStringByDate(date: dateFcst) );
+//        print( temperature!, skyEnum!, ptyEnum! )
         
         let model: KmaHourlyModel = KmaHourlyModel(date: dateFcst, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
         

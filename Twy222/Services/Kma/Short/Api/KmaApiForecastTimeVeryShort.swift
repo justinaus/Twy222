@@ -15,7 +15,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
     public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
         let URL_SERVICE = "ForecastTimeData";
         
-        print( "초단기 예보 조회 base time", DateUtil.getStringByDate(date: dateBase) );
+//        print( "초단기 예보 조회 base time", DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
@@ -131,7 +131,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
         
         let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel( dateBase: dateBase, dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!);
         
-        print( "초단기 예보 받은 값", DateUtil.getStringByDate(date: dateFcst!) );
+//        print( "초단기 예보 받은 값", DateUtil.getStringByDate(date: dateFcst!) );
         
         return model;
     }

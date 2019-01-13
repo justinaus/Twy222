@@ -12,7 +12,9 @@ struct KmaApiUrlStruct {
     static let URL_ROOT = "http://newsky2.kma.go.kr/service/"
     
     // (신)동네예보정보조회서비스
-    static let URL_MID_FORECAST = "SecndSrtpdFrcstInfoService2/"
+    static let URL_SHORT_FORECAST = "SecndSrtpdFrcstInfoService2/"
+    
+    static let URL_MID_FORECAST = "MiddleFrcstInfoService/";
 }
 
 

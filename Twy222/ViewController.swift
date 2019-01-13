@@ -74,8 +74,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         dateLastCalled = now;
         
-        print( "현재 시간", DateUtil.getStringByDate(date: now) );
-        
         showTodayText( date: now );
         
         getGridModelByLonLat( lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude, dateNow: now );
@@ -146,7 +144,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
                 return;
             }
             
-            print( "어제 날씨 값 도착인데, 몇시에 대한 결과냐", DateUtil.getStringByDate(date: hourlyModel.date) )
+//            print( "어제 날씨 값 도착인데, 몇시에 대한 결과냐", DateUtil.getStringByDate(date: hourlyModel.date) )
             
             let yesterdayTemperature = temperature!;
             let resultDiff = hourlyModel.temperature - yesterdayTemperature;

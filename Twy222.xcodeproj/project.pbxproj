@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E220997121EB18B100CDE9EA /* KmaMidApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaMidApiBase.swift */; };
+		E220997321EB1BC100CDE9EA /* KmaMidApiTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaMidApiTemperature.swift */; };
 		E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4321DF03B00061FF86 /* AppDelegate.swift */; };
 		E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4521DF03B00061FF86 /* ViewController.swift */; };
 		E26C5F4921DF03B00061FF86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4721DF03B00061FF86 /* Main.storyboard */; };
@@ -86,6 +88,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E220997021EB18B100CDE9EA /* KmaMidApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaMidApiBase.swift; sourceTree = "<group>"; };
+		E220997221EB1BC100CDE9EA /* KmaMidApiTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaMidApiTemperature.swift; sourceTree = "<group>"; };
 		E26C5F4021DF03B00061FF86 /* Twy222.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twy222.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26C5F4321DF03B00061FF86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E26C5F4521DF03B00061FF86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -177,6 +181,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E220996C21EB177A00CDE9EA /* Short */ = {
+			isa = PBXGroup;
+			children = (
+				E27AD5C121E5A29D00CD67B6 /* Models */,
+				E27AD63F21E71C4F00CD67B6 /* Api */,
+			);
+			path = Short;
+			sourceTree = "<group>";
+		};
+		E220996D21EB17D700CDE9EA /* Mid */ = {
+			isa = PBXGroup;
+			children = (
+				E220996F21EB17E800CDE9EA /* Models */,
+				E220996E21EB17E100CDE9EA /* Api */,
+			);
+			path = Mid;
+			sourceTree = "<group>";
+		};
+		E220996E21EB17E100CDE9EA /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E220997021EB18B100CDE9EA /* KmaMidApiBase.swift */,
+				E220997221EB1BC100CDE9EA /* KmaMidApiTemperature.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		E220996F21EB17E800CDE9EA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E26C5F3721DF03B00061FF86 = {
 			isa = PBXGroup;
 			children = (
@@ -363,9 +401,9 @@
 		E2EF04A121E2F368005C00EB /* Kma */ = {
 			isa = PBXGroup;
 			children = (
-				E27AD63F21E71C4F00CD67B6 /* Api */,
+				E220996D21EB17D700CDE9EA /* Mid */,
+				E220996C21EB177A00CDE9EA /* Short */,
 				E27AD5D321E6035100CD67B6 /* KmaStructs.swift */,
-				E27AD5C121E5A29D00CD67B6 /* Models */,
 				E2EF04A721E30C4E005C00EB /* KmaUtils.swift */,
 				E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */,
 				E27AD5D521E6039E00CD67B6 /* KmaEnums.swift */,
@@ -501,6 +539,7 @@
 				E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */,
 				E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */,
 				E29552B321E998470097480E /* KmaHourlyModel.swift in Sources */,
+				E220997121EB18B100CDE9EA /* KmaMidApiBase.swift in Sources */,
 				E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */,
 				E27AD63221E6F09700CD67B6 /* TwyStructs.swift in Sources */,
 				E27AD5BB21E342E900CD67B6 /* TwyUtils.swift in Sources */,
@@ -510,6 +549,7 @@
 				E27AD5C721E5A5E500CD67B6 /* KmaApiBase.swift in Sources */,
 				E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
+				E220997321EB1BC100CDE9EA /* KmaMidApiTemperature.swift in Sources */,
 				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
 				E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */,
 				E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */,

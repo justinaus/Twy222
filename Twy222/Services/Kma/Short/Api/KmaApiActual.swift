@@ -15,7 +15,7 @@ final class KmaApiActual: KmaApiBase {
     let URL_SERVICE = "ForecastGrib";
     
     public func getData( dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
-        print("초단기 실황 조회 base time", DateUtil.getStringByDate(date: dateBase))
+//        print("초단기 실황 조회 base time", DateUtil.getStringByDate(date: dateBase))
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
