@@ -9,6 +9,7 @@
 import Foundation
 
 class KmaApiForecastTimeVeryShortModel {
+    public private(set) var dateBaseToCall:Date;
     public private(set) var dateForecast:Date;
     
     public private(set) var temperature:Double;
@@ -17,7 +18,8 @@ class KmaApiForecastTimeVeryShortModel {
     public private(set) var ptyEnum:KmaPtyEnum;
     
     
-    init( dateForecast: Date, temperature: Double, skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) {
+    init( dateBase: Date, dateForecast: Date, temperature: Double, skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) {
+        self.dateBaseToCall = dateBase;
         self.dateForecast = dateForecast;
         self.temperature = temperature;
         self.skyEnum = skyEnum;

@@ -9,6 +9,12 @@
 import Foundation
 
 class ForecastHourListModel {
+    public private(set) var dateBaseToCall:Date;
+    
     public var list:Array<HourlyModel> = [];
+    
+    init( dateBase: Date ) {
+        self.dateBaseToCall = dateBase;
+    }
     
 }

@@ -56,7 +56,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
         
         currentLocation = location;
-//        print("locationManager", location.coordinate.longitude, location.coordinate.latitude );
         
         tryStartToApiCall();
     }
@@ -74,6 +73,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
         
         dateLastCalled = now;
+        
+        print( "현재 시간", DateUtil.getStringByDate(date: now) );
         
         showTodayText( date: now );
         
@@ -144,6 +145,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             if( temperature == nil ) {
                 return;
             }
+            
+            print( "어제 날씨 값 도착인데, 몇시에 대한 결과냐", DateUtil.getStringByDate(date: hourlyModel.date) )
             
             let yesterdayTemperature = temperature!;
             let resultDiff = hourlyModel.temperature - yesterdayTemperature;
@@ -266,12 +269,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         if( model.diffFromYesterday == nil ) {
             cell.setLabelTemperature(str: strTemperature);
         } else {
-            var strRoundedDiff = NumberUtil.roundToString(value: model.diffFromYesterday!);
-            if( strRoundedDiff == "0" ) {
-                strRoundedDiff = "=";
+            let intRoundedDiff = NumberUtil.roundToInt(value: model.diffFromYesterday!);
+            
+            var strDiff: String;
+            
+            if( intRoundedDiff == 0 ) {
+                strDiff = "=";
+            } else if( intRoundedDiff > 0 ) {
+                strDiff = "+\(intRoundedDiff)";
+            } else {
+                strDiff = String( intRoundedDiff );
             }
-                
-            let text = strTemperature + " (" + strRoundedDiff + ")"
+            
+            let text = strTemperature + " (" + strDiff + ")"
             
             cell.setLabelTemperature(str: text);
         }

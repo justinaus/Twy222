@@ -12,10 +12,10 @@ import Foundation
 final class KmaApiForecastTimeVeryShort: KmaApiBase {
     static let shared = KmaApiForecastTimeVeryShort();
     
-    public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
+    public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
         let URL_SERVICE = "ForecastTimeData";
         
-        let dateBase = getBaseDate( dateNow: dateNow );
+        print( "초단기 예보 조회 base time", DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
@@ -23,14 +23,41 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
                 return;
             }
             
-            let model = makeModel( dateNow: dateNow, arrItem: arrItem! );
+            let model = makeModel( dateNow: dateNow, dateBase: dateBase, arrItem: arrItem! );
             callback( model );
         }
         
         makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
     }
     
-    private func makeModel( dateNow:Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
+    public func getBaseDate( dateNow: Date ) -> Date {
+        let LIMIT_MINUTES = 45;
+        
+        let calendar = Calendar.current;
+        let minute = calendar.component(.minute, from: dateNow);
+        
+        var dateRet = dateNow;
+        
+        if( minute <= LIMIT_MINUTES ) {
+            dateRet = calendar.date(byAdding: .hour, value: -1, to: dateNow)!;
+        }
+        
+        let hour = calendar.component(.hour, from: dateRet);
+        
+        dateRet = calendar.date(bySettingHour: hour, minute: 30, second: 0, of: dateRet)!
+        
+        return dateRet
+    }
+    
+    public func hasToCall( prevDateCalled: Date?, baseDateToCall: Date ) -> Bool {
+        if( prevDateCalled == nil ) {
+            return true;
+        }
+        
+        return DateUtil.getIsSameDateAndMinute(date0: prevDateCalled!, date1: baseDateToCall);
+    }
+    
+    private func makeModel( dateNow: Date, dateBase: Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
         let len = arrItem.count;
         
         var dateFcst: Date?;
@@ -102,27 +129,10 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
             return nil;
         }
         
-        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel( dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
-
+        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel( dateBase: dateBase, dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!);
+        
+        print( "초단기 예보 받은 값", DateUtil.getStringByDate(date: dateFcst!) );
+        
         return model;
-    }
-    
-    private func getBaseDate( dateNow: Date ) -> Date {
-        let LIMIT_MINUTES = 45;
-        
-        let calendar = Calendar.current;
-        let minute = calendar.component(.minute, from: dateNow);
-        
-        var dateRet = dateNow;
-        
-        if( minute <= LIMIT_MINUTES ) {
-            dateRet = calendar.date(byAdding: .hour, value: -1, to: dateNow)!;
-        }
-        
-        let hour = calendar.component(.hour, from: dateRet);
-        
-        dateRet = calendar.date(bySettingHour: hour, minute: 30, second: 0, of: dateRet)!
-        
-        return dateRet
     }
 }

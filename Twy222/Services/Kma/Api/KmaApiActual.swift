@@ -14,13 +14,9 @@ final class KmaApiActual: KmaApiBase {
     
     let URL_SERVICE = "ForecastGrib";
     
-    public func getData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
-        let dateBase = getBaseDate( dateNow: dateNow );
+    public func getData( dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
+        print("초단기 실황 조회 base time", DateUtil.getStringByDate(date: dateBase))
         
-        getDataByDateBase(dateBase: dateBase, kmaX: kmaX, kmaY: kmaY, callback: callback)
-    }
-    
-    public func getDataByDateBase( dateBase: Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
                 callback( nil );
@@ -32,6 +28,25 @@ final class KmaApiActual: KmaApiBase {
         }
         
         makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
+    }
+    
+    public func getBaseDate( dateNow: Date ) -> Date {
+        let LIMIT_MINUTES = 40;
+        
+        let calendar = Calendar.current;
+        let minute = calendar.component(.minute, from: dateNow);
+        
+        var dateRet = dateNow;
+        
+        if( minute <= LIMIT_MINUTES ) {
+            dateRet = calendar.date(byAdding: .hour, value: -1, to: dateNow)!;
+        }
+        
+        let hour = calendar.component(.hour, from: dateRet);
+        
+        dateRet = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateRet)!
+        
+        return dateRet
     }
     
     private func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiActualModel? {
@@ -72,24 +87,5 @@ final class KmaApiActual: KmaApiBase {
         let model: KmaApiActualModel = KmaApiActualModel(date: dateBase!, temperature: temerature!);
 
         return model;
-    }
-    
-    private func getBaseDate( dateNow: Date ) -> Date {
-        let LIMIT_MINUTES = 40;
-        
-        let calendar = Calendar.current;
-        let minute = calendar.component(.minute, from: dateNow);
-        
-        var dateRet = dateNow;
-        
-        if( minute <= LIMIT_MINUTES ) {
-            dateRet = calendar.date(byAdding: .hour, value: -1, to: dateNow)!;
-        }
-        
-        let hour = calendar.component(.hour, from: dateRet);
-        
-        dateRet = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateRet)!
-        
-        return dateRet
     }
 }
