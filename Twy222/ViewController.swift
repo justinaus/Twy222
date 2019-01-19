@@ -164,7 +164,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let nowModel = gridModel.nowModel!;
         
         DispatchQueue.main.async {
-            self.labelNowLocation.text = gridModel.dongName;
+            // 타이틀 정보가 없으면 이전에 그냥 멈췄음. 나중에 바뀌면 오류를 발생 시키는 게 맞는 것 같음.
+            self.labelNowLocation.text = gridModel.getAddressTitle()!;
             
             let intTemperature = NumberUtil.roundToInt(value: nowModel.temperature);
             self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";

@@ -90,19 +90,24 @@ final class KakaoApiService {
             return nil;
         }
         
-        var dongName:String?;
+        let gridModel:GridModel = GridModel( id: code, lat: String(y), lon: String(x) );
         
+        if let region_1depth_name = obj[ "region_1depth_name" ] as? String {
+            gridModel.setAddressSido(value: region_1depth_name);
+        }
+        if let region_2depth_name = obj[ "region_2depth_name" ] as? String {
+            gridModel.setAddressGu(value: region_2depth_name);
+        }
         if let region_3depth_name = obj[ "region_3depth_name" ] as? String {
-            dongName = region_3depth_name;
-        } else if let address_name = obj[ "address_name" ] as? String {
-            dongName = address_name;
+            gridModel.setAddressDong(value: region_3depth_name);
+        }
+        if let address_name = obj[ "address_name" ] as? String {
+            gridModel.setAddressFull(value: address_name);
         }
         
-        if( dongName == nil ) {
+        if( gridModel.getAddressTitle() == nil ) {
             return nil;
         }
-        
-        let gridModel:GridModel = GridModel( id: code, lat: String(y), lon: String(x), dongName: dongName! );
         
         return gridModel;
     }
