@@ -11,20 +11,10 @@ import Foundation
 final class KmaApiMidTemperature: KmaApiMidBase {
     static let shared = KmaApiMidTemperature();
     
-    private class TemperatureMaxMin {
-        var max: Double;
-        var min: Double;
-        
-        init( max: Double, min: Double ) {
-            self.max = max;
-            self.min = min;
-        }
-    }
-    
-    public func getData( dateNow: Date, dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidModel? ) -> Void ) {
+    public func getData( dateNow: Date, dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidTemperatureModel? ) -> Void ) {
         let URL_SERVICE = "getMiddleTemperature";
         
-        print( "중기 예보 call base time", DateUtil.getStringByDate(date: dateBase) );
+//        print( "중기 예보 call base time", DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( dictItem: [String:Any]? ) {
             if( dictItem == nil ) {
@@ -32,18 +22,15 @@ final class KmaApiMidTemperature: KmaApiMidBase {
                 return;
             }
             
-            let arrTemperature = makeTemperatureArray( dictItem: dictItem! );
-            
-            print(arrTemperature);
-            
-//            callback( model );
+            let model = makeModel( dateBase: dateBase, dictItem: dictItem! );
+            callback( model );
         }
         
         makeCall(serviceName: URL_SERVICE, baseDate: dateBase, regId: regionId, callback: onComplete);
     }
     
-    private func makeTemperatureArray( dictItem: [String:Any] ) -> Array<TemperatureMaxMin>? {
-        var arrRet: Array<TemperatureMaxMin> = [];
+    private func makeModel( dateBase: Date, dictItem: [String:Any] ) -> KmaApiMidTemperatureModel? {
+        let model = KmaApiMidTemperatureModel(dateBaseToCall: dateBase);
         
         for i in 2 ..< 10 {
             guard let max = dictItem[ "taMax\(i+1)" ] as? Double else {
@@ -53,10 +40,12 @@ final class KmaApiMidTemperature: KmaApiMidBase {
                 return nil;
             }
             
-            arrRet.append( TemperatureMaxMin(max: max, min: min) );
+            let tempMaxMin = TemperatureMaxMinModel(max: max, min: min);
+            
+            model.list.append( tempMaxMin );
         }
         
-        return arrRet;
+        return model;
     }
 
     public func getBaseDate( dateNow: Date ) -> Date {

@@ -40,7 +40,7 @@ final class KmaApiManager {
             return;
         }
 
-        func onCompleteMidTemperature( model: KmaApiMidModel? ) {
+        func onCompleteMidTemperature( model: KmaApiMidTemperatureModel? ) {
             guard let modelNotNil = model else {
                 callback( nil );
                 return;

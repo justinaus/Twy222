@@ -21,7 +21,7 @@ final class KmaApiMidTemperatureRegion {
         }
     }
     
-    var arrRegionData: Array<Region>?;
+    private var arrRegionData: Array<Region>?;
 
     
     public func getRegionCode( strDosi: String ) -> String? {
