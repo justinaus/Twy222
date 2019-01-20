@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class KmaApiForecastSpace3hours: KmaApiBase {
+final class KmaApiForecastSpace3hours: KmaApiShortBase {
     static let shared = KmaApiForecastSpace3hours();
     
     public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastSpace3hoursModel? ) -> Void ) {
@@ -35,14 +35,12 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
         let LIMIT_MINUTES = 10;
         
         let calendar = Calendar.current;
-        let component = calendar.dateComponents([.hour,.minute], from: dateNow);
-        
-        let nowHour = calendar.component(.hour, from: dateNow);
+        let componentNow = calendar.dateComponents([.hour,.minute], from: dateNow);
         
         var dateBaseToCall: Date?;
         
         for ( index, hour ) in arrBaseHour.enumerated() {
-            if( nowHour < hour ) {
+            if( componentNow.hour! < hour ) {
                 if( index == 0 ) {
                     dateBaseToCall = calendar.date(bySettingHour: arrBaseHour.last!, minute: 0, second: 0, of: dateNow);
                     dateBaseToCall = calendar.date(byAdding: .day, value: -1, to: dateBaseToCall!);
@@ -51,10 +49,10 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
                 }
                 
                 break;
-            } else if( nowHour == hour ) {
+            } else if( componentNow.hour == hour ) {
                 dateBaseToCall = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: dateNow);
                 
-                if( component.minute! <= LIMIT_MINUTES ) {
+                if( componentNow.minute! <= LIMIT_MINUTES ) {
                     dateBaseToCall = calendar.date(byAdding: .hour, value: -3, to: dateBaseToCall!);
                 }
                 break;
@@ -62,14 +60,6 @@ final class KmaApiForecastSpace3hours: KmaApiBase {
         }
         
         return dateBaseToCall!
-    }
-    
-    public func hasToCall( prevDateCalled: Date?, baseDateToCall: Date ) -> Bool {
-        if( prevDateCalled == nil ) {
-            return true;
-        }
-        
-        return DateUtil.getIsSameDateAndMinute(date0: prevDateCalled!, date1: baseDateToCall);
     }
     
     private func makeModel( dateNow:Date, dateBase: Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastSpace3hoursModel? {

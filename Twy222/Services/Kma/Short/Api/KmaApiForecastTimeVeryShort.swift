@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class KmaApiForecastTimeVeryShort: KmaApiBase {
+final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
     static let shared = KmaApiForecastTimeVeryShort();
     
     public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
@@ -47,14 +47,6 @@ final class KmaApiForecastTimeVeryShort: KmaApiBase {
         dateRet = calendar.date(bySettingHour: hour, minute: 30, second: 0, of: dateRet)!
         
         return dateRet
-    }
-    
-    public func hasToCall( prevDateCalled: Date?, baseDateToCall: Date ) -> Bool {
-        if( prevDateCalled == nil ) {
-            return true;
-        }
-        
-        return DateUtil.getIsSameDateAndMinute(date0: prevDateCalled!, date1: baseDateToCall);
     }
     
     private func makeModel( dateNow: Date, dateBase: Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {

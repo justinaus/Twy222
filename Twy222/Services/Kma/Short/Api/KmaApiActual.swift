@@ -9,7 +9,7 @@
 
 import Foundation
 
-final class KmaApiActual: KmaApiBase {
+final class KmaApiActual: KmaApiShortBase {
     static let shared = KmaApiActual();
     
     let URL_SERVICE = "ForecastGrib";

@@ -19,6 +19,7 @@ class GridModel {
     
     public private(set) var nowModel: NowModel?;
     public private(set) var forecastHourList: ForecastHourListModel?;
+    public private(set) var forecastMidList: ForecastMidListModel?;
     
     public private(set) var addressFull: String?;
     //(바다지역시 존재안함)
@@ -74,6 +75,9 @@ class GridModel {
     }
     public func setForecastHourListModel( value: ForecastHourListModel ) {
         forecastHourList = value;
+    }
+    public func setForecastHourListModel( value: ForecastMidListModel ) {
+        forecastMidList = value;
     }
     
 //    public func resetAll() {
