@@ -20,6 +20,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     @IBOutlet var labelToday: UILabel!
     
     @IBOutlet var collectionViewShort: UICollectionView!
+    @IBOutlet var collectionViewMid: UICollectionView!
     
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
@@ -92,7 +93,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             let kmaX = result.x;
             let kmaY = result.y;
             // 기상청 기준 좌표 :  62, 122
-
+            
             self.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
         }
     }
@@ -110,10 +111,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             drawNowData();
             
             // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
-            getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY)
+            getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
+            
+            getForecastMidData(dateNow: dateNow);
         }
         
         KmaApiManager.shared.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
+    }
+    
+    func getForecastMidData( dateNow: Date ) {
+        func onComplete( model: ForecastMidListModel? ) {
+            if( model == nil ) {
+                print("중기 예보 가져오기 실패. 이후 동작 안함.");
+                return;
+            }
+            
+            let gridModel = GridManager.shared.getCurrentGridModel()!;
+            gridModel.setForecastMidListModel(value: model!);
+
+            DispatchQueue.main.async {
+                self.collectionViewMid.reloadData();
+            }
+        }
+        
+        KmaApiManager.shared.getForecastMidData(dateNow: dateNow, callback: onComplete);
     }
     
     func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int ) {
@@ -236,17 +257,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         if( isShortView ) {
             return gridModel.forecastHourList?.list.count ?? 0;
+        } else {
+            return gridModel.forecastMidList?.list.count ?? 0;
         }
-        
-        return 0;
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let isShortView = collectionView == collectionViewShort;
         
-        //        let cell = isShortView ? makeCollectionViewCellShort(indexPath: indexPath) : makeCollectionViewCellMid(indexPath: indexPath);
-        
-        let cell = makeCollectionViewCellShort(indexPath: indexPath);
+        let cell = isShortView ? makeCollectionViewCellShort(indexPath: indexPath) : makeCollectionViewCellMid(indexPath: indexPath);
         
         return cell;
     }
@@ -288,6 +307,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         return cell;
     }
     
-    
+    func makeCollectionViewCellMid( indexPath: IndexPath ) -> CollectionViewCellMid {
+        let reuseIdentifier = "cellMid";
+        let cell = collectionViewMid.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCellMid;
+        
+        let gridModel = GridManager.shared.getCurrentGridModel()!;
+        let model = gridModel.forecastMidList!.list[indexPath.item];
+        
+        cell.setImageSkyByFileName(imageFileName: model.skyStatusImageName);
+        
+        let max = NumberUtil.roundToInt(value: model.temperatureMax);
+        let min = NumberUtil.roundToInt(value: model.temperatureMin);
+        
+        cell.setLabelTemperatureMaxMin(str: "\(max) / \(min)");
+        
+        let weekday = Calendar.current.component(.weekday, from: model.date);
+        cell.setLabelWeekday(str: DateUtil.getWeekdayString( weekday, .koreanOneLetter) );
+        
+        return cell;
+    }
 }
 

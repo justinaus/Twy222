@@ -48,8 +48,6 @@ class KmaApiMidBase: ApiBase {
         
         let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_MID_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&tmFc=\(baseDateAndBaseTime.baseDate)\(baseDateAndBaseTime.baseTime)&regId=\(regId)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
         
-        print(url);
-        
         return url;
     }
     

@@ -59,7 +59,9 @@ final class KmaApiManager {
                 
                 let skyStatusImageName = KmaUtils.getStatusImageName(skyEnum: skyEnum, isDay: true);
                 
-                let dailyModel = DailyModel(date: dateBase, temperatureMax: temperature.max, temperatureMin: temperature.min, skyStatusImageName: skyStatusImageName, skyStatusText: skyEnum.rawValue)
+                let date = Calendar.current.date(byAdding: .day, value: i + 1, to: dateBase)!;
+                
+                let dailyModel = DailyModel(date: date, temperatureMax: temperature.max, temperatureMin: temperature.min, skyStatusImageName: skyStatusImageName, skyStatusText: skyEnum.rawValue)
                 
                 retModelList.list.append(dailyModel);
             }

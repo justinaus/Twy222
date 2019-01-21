@@ -76,7 +76,7 @@ class GridModel {
     public func setForecastHourListModel( value: ForecastHourListModel ) {
         forecastHourList = value;
     }
-    public func setForecastHourListModel( value: ForecastMidListModel ) {
+    public func setForecastMidListModel( value: ForecastMidListModel ) {
         forecastMidList = value;
     }
     

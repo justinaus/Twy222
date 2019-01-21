@@ -18,6 +18,7 @@
 		E220998321F4477500CDE9EA /* KmaApiMidTemperatureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998221F4477500CDE9EA /* KmaApiMidTemperatureModel.swift */; };
 		E220998521F447C700CDE9EA /* TemperatureMaxMinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998421F447C700CDE9EA /* TemperatureMaxMinModel.swift */; };
 		E220998721F4487900CDE9EA /* KmaApiMidLandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998621F4487900CDE9EA /* KmaApiMidLandModel.swift */; };
+		E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998821F634B300CDE9EA /* CollectionViewCellMid.swift */; };
 		E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4321DF03B00061FF86 /* AppDelegate.swift */; };
 		E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4521DF03B00061FF86 /* ViewController.swift */; };
 		E26C5F4921DF03B00061FF86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4721DF03B00061FF86 /* Main.storyboard */; };
@@ -108,6 +109,7 @@
 		E220998221F4477500CDE9EA /* KmaApiMidTemperatureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureModel.swift; sourceTree = "<group>"; };
 		E220998421F447C700CDE9EA /* TemperatureMaxMinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureMaxMinModel.swift; sourceTree = "<group>"; };
 		E220998621F4487900CDE9EA /* KmaApiMidLandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidLandModel.swift; sourceTree = "<group>"; };
+		E220998821F634B300CDE9EA /* CollectionViewCellMid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellMid.swift; sourceTree = "<group>"; };
 		E26C5F4021DF03B00061FF86 /* Twy222.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twy222.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26C5F4321DF03B00061FF86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E26C5F4521DF03B00061FF86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				E29552B721E9AAEA0097480E /* CollectionViewCellShort.swift */,
+				E220998821F634B300CDE9EA /* CollectionViewCellMid.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				E220998721F4487900CDE9EA /* KmaApiMidLandModel.swift in Sources */,
 				E220997721F2DACD00CDE9EA /* ForecastMidListModel.swift in Sources */,
 				E27AD5D621E6039E00CD67B6 /* KmaEnums.swift in Sources */,
+				E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */,
 				E2EF04A821E30C4E005C00EB /* KmaUtils.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
 				E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */,
