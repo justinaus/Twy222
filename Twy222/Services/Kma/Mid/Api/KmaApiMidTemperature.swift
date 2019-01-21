@@ -32,7 +32,7 @@ final class KmaApiMidTemperature: KmaApiMidBase {
     private func makeModel( dateBase: Date, dictItem: [String:Any] ) -> KmaApiMidTemperatureModel? {
         let model = KmaApiMidTemperatureModel(dateBaseToCall: dateBase);
         
-        for i in 2 ..< 10 {
+        for i in 2 ..< 7 {
             guard let max = dictItem[ "taMax\(i+1)" ] as? Double else {
                 return nil;
             }
@@ -47,22 +47,18 @@ final class KmaApiMidTemperature: KmaApiMidBase {
         
         return model;
     }
-
-    public func getBaseDate( dateNow: Date ) -> Date {
-        let calendar = Calendar.current;
+    
+    public func getRegionId( addressSiDo: String?, addressGu: String? ) -> String? {
+        var regionId: String?;
         
-        //0600, 1800
-        // 18시 10분 이후는 1800로 호출, 아니면 0600시로 호출 하게끔.
-        let limitDate = calendar.date(bySettingHour: 18, minute: 10, second: 0, of: dateNow);
-        
-        var dateBaseToCall: Date?;
-        
-        if( dateNow > limitDate! ) {
-            dateBaseToCall = calendar.date(bySettingHour: 18, minute: 0, second: 0, of: dateNow);
-        } else {
-            dateBaseToCall = calendar.date(bySettingHour: 6, minute: 0, second: 0, of: dateNow);
+        if( addressSiDo != nil ) {
+            regionId = KmaApiMidTemperatureRegion.shared.getRegionCode(strDosi: addressSiDo!);
         }
         
-        return dateBaseToCall!
+        if( regionId == nil && addressGu != nil ) {
+            regionId = KmaApiMidTemperatureRegion.shared.getRegionCode(strDosi: addressGu!);
+        }
+        
+        return regionId;
     }
 }

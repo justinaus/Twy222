@@ -63,3 +63,18 @@ public enum KmaPtyEnum : Int {
         }
     }
 }
+
+public enum KmaMidSkyStatusEnum : String {
+    case GOOD = "맑음";
+    case LITTLE_CLOUDY = "구름조금";
+    case QUITE_CLOUDY = "구름많음";
+    case QUITE_CLOUDY_AND_RAINY = "구름많고 비";
+    case QUITE_CLOUDY_AND_SNOWY = "구름많고 눈";
+    case QUITE_CLOUDY_AND_RAINY_OR_SNOWY = "구름많고 비/눈";
+    case QUITE_CLOUDY_AND_SNOWY_OR_RAINY = "구름많고 눈/비";
+    case CLOUDY = "흐림";
+    case CLOUDY_AND_RAINY = "흐리고 비";
+    case CLOUDY_AND_SNOWY = "흐리고 눈";
+    case CLOUDY_AND_RAINY_OR_SNOWY = "흐리고 비/눈";
+    case CLOUDY_AND_SNOWY_OR_RAINY = "흐리고 눈/비";
+}

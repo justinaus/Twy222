@@ -84,4 +84,26 @@ class KmaApiMidBase: ApiBase {
         return item;
     }
     
+    public func getBaseDate( dateNow: Date ) -> Date {
+        let calendar = Calendar.current;
+        
+        //0600, 1800
+        // 18시 10분 이후는 1800로 호출, 아니면 0600시로 호출 하게끔.
+        let dateLimit18 = calendar.date(bySettingHour: 18, minute: 10, second: 0, of: dateNow);
+        let dateLimit06 = calendar.date(bySettingHour: 06, minute: 10, second: 0, of: dateNow);
+        
+        var dateBaseToCall: Date?;
+        
+        if( dateNow > dateLimit18! ) {
+            dateBaseToCall = calendar.date(bySettingHour: 18, minute: 0, second: 0, of: dateNow);
+        } else if( dateNow > dateLimit06! ) {
+            dateBaseToCall = calendar.date(bySettingHour: 6, minute: 0, second: 0, of: dateNow);
+        } else {
+            let temp = calendar.date(bySettingHour: 18, minute: 0, second: 0, of: dateNow);
+            dateBaseToCall = calendar.date(byAdding: .day, value: -1, to: temp!)
+        }
+        
+        return dateBaseToCall!
+    }
+    
 }

@@ -103,6 +103,37 @@ class KmaUtils {
         }
     }
     
+    public static func getStatusImageName( skyEnum: KmaMidSkyStatusEnum, isDay:Bool ) -> String {
+        switch skyEnum {
+        case .GOOD:
+            return isDay ? "01" : "08";
+        case .LITTLE_CLOUDY:
+            return isDay ? "02" : "09";
+        case .QUITE_CLOUDY:
+            return isDay ? "03" : "10";
+        case .QUITE_CLOUDY_AND_RAINY:
+            return "21";
+        case .QUITE_CLOUDY_AND_SNOWY:
+            return "32";
+        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
+            return "04";
+        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
+            return "04";
+        case .CLOUDY:
+            return "18";
+        case .CLOUDY_AND_RAINY:
+            return "36";
+        case .CLOUDY_AND_SNOWY:
+            return "37";
+        case .CLOUDY_AND_RAINY_OR_SNOWY:
+            return "39";
+        case .CLOUDY_AND_SNOWY_OR_RAINY:
+            return "39";
+        default:
+            return "18";
+        }
+    }
+    
     public static func getSkyStatusText( skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) -> String {
         if( ptyEnum != KmaPtyEnum.NONE ) {
             return ptyEnum.description;

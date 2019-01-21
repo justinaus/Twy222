@@ -16,31 +16,36 @@ import Foundation
 final class KmaApiManager {
     static let shared = KmaApiManager();
     
-    
     public func getForecastMidData( dateNow: Date, callback:@escaping ( ForecastMidListModel? ) -> Void ) {
         guard let currentGridModel = GridManager.shared.getCurrentGridModel() else {
             callback( nil );
             return ;
         }
         
-        guard let regionId = getRegionId(gridModel: currentGridModel) else {
-            callback( nil );
-            return ;
-        }
-        
-        let api = KmaApiMidTemperature.shared;
-        
-        let dateBase = api.getBaseDate(dateNow: dateNow);
+        let dateBase = KmaApiMidTemperature.shared.getBaseDate(dateNow: dateNow);
         
         let prevModel = currentGridModel.forecastMidList;
-        let hasToCall = api.hasToCall(prevDateCalled: prevModel?.dateBaseToCall, baseDateToCall: dateBase);
+        let hasToCall = KmaApiMidTemperature.shared.hasToCall(prevDateCalled: prevModel?.dateBaseToCall, baseDateToCall: dateBase);
         if( !hasToCall )  {
             print("이미 해당 시간에 대한 데이터가 있음.");
             callback( nil );
             return;
         }
+        
+        var modelTemperature: KmaApiMidTemperatureModel?;
 
         func onCompleteMidTemperature( model: KmaApiMidTemperatureModel? ) {
+            if( model == nil ) {
+                callback( nil );
+                return;
+            }
+            
+            modelTemperature = model!;
+            
+            getForecastMidLandStatus(dateNow: dateNow, dateBase: dateBase, callback: onCompleteMidLand );
+        }
+        
+        func onCompleteMidLand( model: KmaApiMidLandModel? ) {
             guard let modelNotNil = model else {
                 callback( nil );
                 return;
@@ -48,35 +53,72 @@ final class KmaApiManager {
             
             let retModelList = ForecastMidListModel(dateBase: modelNotNil.dateBaseToCall);
             
-//            var model: HourlyModel;
-//
-//            for kmaModel in modelNotNil.list {
-//                model = changeToCommonHourlyModel(kmaModel: kmaModel);
-//                retModelList.list.append(model);
-//            }
-//
-//            callback( retModelList );
-        }
-        
-        api.getData(dateNow: dateNow, dateBase: dateBase, regionId: regionId, callback: onCompleteMidTemperature);
-    }
-    
-    private func getRegionId( gridModel: GridModel ) -> String? {
-        var regionId: String?;
-        
-        if let strSido = gridModel.addressSiDo {
-            regionId = KmaApiMidTemperatureRegion.shared.getRegionCode(strDosi: strSido);
-        }
-        
-        if( regionId == nil ) {
-            if let strGu = gridModel.addressGu {
-                regionId = KmaApiMidTemperatureRegion.shared.getRegionCode(strDosi: strGu);
+            for i in 0 ..< 5 {
+                let temperature = modelTemperature!.list[ i ];
+                let skyEnum = modelNotNil.list[ i ];
+                
+                let skyStatusImageName = KmaUtils.getStatusImageName(skyEnum: skyEnum, isDay: true);
+                
+                let dailyModel = DailyModel(date: dateBase, temperatureMax: temperature.max, temperatureMin: temperature.min, skyStatusImageName: skyStatusImageName, skyStatusText: skyEnum.rawValue)
+                
+                retModelList.list.append(dailyModel);
             }
+            
+            callback( retModelList );
         }
         
-        return regionId;
+        getForecastMidTemperature(dateNow: dateNow, dateBase: dateBase, callback: onCompleteMidTemperature)
     }
     
+    private func getForecastMidLandStatus( dateNow:Date, dateBase: Date, callback: @escaping ( KmaApiMidLandModel? ) -> Void ) {
+        guard let currentGridModel = GridManager.shared.getCurrentGridModel() else {
+            callback( nil );
+            return ;
+        }
+        
+        let api = KmaApiMidLand.shared;
+        
+        guard let regionId = api.getRegionId(addressSiDo: currentGridModel.addressSiDo, addressGu: currentGridModel.addressGu) else {
+            callback( nil );
+            return ;
+        }
+        
+        func onComplete( model: KmaApiMidLandModel? ) {
+            guard let modelNotNil = model else {
+                callback( nil );
+                return;
+            }
+            
+            callback( modelNotNil );
+        }
+        
+        api.getData(dateNow: dateNow, dateBase: dateBase, regionId: regionId, callback: onComplete);
+    }
+    
+    private func getForecastMidTemperature( dateNow:Date, dateBase: Date, callback: @escaping ( KmaApiMidTemperatureModel? ) -> Void ) {
+        guard let currentGridModel = GridManager.shared.getCurrentGridModel() else {
+            callback( nil );
+            return ;
+        }
+        
+        let api = KmaApiMidTemperature.shared;
+        
+        guard let regionId = api.getRegionId(addressSiDo: currentGridModel.addressSiDo, addressGu: currentGridModel.addressGu) else {
+            callback( nil );
+            return ;
+        }
+        
+        func onComplete( model: KmaApiMidTemperatureModel? ) {
+            guard let modelNotNil = model else {
+                callback( nil );
+                return;
+            }
+            
+            callback( modelNotNil );
+        }
+        
+        api.getData(dateNow: dateNow, dateBase: dateBase, regionId: regionId, callback: onComplete);
+    }
     
     public func getNowData( dateNow: Date, kmaX: Int, kmaY: Int, callback:@escaping ( NowModel? ) -> Void ) {
         let api = KmaApiForecastTimeVeryShort.shared;
