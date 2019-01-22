@@ -12,10 +12,10 @@ import Foundation
 final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
     static let shared = KmaApiForecastTimeVeryShort();
     
-    public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
+    public func getData( dateNow: Date, dateBase:Date, kmaXY: KmaXY, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
         let URL_SERVICE = "ForecastTimeData";
         
-//        print( "초단기 예보 조회 base time", DateUtil.getStringByDate(date: dateBase) );
+//        print("초단기 예보 호출 basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
@@ -23,11 +23,23 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
                 return;
             }
             
-            let model = makeModel( dateNow: dateNow, dateBase: dateBase, arrItem: arrItem! );
+            let model = makeModel( dateNow: dateNow, dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem! );
             callback( model );
         }
         
-        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
+        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callback: onComplete );
+    }
+    
+    public func hasToCall( prevModel: KmaApiForecastTimeVeryShortModel, newDateBase: Date, kmaXY: KmaXY) -> Bool {
+        if( !DateUtil.getIsSameDateAndMinute(date0: prevModel.dateBaseCalled, date1: newDateBase) ) {
+            return true;
+        }
+        
+        if( prevModel.kmaXY.x != kmaXY.x || prevModel.kmaXY.y != kmaXY.y ) {
+            return true;
+        }
+        
+        return false;
     }
     
     public func getBaseDate( dateNow: Date ) -> Date {
@@ -49,7 +61,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
         return dateRet
     }
     
-    private func makeModel( dateNow: Date, dateBase: Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
+    private func makeModel( dateNow: Date, dateBase: Date, kmaXY: KmaXY, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
         let len = arrItem.count;
         
         var dateFcst: Date?;
@@ -121,9 +133,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
             return nil;
         }
         
-        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel( dateBase: dateBase, dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!);
-        
-//        print( "초단기 예보 받은 값", DateUtil.getStringByDate(date: dateFcst!) );
+        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel(dateBase: dateBase, dateForecast: dateFcst!, temperature: temperature!, kmaXY: kmaXY, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
         
         return model;
     }

@@ -9,12 +9,13 @@
 import Foundation
 
 class KmaApiMidLandModel {
-    public private(set) var dateBaseToCall:Date;
+    public private(set) var dateBaseCalled:Date;
+    public private(set) var regId:String;
     
     public var list: Array<KmaMidSkyStatusEnum> = [];
     
-    
-    init( dateBaseToCall: Date ) {
-        self.dateBaseToCall = dateBaseToCall;
+    init( dateBase: Date, regId: String ) {
+        self.dateBaseCalled = dateBase;
+        self.regId = regId;
     }
 }

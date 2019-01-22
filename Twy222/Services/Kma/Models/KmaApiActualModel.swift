@@ -9,13 +9,13 @@
 import Foundation
 
 class KmaApiActualModel {
-    public private(set) var date:Date;
+    public private(set) var dateBaseCalled:Date;
     
     public private(set) var temperature:Double;
     
     
-    init( date: Date, temperature: Double ) {
-        self.date = date;
+    init( dateBase: Date, temperature: Double ) {
+        self.dateBaseCalled = dateBase;
         self.temperature = temperature;
     }
 }

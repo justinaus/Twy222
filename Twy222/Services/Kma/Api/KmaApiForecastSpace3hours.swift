@@ -11,7 +11,7 @@ import Foundation
 final class KmaApiForecastSpace3hours: KmaApiShortBase {
     static let shared = KmaApiForecastSpace3hours();
     
-    public func getData( dateNow: Date, dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiForecastSpace3hoursModel? ) -> Void ) {
+    public func getData( dateBase:Date, kmaXY: KmaXY, callback:@escaping ( KmaApiForecastSpace3hoursModel? ) -> Void ) {
         let URL_SERVICE = "ForecastSpaceData";
         
 //        print( "3시간 예보 call base time", DateUtil.getStringByDate(date: dateBase) );
@@ -22,11 +22,23 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
                 return;
             }
             
-            let model = makeModel( dateNow: dateNow, dateBase: dateBase, arrItem: arrItem! );
+            let model = makeModel( dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem! );
             callback( model );
         }
         
-        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
+        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callback: onComplete );
+    }
+    
+    public func hasToCall( prevModel: KmaApiForecastSpace3hoursModel, newDateBase: Date, kmaXY: KmaXY) -> Bool {
+        if( !DateUtil.getIsSameDateAndMinute(date0: prevModel.dateBaseCalled, date1: newDateBase) ) {
+            return true;
+        }
+        
+        if( prevModel.kmaXY.x != kmaXY.x || prevModel.kmaXY.y != kmaXY.y ) {
+            return true;
+        }
+        
+        return false;
     }
     
     public func getBaseDate( dateNow: Date ) -> Date {
@@ -62,7 +74,7 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
         return dateBaseToCall!
     }
     
-    private func makeModel( dateNow:Date, dateBase: Date, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastSpace3hoursModel? {
+    private func makeModel( dateBase: Date, kmaXY: KmaXY, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastSpace3hoursModel? {
         if( arrItem.count < 1 ) {
             return nil;
         }
@@ -73,7 +85,7 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
         
         var dateFcst: Date = dateStart;
         
-        let modelList = KmaApiForecastSpace3hoursModel(dateBaseToCall: dateBase);
+        let modelList = KmaApiForecastSpace3hoursModel(dateBaseToCall: dateBase, kmaXY: kmaXY)
         
         var arrTemp: Array<[ String : Any ]> = [];
         
@@ -155,9 +167,6 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
         if( temperature == nil || skyEnum == nil || ptyEnum == nil ) {
             return nil;
         }
-        
-//        print( "3시간 예보 받은 값", DateUtil.getStringByDate(date: dateFcst) );
-//        print( temperature!, skyEnum!, ptyEnum! )
         
         let model: KmaHourlyModel = KmaHourlyModel(date: dateFcst, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
         

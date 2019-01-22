@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaApiMidBase: ApiBase {
+class KmaApiMidBase {
     
     public func makeCall( serviceName: String, baseDate: Date, regId: String, callback:@escaping ( [String:Any]? ) -> Void ) {
         let url = getUrl(serviceName: serviceName, baseDate: baseDate, regId: regId);
@@ -38,7 +38,6 @@ class KmaApiMidBase: ApiBase {
         
         currentTask.resume();
     }
-    
     
     private func getUrl( serviceName: String, baseDate: Date, regId: String ) -> String {
         let RESULT_TYPE = "json"
@@ -103,5 +102,4 @@ class KmaApiMidBase: ApiBase {
         
         return dateBaseToCall!
     }
-    
 }

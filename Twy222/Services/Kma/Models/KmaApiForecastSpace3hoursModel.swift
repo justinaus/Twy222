@@ -9,13 +9,15 @@
 import Foundation
 
 class KmaApiForecastSpace3hoursModel {
-    public private(set) var dateBaseToCall:Date;
+    public private(set) var dateBaseCalled:Date;
+    public private(set) var kmaXY: KmaXY;
     
     public var list: Array<KmaHourlyModel> = [];
     
     
-    init( dateBaseToCall: Date ) {
-        self.dateBaseToCall = dateBaseToCall;
+    init( dateBaseToCall: Date, kmaXY: KmaXY  ) {
+        self.dateBaseCalled = dateBaseToCall;
+        self.kmaXY = kmaXY;
     }
 }
 

@@ -8,6 +8,29 @@
 
 import Foundation
 
+struct KmaApiUrlStruct {
+    static let URL_ROOT = "http://newsky2.kma.go.kr/service/"
+    
+    // (신)동네예보정보조회서비스
+    static let URL_SHORT_FORECAST = "SecndSrtpdFrcstInfoService2/"
+    
+    static let URL_MID_FORECAST = "MiddleFrcstInfoService/";
+}
+
+enum KmaCategoryCodeEnum : String {
+    // 강수 형태
+    case PTY = "PTY";
+    
+    // 하늘 상태
+    case SKY = "SKY";
+    
+    // 기온
+    case T1H = "T1H";
+    
+    // 기온 3시간 단위.
+    case T3H = "T3H";
+}
+
 class KmaUtils {
     public static func createDate( kmaDate: String, kmaTime: String ) -> Date? {
         // "fcstDate":20190107,"fcstTime":"0700"
@@ -62,83 +85,5 @@ class KmaUtils {
         }
 
         return dateBase;
-    }
-    
-    public static func getStatusImageName( skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum, isDay:Bool ) -> String {
-        switch ptyEnum {
-        case KmaPtyEnum.RAINY:
-            if( skyEnum == KmaSkyEnum.GOOD || skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
-                return isDay ? "12" : "40";
-            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
-                return "21";
-            } else {
-                return "36";
-            }
-        case KmaPtyEnum.SNOWY:
-            if( skyEnum == KmaSkyEnum.GOOD || skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
-                return isDay ? "13" : "41";
-            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
-                return "32";
-            } else {
-                return "37";
-            }
-        case KmaPtyEnum.RAINY_AND_SNOWY:
-            if( skyEnum == KmaSkyEnum.GOOD || skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
-                return isDay ? "14" : "42";
-            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
-                return "04";
-            } else {
-                return "39";
-            }
-        default:
-            if( skyEnum == KmaSkyEnum.GOOD ) {
-                return isDay ? "01" : "08";
-            } else if( skyEnum == KmaSkyEnum.LITTLE_CLOUDY ) {
-                return isDay ? "02" : "09";
-            } else if( skyEnum == KmaSkyEnum.QUITE_CLOUDY ) {
-                return isDay ? "03" : "10";
-            } else {
-                return "18";
-            }
-        }
-    }
-    
-    public static func getStatusImageName( skyEnum: KmaMidSkyStatusEnum, isDay:Bool ) -> String {
-        switch skyEnum {
-        case .GOOD:
-            return isDay ? "01" : "08";
-        case .LITTLE_CLOUDY:
-            return isDay ? "02" : "09";
-        case .QUITE_CLOUDY:
-            return isDay ? "03" : "10";
-        case .QUITE_CLOUDY_AND_RAINY:
-            return "21";
-        case .QUITE_CLOUDY_AND_SNOWY:
-            return "32";
-        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
-            return "04";
-        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
-            return "04";
-        case .CLOUDY:
-            return "18";
-        case .CLOUDY_AND_RAINY:
-            return "36";
-        case .CLOUDY_AND_SNOWY:
-            return "37";
-        case .CLOUDY_AND_RAINY_OR_SNOWY:
-            return "39";
-        case .CLOUDY_AND_SNOWY_OR_RAINY:
-            return "39";
-        default:
-            return "18";
-        }
-    }
-    
-    public static func getSkyStatusText( skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum ) -> String {
-        if( ptyEnum != KmaPtyEnum.NONE ) {
-            return ptyEnum.description;
-        }
-        
-        return skyEnum.description;
     }
 }

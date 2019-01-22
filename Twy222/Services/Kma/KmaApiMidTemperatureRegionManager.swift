@@ -1,6 +1,8 @@
 //
-//  KmaMidApiTemperatureRegion.swift
+//  KmaApiMidTemperatureRegionManager
 //  Twy222
+//  지역명으로 지역 코드 가져오기.
+//  이 클래스는 신경 안써도 될 것 같다.
 //
 //  Created by Bonkook Koo on 19/01/2019.
 //  Copyright © 2019 justinaus. All rights reserved.
@@ -8,8 +10,8 @@
 
 import Foundation
 
-final class KmaApiMidTemperatureRegion {
-    static let shared = KmaApiMidTemperatureRegion();
+final class KmaApiMidTemperatureRegionManager {
+    static let shared = KmaApiMidTemperatureRegionManager();
     
     private class Region {
         var name: String;

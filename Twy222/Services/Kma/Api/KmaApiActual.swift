@@ -14,8 +14,8 @@ final class KmaApiActual: KmaApiShortBase {
     
     let URL_SERVICE = "ForecastGrib";
     
-    public func getData( dateBase:Date, kmaX: Int, kmaY: Int, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
-//        print("초단기 실황 조회 base time", DateUtil.getStringByDate(date: dateBase))
+    public func getData( dateBase:Date, kmaXY: KmaXY, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
+//        print("지정 시간 날씨 basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( arrItem: Array<[String:Any]>? ) {
             if( arrItem == nil ) {
@@ -27,7 +27,7 @@ final class KmaApiActual: KmaApiShortBase {
             callback( model );
         }
         
-        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaX: kmaX, kmaY: kmaY, callback: onComplete );
+        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callback: onComplete );
     }
     
     public func getBaseDate( dateNow: Date ) -> Date {
@@ -84,7 +84,7 @@ final class KmaApiActual: KmaApiShortBase {
             return nil;
         }
 
-        let model: KmaApiActualModel = KmaApiActualModel(date: dateBase!, temperature: temerature!);
+        let model: KmaApiActualModel = KmaApiActualModel(dateBase: dateBase!, temperature: temerature!);
 
         return model;
     }

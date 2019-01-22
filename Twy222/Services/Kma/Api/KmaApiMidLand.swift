@@ -11,8 +11,10 @@ import Foundation
 final class KmaApiMidLand: KmaApiMidBase {
     static let shared = KmaApiMidLand();
     
-    public func getData( dateNow: Date, dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidLandModel? ) -> Void ) {
+    public func getData( dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidLandModel? ) -> Void ) {
         let URL_SERVICE = "getMiddleLandWeather";
+        
+        print("중기 육상 상태 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( dictItem: [String:Any]? ) {
             if( dictItem == nil ) {
@@ -20,15 +22,27 @@ final class KmaApiMidLand: KmaApiMidBase {
                 return;
             }
             
-            let model = makeModel( dateBase: dateBase, dictItem: dictItem! );
+            let model = makeModel( dateBase: dateBase, regId: regionId, dictItem: dictItem! );
             callback( model );
         }
         
         makeCall(serviceName: URL_SERVICE, baseDate: dateBase, regId: regionId, callback: onComplete);
     }
     
-    private func makeModel( dateBase: Date, dictItem: [String:Any] ) -> KmaApiMidLandModel? {
-        let model = KmaApiMidLandModel(dateBaseToCall: dateBase);
+    public func hasToCall( prevModel: KmaApiMidLandModel, newDateBase: Date, newRegId: String) -> Bool {
+        if( !DateUtil.getIsSameDateAndMinute(date0: prevModel.dateBaseCalled, date1: newDateBase) ) {
+            return true;
+        }
+        
+        if( prevModel.regId != newRegId ) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private func makeModel( dateBase: Date, regId: String, dictItem: [String:Any] ) -> KmaApiMidLandModel? {
+        let model = KmaApiMidLandModel(dateBase: dateBase, regId: regId);
         
         for i in 2 ..< 7 {
             guard let am = dictItem[ "wf\(i+1)Am" ] as? String else {
@@ -53,6 +67,21 @@ final class KmaApiMidLand: KmaApiMidBase {
         return model;
     }
     
+    public func getRegionId( addressSiDo: String?, addressGu: String? ) -> String? {
+        var regionId: String?;
+        
+        if( addressSiDo != nil ) {
+            regionId = getCode(strDosi: addressSiDo!);
+        }
+        
+        if( regionId == nil && addressGu != nil ) {
+            regionId = getCode(strDosi: addressGu!);
+        }
+        
+        return regionId;
+    }
+    
+    // 눈/비 우선, 오후 날씨 우선.
     private func getSkyStatus( amEnum: KmaMidSkyStatusEnum, pmEnum: KmaMidSkyStatusEnum ) -> KmaMidSkyStatusEnum {
         if( getIsRainyOrSnowy(skyEnum: pmEnum) ) {
             return pmEnum;
@@ -75,20 +104,6 @@ final class KmaApiMidLand: KmaApiMidBase {
         case .CLOUDY_AND_SNOWY_OR_RAINY: return true;
         default:    return false;
         }
-    }
-    
-    public func getRegionId( addressSiDo: String?, addressGu: String? ) -> String? {
-        var regionId: String?;
-        
-        if( addressSiDo != nil ) {
-            regionId = getCode(strDosi: addressSiDo!);
-        }
-        
-        if( regionId == nil && addressGu != nil ) {
-            regionId = getCode(strDosi: addressGu!);
-        }
-        
-        return regionId;
     }
     
     private func getCode( strDosi: String ) -> String {
@@ -116,4 +131,50 @@ final class KmaApiMidLand: KmaApiMidBase {
         
         return "11B00000";
     }
+    
+    public func getStatusImageName( skyEnum: KmaMidSkyStatusEnum, isDay:Bool ) -> String {
+        switch skyEnum {
+        case .GOOD:
+            return isDay ? "01" : "08";
+        case .LITTLE_CLOUDY:
+            return isDay ? "02" : "09";
+        case .QUITE_CLOUDY:
+            return isDay ? "03" : "10";
+        case .QUITE_CLOUDY_AND_RAINY:
+            return "21";
+        case .QUITE_CLOUDY_AND_SNOWY:
+            return "32";
+        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
+            return "04";
+        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
+            return "04";
+        case .CLOUDY:
+            return "18";
+        case .CLOUDY_AND_RAINY:
+            return "36";
+        case .CLOUDY_AND_SNOWY:
+            return "37";
+        case .CLOUDY_AND_RAINY_OR_SNOWY:
+            return "39";
+        case .CLOUDY_AND_SNOWY_OR_RAINY:
+            return "39";
+        default:
+            return "18";
+        }
+    }
+}
+
+public enum KmaMidSkyStatusEnum : String {
+    case GOOD = "맑음";
+    case LITTLE_CLOUDY = "구름조금";
+    case QUITE_CLOUDY = "구름많음";
+    case QUITE_CLOUDY_AND_RAINY = "구름많고 비";
+    case QUITE_CLOUDY_AND_SNOWY = "구름많고 눈";
+    case QUITE_CLOUDY_AND_RAINY_OR_SNOWY = "구름많고 비/눈";
+    case QUITE_CLOUDY_AND_SNOWY_OR_RAINY = "구름많고 눈/비";
+    case CLOUDY = "흐림";
+    case CLOUDY_AND_RAINY = "흐리고 비";
+    case CLOUDY_AND_SNOWY = "흐리고 눈";
+    case CLOUDY_AND_RAINY_OR_SNOWY = "흐리고 비/눈";
+    case CLOUDY_AND_SNOWY_OR_RAINY = "흐리고 눈/비";
 }

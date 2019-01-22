@@ -90,15 +90,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
 
             let result = FronteerKr.convertGRID_GPS( toGrid: true, lat_X: lat, lng_Y: lon );
             
-            let kmaX = result.x;
-            let kmaY = result.y;
+            let kmaXY = KmaXY(x: result.x, y: result.y);
             // 기상청 기준 좌표 :  62, 122
             
-            self.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
+            self.getNowData(dateNow: dateNow, kmaXY: kmaXY);
         }
     }
     
-    func getNowData( dateNow: Date, kmaX: Int, kmaY: Int ) {
+    func getNowData( dateNow: Date, kmaXY: KmaXY ) {
         func onComplete( model:NowModel? ) {
             if( model == nil ) {
                 print("현재 기온, 하늘 상태 가져오기 실패. 아무것도 안함.");
@@ -111,12 +110,55 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             drawNowData();
             
             // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
-            getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY);
+            getForecastHourlyData(dateNow: dateNow, kmaXY: kmaXY );
             
             getForecastMidData(dateNow: dateNow);
         }
         
-        KmaApiManager.shared.getNowData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
+        KmaApiManager.shared.getNowData(dateNow: dateNow, kmaXY: kmaXY, callback: onComplete);
+    }
+    
+    func getForecastHourlyData( dateNow: Date, kmaXY: KmaXY ) {
+        func onComplete( model: ForecastHourListModel? ) {
+            if( model == nil ) {
+                print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
+                return;
+            }
+            
+            let gridModel = GridManager.shared.getCurrentGridModel()!;
+            gridModel.setForecastHourListModel(value: model!);
+            
+            DispatchQueue.main.async {
+                self.collectionViewShort.reloadData();
+            }
+
+            for hourlyModel in model!.list {
+                getHourlyYesterdayData(hourlyModel: hourlyModel, kmaXY: kmaXY);
+            }
+        }
+        
+        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, kmaXY: kmaXY, callback: onComplete);
+    }
+    
+    func getHourlyYesterdayData( hourlyModel: HourlyModel, kmaXY: KmaXY ) {
+        func onComplete( temperature: Double? ) {
+            if( temperature == nil ) {
+                return;
+            }
+            
+//          print( "어제 날씨 값 도착인데, 몇시에 대한 결과냐", DateUtil.getStringByDate(date: hourlyModel.date) )
+            
+            let yesterdayTemperature = temperature!;
+            let resultDiff = hourlyModel.temperature - yesterdayTemperature;
+            
+            hourlyModel.setDiffFromYesterday(value: resultDiff );
+            
+            DispatchQueue.main.async {
+                self.collectionViewShort.reloadData();
+            }
+        }
+        
+        KmaApiManager.shared.getYesterdayData(dateStandard: hourlyModel.date, kmaXY: kmaXY, callback: onComplete);
     }
     
     func getForecastMidData( dateNow: Date ) {
@@ -135,49 +177,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
         
         KmaApiManager.shared.getForecastMidData(dateNow: dateNow, callback: onComplete);
-    }
-    
-    func getForecastHourlyData( dateNow: Date, kmaX: Int, kmaY: Int ) {
-        func onComplete( model: ForecastHourListModel? ) {
-            if( model == nil ) {
-                print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
-                return;
-            }
-            
-            let gridModel = GridManager.shared.getCurrentGridModel()!;
-            gridModel.setForecastHourListModel(value: model!);
-            
-            DispatchQueue.main.async {
-                self.collectionViewShort.reloadData();
-            }
-            
-            for hourlyModel in model!.list {
-                getHourlyYesterdayData(hourlyModel: hourlyModel, kmaX: kmaX, kmaY: kmaY);
-            }
-        }
-        
-        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, kmaX: kmaX, kmaY: kmaY, callback: onComplete);
-    }
-    
-    func getHourlyYesterdayData( hourlyModel: HourlyModel, kmaX: Int, kmaY: Int ) {
-        func onCompleteYesterday( temperature: Double? ) {
-            if( temperature == nil ) {
-                return;
-            }
-            
-//            print( "어제 날씨 값 도착인데, 몇시에 대한 결과냐", DateUtil.getStringByDate(date: hourlyModel.date) )
-            
-            let yesterdayTemperature = temperature!;
-            let resultDiff = hourlyModel.temperature - yesterdayTemperature;
-            
-            hourlyModel.setDiffFromYesterday(value: resultDiff );
-            
-            DispatchQueue.main.async {
-                self.collectionViewShort.reloadData();
-            }
-        }
-        
-        KmaApiManager.shared.getYesterdayData(dateStandard: hourlyModel.date, kmaX: kmaX, kmaY: kmaY, callback: onCompleteYesterday)
     }
     
     func drawNowData() {
