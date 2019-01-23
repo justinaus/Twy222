@@ -90,7 +90,8 @@ final class KakaoApiService {
             return nil;
         }
         
-        let gridModel:GridModel = GridModel( id: code, lat: String(y), lon: String(x) );
+//        let gridModel:GridModel = GridModel( id: code, lat: String(y), lon: String(x) );
+        let gridModel:GridModel = GridModel( id: code, lat: y, lon: x );
         
         if let region_1depth_name = obj[ "region_1depth_name" ] as? String {
             gridModel.setAddressSido(value: region_1depth_name);

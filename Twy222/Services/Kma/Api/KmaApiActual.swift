@@ -23,7 +23,7 @@ final class KmaApiActual: KmaApiShortBase {
                 return;
             }
             
-            let model = makeModel( arrItem: arrItem! );
+            let model = makeModel( kmaXY: kmaXY, arrItem: arrItem! );
             callback( model );
         }
         
@@ -49,7 +49,7 @@ final class KmaApiActual: KmaApiShortBase {
         return dateRet
     }
     
-    private func makeModel( arrItem: Array<[ String : Any ]> ) -> KmaApiActualModel? {
+    private func makeModel( kmaXY: KmaXY, arrItem: Array<[ String : Any ]> ) -> KmaApiActualModel? {
         let len = arrItem.count;
 
         var dateBase: Date?;
@@ -84,7 +84,7 @@ final class KmaApiActual: KmaApiShortBase {
             return nil;
         }
 
-        let model: KmaApiActualModel = KmaApiActualModel(dateBase: dateBase!, temperature: temerature!);
+        let model: KmaApiActualModel = KmaApiActualModel(dateBase: dateBase!, kmaXY: kmaXY, temperature: temerature!);
 
         return model;
     }

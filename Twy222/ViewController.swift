@@ -87,38 +87,32 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             }
             
             GridManager.shared.setCurrentGridModel( gridModel: model! );
-
-            let result = FronteerKr.convertGRID_GPS( toGrid: true, lat_X: lat, lng_Y: lon );
             
-            let kmaXY = KmaXY(x: result.x, y: result.y);
-            // 기상청 기준 좌표 :  62, 122
-            
-            self.getNowData(dateNow: dateNow, kmaXY: kmaXY);
+            self.getNowData(dateNow: dateNow);
         }
     }
     
-    func getNowData( dateNow: Date, kmaXY: KmaXY ) {
+    func getNowData( dateNow: Date ) {
+        let gridModel = GridManager.shared.getCurrentGridModel()!;
+        
         func onComplete( model:NowModel? ) {
             if( model == nil ) {
                 print("현재 기온, 하늘 상태 가져오기 실패. 아무것도 안함.");
                 return;
             }
             
-            let gridModel = GridManager.shared.getCurrentGridModel()!;
             gridModel.setNowModel(value: model!);
             
             drawNowData();
             
             // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
-            getForecastHourlyData(dateNow: dateNow, kmaXY: kmaXY );
-            
-            getForecastMidData(dateNow: dateNow);
+            getForecastHourlyData(dateNow: dateNow );
         }
         
-        KmaApiManager.shared.getNowData(dateNow: dateNow, kmaXY: kmaXY, callback: onComplete);
+        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridModel.latitude, lon: gridModel.longitude, callback: onComplete );
     }
     
-    func getForecastHourlyData( dateNow: Date, kmaXY: KmaXY ) {
+    func getForecastHourlyData( dateNow: Date ) {
         func onComplete( model: ForecastHourListModel? ) {
             if( model == nil ) {
                 print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
@@ -128,37 +122,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             let gridModel = GridManager.shared.getCurrentGridModel()!;
             gridModel.setForecastHourListModel(value: model!);
             
-            DispatchQueue.main.async {
-                self.collectionViewShort.reloadData();
-            }
-
-            for hourlyModel in model!.list {
-                getHourlyYesterdayData(hourlyModel: hourlyModel, kmaXY: kmaXY);
-            }
+            drawHourlyList();
         }
         
-        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, kmaXY: kmaXY, callback: onComplete);
-    }
-    
-    func getHourlyYesterdayData( hourlyModel: HourlyModel, kmaXY: KmaXY ) {
-        func onComplete( temperature: Double? ) {
-            if( temperature == nil ) {
-                return;
-            }
+        func onCompleteYesterdayAll() {
+            drawHourlyList();
             
-//          print( "어제 날씨 값 도착인데, 몇시에 대한 결과냐", DateUtil.getStringByDate(date: hourlyModel.date) )
-            
-            let yesterdayTemperature = temperature!;
-            let resultDiff = hourlyModel.temperature - yesterdayTemperature;
-            
-            hourlyModel.setDiffFromYesterday(value: resultDiff );
-            
-            DispatchQueue.main.async {
-                self.collectionViewShort.reloadData();
-            }
+            //            getForecastMidData(dateNow: dateNow);
         }
         
-        KmaApiManager.shared.getYesterdayData(dateStandard: hourlyModel.date, kmaXY: kmaXY, callback: onComplete);
+        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, callback: onComplete, callbackYesterdayAll: onCompleteYesterdayAll);
     }
     
     func getForecastMidData( dateNow: Date ) {
@@ -206,6 +179,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
 //                let nTempMin = NumberUtil.roundToInt( model.temperatureMin ) {
 //                self.labelNowTempMaxMin.text = String( nTempMax ) + " / " + String( nTempMin );
 //            }
+        }
+    }
+    
+    func drawHourlyList() {
+        DispatchQueue.main.async {
+            self.collectionViewShort.reloadData();
         }
     }
     

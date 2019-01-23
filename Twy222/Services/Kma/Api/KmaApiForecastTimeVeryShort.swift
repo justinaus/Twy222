@@ -133,7 +133,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
             return nil;
         }
         
-        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel(dateBase: dateBase, dateForecast: dateFcst!, temperature: temperature!, kmaXY: kmaXY, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
+        let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel(dateBase: dateBase, kmaXY: kmaXY, dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
         
         return model;
     }

@@ -129,6 +129,15 @@ class KmaApiShortBase {
         
         return skyEnum.description;
     }
+    
+    public func getKmaXY( lat: Double, lon: Double ) -> KmaXY {
+        let result = FronteerKr.convertGRID_GPS( toGrid: true, lat_X: lat, lng_Y: lon );
+        
+        let kmaXY = KmaXY(x: result.x, y: result.y);
+        // 기상청 기준 좌표 :  62, 122
+
+        return kmaXY;
+    }
 }
 
 public enum KmaSkyEnum : Int {

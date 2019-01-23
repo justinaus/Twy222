@@ -17,14 +17,19 @@ final class KmaApiManager {
     static let shared = KmaApiManager();
     
     // 나중에 로컬 디비로 사용.
-    var apiTimeVeryShortModel: KmaApiForecastTimeVeryShortModel?;
-    var apiSpace3HoursModel: KmaApiForecastSpace3hoursModel?;
-    var apiMidTemperatureModel: KmaApiMidTemperatureModel?;
-    var apiMidLandModel: KmaApiMidLandModel?;
+    private var apiTimeVeryShortModel: KmaApiForecastTimeVeryShortModel?;
+    private var apiSpace3HoursModel: KmaApiForecastSpace3hoursModel?;
+    
+    private var space3HourYesterdayList: Array<KmaApiActualModel>?;
+    
+    private var apiMidTemperatureModel: KmaApiMidTemperatureModel?;
+    private var apiMidLandModel: KmaApiMidLandModel?;
     
     
-    public func getNowData( dateNow: Date, kmaXY: KmaXY, callback:@escaping ( NowModel? ) -> Void ) {
+    public func getNowData( dateNow: Date, lat: Double, lon: Double, callback:@escaping ( NowModel? ) -> Void ) {
         var nowModel: NowModel?
+        
+        let kmaXY = KmaApiForecastSpace3hours.shared.getKmaXY(lat: lat, lon: lon);
         
         func onCompleteVeryShort( model: KmaApiForecastTimeVeryShortModel? ) {
             guard let modelNotNil = model else {
@@ -60,12 +65,11 @@ final class KmaApiManager {
         getForecastVeryShort(dateNow: dateNow, kmaXY: kmaXY, callback: onCompleteVeryShort);
     }
     
-    public func getForecastHourlyData( dateNow: Date, kmaXY: KmaXY, callback:@escaping ( ForecastHourListModel? ) -> Void ) {
+    public func getForecastHourlyData( dateNow: Date, callback:@escaping ( ForecastHourListModel? ) -> Void, callbackYesterdayAll:@escaping () -> Void ) {
         let api = KmaApiForecastSpace3hours.shared;
-        
         let dateBase = api.getBaseDate(dateNow: dateNow);
-        
         let prevModel = apiSpace3HoursModel;
+        let kmaXY = apiTimeVeryShortModel!.kmaXY;
         
         let hasToCall: Bool = prevModel == nil ? true : api.hasToCall(prevModel: prevModel!, newDateBase: dateBase, kmaXY: kmaXY);
         if( !hasToCall ) {
@@ -73,43 +77,81 @@ final class KmaApiManager {
             return;
         }
         
+        space3HourYesterdayList = [];
+        var nYesterdayCompleteCount = 0;
+        
         func onComplete( model: KmaApiForecastSpace3hoursModel? ) {
             guard let modelNotNil = model else {
                 callback( nil );
                 return;
             }
             
+            // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
+            // 8개 제공하자.
+            modelNotNil.list = Array(modelNotNil.list[ 0...Settings.HOURLY_DATA_COUNT-1 ]);
             apiSpace3HoursModel = modelNotNil;
             
             let retModel = ForecastHourListModel(dateBase: modelNotNil.dateBaseCalled);
-
             var model: HourlyModel;
-
+        
             for kmaModel in modelNotNil.list {
                 model = changeToCommonHourlyModel(kmaModel: kmaModel);
                 retModel.list.append(model);
+                
+                getYesterdayData(standardModel: model, kmaXY: kmaXY, callback: onCompleteYesterday);
             }
 
             callback( retModel );
         }
         
+        func onCompleteYesterday() {
+            nYesterdayCompleteCount += 1;
+            
+            if( nYesterdayCompleteCount == Settings.HOURLY_DATA_COUNT ) {
+                callbackYesterdayAll();
+            }
+        }
+        
         api.getData(dateBase: dateBase, kmaXY: kmaXY, callback: onComplete);
     }
     
-    public func getYesterdayData( dateStandard: Date, kmaXY: KmaXY, callback:@escaping ( Double? ) -> Void ) {
-        let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: dateStandard)!;
+    private func getYesterdayData( standardModel: HourlyModel, kmaXY: KmaXY, callback:@escaping () -> Void ) {
+        let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: standardModel.date)!;
         
         func onComplete( model: KmaApiActualModel? ) {
             guard let modelNotNil = model else {
-                callback( nil );
+                callback();
                 return;
             }
             
-            callback( modelNotNil.temperature);
+            space3HourYesterdayList!.append(modelNotNil);
+            
+            let yesterdayTemperature = modelNotNil.temperature;
+            let resultDiff = standardModel.temperature - yesterdayTemperature;
+            
+            standardModel.setDiffFromYesterday(value: resultDiff );
+            
+            callback();
         }
         
         getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callback: onComplete);
     }
+    
+    
+//    public func getYesterdayData( dateStandard: Date, kmaXY: KmaXY, callback:@escaping ( Double? ) -> Void ) {
+//        let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: dateStandard)!;
+//
+//        func onComplete( model: KmaApiActualModel? ) {
+//            guard let modelNotNil = model else {
+//                callback( nil );
+//                return;
+//            }
+//
+//            callback( modelNotNil.temperature);
+//        }
+//
+//        getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callback: onComplete);
+//    }
     
     public func getForecastMidData( dateNow: Date, callback:@escaping ( ForecastMidListModel? ) -> Void ) {
         guard let currentGridModel = GridManager.shared.getCurrentGridModel() else {
@@ -240,7 +282,7 @@ final class KmaApiManager {
         let skyImage = KmaApiForecastSpace3hours.shared.getStatusImageName(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum, isDay: isDay);
         let skyText = KmaApiForecastSpace3hours.shared.getSkyStatusText(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum);
         
-        let model = HourlyModel( date: kmaModel.date, temperature: kmaModel.temperature, skyStatusImageName: skyImage, skyStatusText: skyText)
+        let model = HourlyModel( date: kmaModel.date, temperature: kmaModel.temperature3H, skyStatusImageName: skyImage, skyStatusText: skyText)
 
         return model;
     }

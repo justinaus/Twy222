@@ -104,9 +104,9 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
                     
                     // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
                     // 8개 제공하자.
-                    if( modelList.list.count >= Settings.HOURLY_DATA_COUNT ) {
-                        break;
-                    }
+//                    if( modelList.list.count >= Settings.HOURLY_DATA_COUNT ) {
+//                        break;
+//                    }
                 }
                 
                 dateFcst = dateForecast;
@@ -123,6 +123,8 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
         var temperature: Double?;
         var skyEnum: KmaSkyEnum?;
         var ptyEnum: KmaPtyEnum?;
+        var temperatureMax: Double?;
+        var temperatureMin: Double?;
         
         for obj in arrItem {
             guard let category = obj[ "category" ] as? String else {
@@ -159,6 +161,22 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
                 
                 skyEnum = skyEnumTemp;
                 break;
+            case KmaCategoryCodeEnum.TMX.rawValue:
+                guard let fcstValue = obj[ "fcstValue" ] as? Double else {
+                    continue;
+                }
+                
+                temperatureMax = fcstValue;
+                
+                break;
+            case KmaCategoryCodeEnum.TMN.rawValue:
+                guard let fcstValue = obj[ "fcstValue" ] as? Double else {
+                    continue;
+                }
+                
+                temperatureMin = fcstValue;
+                
+                break;
             default:
                 continue;
             }
@@ -168,7 +186,14 @@ final class KmaApiForecastSpace3hours: KmaApiShortBase {
             return nil;
         }
         
-        let model: KmaHourlyModel = KmaHourlyModel(date: dateFcst, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
+        let model: KmaHourlyModel = KmaHourlyModel(date: dateFcst, temperature3H: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!);
+        
+        if( temperatureMax != nil ) {
+            model.setTemperatureMax(value: temperatureMax!)
+        }
+        if( temperatureMin != nil ) {
+            model.setTemperatureMin(value: temperatureMin!)
+        }
         
         return model;
     }

@@ -9,8 +9,8 @@
 import Foundation
 
 class GridModel {
-    public private(set) var latitude:String;
-    public private(set) var longitude:String;
+    public private(set) var latitude: Double;
+    public private(set) var longitude: Double;
     
     // 구분 키 값
     public private(set) var id: String;
@@ -32,7 +32,7 @@ class GridModel {
     public private(set) var addressRi: String?;
     
     
-    init( id: String, lat: String, lon: String ) {
+    init( id: String, lat: Double, lon: Double ) {
         self.id = id;
         self.latitude = lat;
         self.longitude = lon;

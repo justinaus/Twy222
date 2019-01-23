@@ -29,6 +29,9 @@ enum KmaCategoryCodeEnum : String {
     
     // 기온 3시간 단위.
     case T3H = "T3H";
+    
+    case TMX = "TMX";
+    case TMN = "TMN";
 }
 
 class KmaUtils {
