@@ -146,7 +146,7 @@ final class KmaApiMidLand: KmaApiMidBase {
             return "32";
         case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
             return "04";
-        case .QUITE_CLOUDY_AND_RAINY_OR_SNOWY:
+        case .QUITE_CLOUDY_AND_SNOWY_OR_RAINY:
             return "04";
         case .CLOUDY:
             return "18";
