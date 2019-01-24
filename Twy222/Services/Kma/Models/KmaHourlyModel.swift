@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaHourlyModel {
+class KmaHourlyModel: IDate {
     public private(set) var date:Date;
     
     public private(set) var temperature3H:Double;

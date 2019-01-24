@@ -15,7 +15,7 @@ class DailyModel {
     public private(set) var temperatureMin: Double;
     public private(set) var skyStatusImageName: String;
     public private(set) var skyStatusText: String;
-    public private(set) var diffFromYesterday: Double?;
+//    public private(set) var diffFromYesterday: Double?;
     
     init( date: Date, temperatureMax: Double, temperatureMin: Double, skyStatusImageName:String, skyStatusText: String ) {
         self.date = date;
@@ -25,7 +25,7 @@ class DailyModel {
         self.skyStatusText = skyStatusText;
     }
     
-    func setDiffFromYesterday( value: Double? ) {
-        diffFromYesterday = value;
-    }
+//    func setDiffFromYesterday( value: Double? ) {
+//        diffFromYesterday = value;
+//    }
 }

@@ -8,15 +8,15 @@
 
 import Foundation
 
-class KmaApiActualModel {
-    public private(set) var dateBaseCalled: Date;
+class KmaApiActualModel: IDate {
+    public private(set) var date: Date;
     public private(set) var kmaXY: KmaXY;
     
     public private(set) var temperature: Double;
     
     
     init( dateBase: Date, kmaXY: KmaXY, temperature: Double ) {
-        self.dateBaseCalled = dateBase;
+        self.date = dateBase;
         self.kmaXY = kmaXY;
         self.temperature = temperature;
     }

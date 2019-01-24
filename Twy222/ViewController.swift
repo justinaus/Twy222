@@ -128,7 +128,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         func onCompleteYesterdayAll() {
             drawHourlyList();
             
-            //            getForecastMidData(dateNow: dateNow);
+            getForecastMidData(dateNow: dateNow);
         }
         
         KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, callback: onComplete, callbackYesterdayAll: onCompleteYesterdayAll);

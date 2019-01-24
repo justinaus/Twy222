@@ -18,6 +18,7 @@
 		E220998721F4487900CDE9EA /* KmaApiMidLandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998621F4487900CDE9EA /* KmaApiMidLandModel.swift */; };
 		E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998821F634B300CDE9EA /* CollectionViewCellMid.swift */; };
 		E220998B21F6CEB800CDE9EA /* KmaXY.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998A21F6CEB800CDE9EA /* KmaXY.swift */; };
+		E220998D21FA157600CDE9EA /* IDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998C21FA157600CDE9EA /* IDate.swift */; };
 		E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4321DF03B00061FF86 /* AppDelegate.swift */; };
 		E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4521DF03B00061FF86 /* ViewController.swift */; };
 		E26C5F4921DF03B00061FF86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4721DF03B00061FF86 /* Main.storyboard */; };
@@ -106,6 +107,7 @@
 		E220998621F4487900CDE9EA /* KmaApiMidLandModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidLandModel.swift; sourceTree = "<group>"; };
 		E220998821F634B300CDE9EA /* CollectionViewCellMid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCellMid.swift; sourceTree = "<group>"; };
 		E220998A21F6CEB800CDE9EA /* KmaXY.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaXY.swift; sourceTree = "<group>"; };
+		E220998C21FA157600CDE9EA /* IDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDate.swift; sourceTree = "<group>"; };
 		E26C5F4021DF03B00061FF86 /* Twy222.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twy222.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26C5F4321DF03B00061FF86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E26C5F4521DF03B00061FF86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				E220998621F4487900CDE9EA /* KmaApiMidLandModel.swift */,
 				E29552B221E998470097480E /* KmaHourlyModel.swift */,
 				E220998A21F6CEB800CDE9EA /* KmaXY.swift */,
+				E220998C21FA157600CDE9EA /* IDate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */,
 				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
+				E220998D21FA157600CDE9EA /* IDate.swift in Sources */,
 				E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */,
 				E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */,
 				E27AD5CD21E5B92B00CD67B6 /* ForecastHourListModel.swift in Sources */,
