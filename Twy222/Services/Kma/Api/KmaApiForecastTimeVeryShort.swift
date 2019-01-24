@@ -78,11 +78,13 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
             }
             
             // 지금 현재 시간의 다음 시간 ex 02:10 이면 03:00 정보, 02:50이면 03:00 정보 사용.
-            
-            let nowHour = Calendar.current.component(.hour, from: dateNow);
+//            let nowHour = Calendar.current.component(.hour, from: dateNow);
+            let useDate = Calendar.current.date(byAdding: .hour, value: 1, to: dateNow)
+            let useDateHour = Calendar.current.component(.hour, from: useDate!);
             let forecastHour = Calendar.current.component(.hour, from: dateForecast);
             
-            if( nowHour + 1 != forecastHour ) {
+//            if( nowHour + 1 != forecastHour ) {
+            if( useDateHour != forecastHour ) {
                 continue;
             }
             
