@@ -82,11 +82,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     
     func getGridModelByLonLat( lon: Double, lat: Double, dateNow: Date ) {
         KakaoApiService.shared.getGridModel(lon: lon, lat: lat) { ( model: GridModel? ) in
-            if( model == nil ) {
+            guard let modelNotNil = model else {
                 return;
             }
             
-            GridManager.shared.setCurrentGridModel( gridModel: model! );
+            GridManager.shared.setCurrentGridModel( gridModel: modelNotNil );
             
             self.getNowData(dateNow: dateNow);
         }
@@ -96,12 +96,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let gridModel = GridManager.shared.getCurrentGridModel()!;
         
         func onComplete( model:NowModel? ) {
-            if( model == nil ) {
+            guard let modelNotNil = model else {
                 print("현재 기온, 하늘 상태 가져오기 실패. 아무것도 안함.");
                 return;
             }
             
-            gridModel.setNowModel(value: model!);
+            gridModel.setNowModel(value: modelNotNil);
             
             drawNowData();
             
@@ -114,13 +114,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     
     func getForecastHourlyData( dateNow: Date ) {
         func onComplete( model: ForecastHourListModel? ) {
-            if( model == nil ) {
+            guard let modelNotNil = model else {
                 print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
                 return;
             }
             
             let gridModel = GridManager.shared.getCurrentGridModel()!;
-            gridModel.setForecastHourListModel(value: model!);
+            gridModel.setForecastHourListModel(value: modelNotNil);
             
             drawHourlyList();
         }
@@ -168,7 +168,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             
             self.labelNowSkyStatus.text = nowModel.skyStatusText;
             
-            self.imageSkyStatus.image = UIImage(named: nowModel.skyStatusImageName)!
+            self.imageSkyStatus.image = UIImage(named: nowModel.skyStatusImageName);
             self.imageSkyStatus.isHidden = false;
             
             if( nowModel.diffFromYesterday == nil ) {

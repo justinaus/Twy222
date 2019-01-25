@@ -14,7 +14,7 @@ final class KmaApiMidLand: KmaApiMidBase {
     public func getData( dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidLandModel? ) -> Void ) {
         let URL_SERVICE = "getMiddleLandWeather";
         
-        print("중기 육상 상태 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
+//        print("중기 육상 상태 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( dictItem: [String:Any]? ) {
             if( dictItem == nil ) {

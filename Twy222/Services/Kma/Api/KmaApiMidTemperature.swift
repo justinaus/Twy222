@@ -14,7 +14,7 @@ final class KmaApiMidTemperature: KmaApiMidBase {
     public func getData( dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidTemperatureModel? ) -> Void ) {
         let URL_SERVICE = "getMiddleTemperature";
         
-        print("중기 기온 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
+//        print("중기 기온 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
         func onComplete( dictItem: [String:Any]? ) {
             if( dictItem == nil ) {
