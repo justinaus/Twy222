@@ -18,6 +18,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     @IBOutlet var imageSkyStatus: UIImageView!
     
     @IBOutlet var labelToday: UILabel!
+    @IBOutlet var labelTodayTemperature: UILabel!
     
     @IBOutlet var collectionViewShort: UICollectionView!
     @IBOutlet var collectionViewMid: UICollectionView!
@@ -148,6 +149,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             gridModel.setForecastMidListModel(value: modelNotNil);
 
             DispatchQueue.main.async {
+                self.labelTodayTemperature.text = "\(NumberUtil.roundToInt(value: today.temperatureMax)) / \(NumberUtil.roundToInt(value: today.temperatureMin))";
+                
                 self.collectionViewMid.reloadData();
             }
         }
@@ -210,11 +213,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         labelNowSkyStatus.text = "";
         labelNowTemperature.text = "";
         labelNowCompareWithYesterday.text = "";
-//        labelNowTempMaxMin.text = "";
+        labelTodayTemperature.text = "";
         imageSkyStatus.isHidden = true;
-//
-//        btnLogo.isHidden = true;
-//
+
         labelToday.text = "";
 //
 //        labelPm10.text = "";

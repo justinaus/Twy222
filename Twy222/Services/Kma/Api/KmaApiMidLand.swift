@@ -158,8 +158,6 @@ final class KmaApiMidLand: KmaApiMidBase {
             return "39";
         case .CLOUDY_AND_SNOWY_OR_RAINY:
             return "39";
-        default:
-            return "18";
         }
     }
 }

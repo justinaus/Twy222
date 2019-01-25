@@ -34,6 +34,13 @@
                                         <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="26 / 14" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MzC-jI-mii">
+                                        <rect key="frame" x="199" y="299" width="103" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <fontDescription key="fontDescription" name="NanumGothic" family="NanumGothic" pointSize="13"/>
+                                        <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u5H-hV-D8W">
                                         <rect key="frame" x="0.0" y="110" width="320" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -219,6 +226,7 @@
                         <outlet property="labelNowSkyStatus" destination="KWx-8y-WZd" id="VX7-Ib-Jmv"/>
                         <outlet property="labelNowTemperature" destination="Pix-U4-TRA" id="16n-JX-egR"/>
                         <outlet property="labelToday" destination="xkL-TD-Mbh" id="SYR-R4-9hZ"/>
+                        <outlet property="labelTodayTemperature" destination="MzC-jI-mii" id="7Th-4D-JuN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
