@@ -29,7 +29,7 @@ final class KmaApiManager {
     public func getNowData( dateNow: Date, lat: Double, lon: Double, callback:@escaping ( NowModel? ) -> Void ) {
         var nowModel: NowModel?
         
-        let kmaXY = KmaApiForecastSpace3hours.shared.getKmaXY(lat: lat, lon: lon);
+        let kmaXY = KmaUtils.getKmaXY(lat: lat, lon: lon);
         
         func onCompleteVeryShort( model: KmaApiForecastTimeVeryShortModel? ) {
             guard let modelNotNil = model else {
@@ -39,8 +39,8 @@ final class KmaApiManager {
             
             let hour = Calendar.current.component(.hour, from: modelNotNil.dateForecast);
             let isDay = TwyUtils.getIsDay(hour: hour);
-            let skyImage = KmaApiForecastTimeVeryShort.shared.getStatusImageName(skyEnum: modelNotNil.skyEnum, ptyEnum: modelNotNil.ptyEnum, isDay: isDay);
-            let skyText = KmaApiForecastTimeVeryShort.shared.getSkyStatusText(skyEnum: modelNotNil.skyEnum, ptyEnum: modelNotNil.ptyEnum);
+            let skyImage = KmaUtils.getStatusImageName(skyEnum: modelNotNil.skyEnum, ptyEnum: modelNotNil.ptyEnum, isDay: isDay);
+            let skyText = KmaUtils.getSkyStatusText(skyEnum: modelNotNil.skyEnum, ptyEnum: modelNotNil.ptyEnum);
             
             nowModel = NowModel(dateBase: modelNotNil.dateBaseCalled, dateForecast: modelNotNil.dateForecast, temperature: modelNotNil.temperature, skyStatusImageName: skyImage, skyStatusText: skyText);
             
@@ -88,14 +88,12 @@ final class KmaApiManager {
             
             apiSpace3HoursModel = modelNotNil;
             
-            // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
-            // 8개 제공하자.
-//            modelNotNil.list = Array(modelNotNil.list[ 0...Settings.HOURLY_DATA_COUNT-1 ]);
-            
             let retModel = ForecastHourListModel(dateBase: modelNotNil.dateBaseCalled);
             var model: HourlyModel;
         
             for ( index, kmaModel ) in modelNotNil.list.enumerated() {
+                // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
+                // 7개 제공하자.
                 if( index > Settings.HOURLY_DATA_COUNT - 1 ) {
                     break;
                 }
@@ -104,8 +102,6 @@ final class KmaApiManager {
                 retModel.list.append(model);
                 
                 getYesterdayData(standardModel: model, kmaXY: kmaXY, callback: onCompleteYesterday);
-                
-//                getYesterdayData(standardModel: model, kmaXY: kmaXY, callback: onCompleteYesterday);
             }
 
             callback( retModel );
@@ -150,117 +146,29 @@ final class KmaApiManager {
             apiMidTemperatureModel = modelTemperature!;
             apiMidLandModel = modelNotNil;
             
-            let retModel = ForecastMidListModel(dateBase: modelNotNil.dateBaseCalled);
+            let retMidModel = ForecastMidListModel(dateBase: modelNotNil.dateBaseCalled);
             
             let arrMidAfter3days = makeMidAfter3dayList(modelTemperature: modelTemperature!, modelLand: modelNotNil );
             
+            var arrFromYesterday: [IDate] = space3HourYesterdayList!;
+            let arrSpace: [IDate] = apiSpace3HoursModel!.list;
+            arrFromYesterday.append(contentsOf: arrSpace);
             
-            for yesterday in space3HourYesterdayList! {
-                print( DateUtil.getStringByDate(date: yesterday.date) );
-            }
-    
-    
-            for hourly in apiSpace3HoursModel!.list {
-                print( DateUtil.getStringByDate(date: hourly.date) );
-            }
+            // 현재 날짜 이전은 사용 안함. 가공하는 부분은 일단 눈에 보이는 게 싫어서... 유틸에 옮겨 둠.
+            let arrDualByDay = KmaUtils.makeDualArrayByDay(dateNow: dateNow, arrOrigin: arrFromYesterday);
+            let dailyModelBefore3days = KmaUtils.makeDailyModelList(arrDual: arrDualByDay);
             
+            let result = KmaUtils.concatNotOverlap(arrBase: arrMidAfter3days, arrAdd: dailyModelBefore3days);
+            retMidModel.list = result;
             
-            let test = getArrayByDay(arrHourly: space3HourYesterdayList!);
-            let test2 = getArrayByDay(arrHourly: apiSpace3HoursModel!.list);
-            
-            print(test)
-            
-            
-            
-            
-            
-//            let arrCurrentDays = makeCurrent3DayList( dateNow: dateNow, modelHourly: apiSpace3HoursModel!, arrHourlyYesterday: space3HourYesterdayList!);
-            
-//            for i in 0 ..< 5 {
-//                let temperature = modelTemperature!.list[ i ];
-//                let skyEnum = modelNotNil.list[ i ];
-//
-//                let skyStatusImageName = KmaApiMidLand.shared.getStatusImageName(skyEnum: skyEnum, isDay: true);
-//
-//                let date = Calendar.current.date(byAdding: .day, value: i + 1, to: modelTemperature!.dateBaseCalled )!;
-//
-//                let dailyModel = DailyModel(date: date, temperatureMax: temperature.max, temperatureMin: temperature.min, skyStatusImageName: skyStatusImageName, skyStatusText: skyEnum.rawValue)
-//
-//                retModel.list.append(dailyModel);
+//            for item in result {
+//                print( "\(DateUtil.getStringByDate(date: item.date))" )
 //            }
-//
-//            callback( retModel );
+            
+            callback( retMidModel );
         }
         
         getForecastMidTemperature(dateNow: dateNow, addressSiDo: currentGridModel.addressSiDo, addressGu: currentGridModel.addressGu, callback: onCompleteTemperature);
-    }
-    
-//    private func makeCurrent3DayList( dateNow: Date, modelHourly: KmaApiForecastSpace3hoursModel, arrHourlyYesterday: Array<KmaApiActualModel> ) -> Array<DailyModel> {
-//        let dayToday = Calendar.current.component(.day, from: dateNow);
-//
-//        var dayPrev: Int?
-//        var nMax: Double = 100;
-//        var nMin: Double = -100;
-//
-//
-//
-//        for yesterday in arrHourlyYesterday {
-//            let dayYesterday = Calendar.current.component(.day, from: yesterday.date);
-//
-//
-//
-//            if( dayToday != dayYesterday ) {
-//                // 오늘 날짜부터 필요하다.
-//                continue;
-//            }
-//
-//            if( dayPrev != dayYesterday ) {
-//                let dailyModel = DailyModel(
-//            }
-//
-//            datePrev = yesterday.dateBaseCalled;
-//
-//            print( DateUtil.getStringByDate(date: yesterday.date) );
-//        }
-//
-//
-//        for hourly in modelHourly.list {
-//            print( DateUtil.getStringByDate(date: hourly.date) );
-//        }
-//
-//        return [];
-//    }
-    
-    private func getArrayByDay( arrHourly: Array<IDate> ) -> Array< Array<IDate> > {
-        if( arrHourly.count == 0 ) {
-            return [];
-        }
-        
-        var arrRet = Array< Array<IDate> >();
-        
-        var arr: Array<IDate> = [];
-        
-        var dayPrev: Int?;
-        
-        for kmaHourlyModel in arrHourly {
-            let dayHourlyModel = Calendar.current.component(.day, from: kmaHourlyModel.date);
-            
-            if( dayPrev == nil ) {
-                dayPrev = dayHourlyModel;
-            } else if( dayPrev != dayHourlyModel ) {
-                arrRet.append( arr );
-                
-                dayPrev = dayHourlyModel;
-                
-                arr = [];
-            }
-            
-            arr.append(kmaHourlyModel);
-        }
-        
-        arrRet.append( arr );
-        
-        return arrRet;
     }
     
     private func makeMidAfter3dayList( modelTemperature: KmaApiMidTemperatureModel, modelLand: KmaApiMidLandModel ) -> Array<DailyModel> {
@@ -272,7 +180,7 @@ final class KmaApiManager {
 
             let skyStatusImageName = KmaApiMidLand.shared.getStatusImageName(skyEnum: skyEnum, isDay: true);
 
-            let date = Calendar.current.date(byAdding: .day, value: i + 1, to: modelTemperature.dateBaseCalled )!;
+            let date = Calendar.current.date(byAdding: .day, value: i + 3, to: modelTemperature.dateBaseCalled )!;
 
             let dailyModel = DailyModel(date: date, temperatureMax: temperature.max, temperatureMin: temperature.min, skyStatusImageName: skyStatusImageName, skyStatusText: skyEnum.rawValue)
 
@@ -303,22 +211,6 @@ final class KmaApiManager {
         
         getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callback: onComplete);
     }
-    
-    
-//    public func getYesterdayData( dateStandard: Date, kmaXY: KmaXY, callback:@escaping ( Double? ) -> Void ) {
-//        let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: dateStandard)!;
-//
-//        func onComplete( model: KmaApiActualModel? ) {
-//            guard let modelNotNil = model else {
-//                callback( nil );
-//                return;
-//            }
-//
-//            callback( modelNotNil.temperature);
-//        }
-//
-//        getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callback: onComplete);
-//    }
     
     private func getForecastVeryShort( dateNow: Date, kmaXY: KmaXY, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
         let api = KmaApiForecastTimeVeryShort.shared;
@@ -397,8 +289,8 @@ final class KmaApiManager {
     private func changeToCommonHourlyModel( kmaModel: KmaHourlyModel ) -> HourlyModel {
         let hour = Calendar.current.component(.hour, from: kmaModel.date);
         let isDay = TwyUtils.getIsDay(hour: hour);
-        let skyImage = KmaApiForecastSpace3hours.shared.getStatusImageName(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum, isDay: isDay);
-        let skyText = KmaApiForecastSpace3hours.shared.getSkyStatusText(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum);
+        let skyImage = KmaUtils.getStatusImageName(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum, isDay: isDay);
+        let skyText = KmaUtils.getSkyStatusText(skyEnum: kmaModel.skyEnum, ptyEnum: kmaModel.ptyEnum);
         
         let model = HourlyModel( date: kmaModel.date, temperature: kmaModel.temperature3H, skyStatusImageName: skyImage, skyStatusText: skyText)
 

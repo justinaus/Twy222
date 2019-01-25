@@ -136,13 +136,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     
     func getForecastMidData( dateNow: Date ) {
         func onComplete( model: ForecastMidListModel? ) {
-            if( model == nil ) {
+            guard let modelNotNil = model else {
                 print("중기 예보 가져오기 실패. 이후 동작 안함.");
                 return;
             }
             
+            // 오늘이 포함 되어 있다. 오늘을 자른다.
+            let today = modelNotNil.list.removeFirst();
+            
             let gridModel = GridManager.shared.getCurrentGridModel()!;
-            gridModel.setForecastMidListModel(value: model!);
+            gridModel.setForecastMidListModel(value: modelNotNil);
 
             DispatchQueue.main.async {
                 self.collectionViewMid.reloadData();
