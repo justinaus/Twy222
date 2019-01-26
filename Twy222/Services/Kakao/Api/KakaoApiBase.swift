@@ -12,7 +12,9 @@ class KakaoApiBase {
     public func makeCall( serviceName: String, lat: Double, lon: Double, callback:@escaping ( [String:Any]? ) -> Void ) {
         let url = getUrl(serviceName: serviceName, lat: lat, lon: lon);
         
-        guard let urlObjct = URL(string: url) else {
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
+        
+        guard let urlObjct = URL(string: encodedUrl) else {
             callback( nil );
             return;
         }

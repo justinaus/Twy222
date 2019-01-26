@@ -13,7 +13,10 @@ class KmaApiMidBase {
     public func makeCall( serviceName: String, baseDate: Date, regId: String, callback:@escaping ( [String:Any]? ) -> Void ) {
         let url = getUrl(serviceName: serviceName, baseDate: baseDate, regId: regId);
         
-        guard let urlObjct = URL(string: url) else {
+        var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
+        encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
+        
+        guard let urlObjct = URL(string: encodedUrl) else {
             callback( nil );
             return;
         }
@@ -45,7 +48,9 @@ class KmaApiMidBase {
         
         let baseDateAndBaseTime = KmaUtils.getBaseDateAndBaseTime(date: baseDate);
         
-        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_MID_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&tmFc=\(baseDateAndBaseTime.baseDate)\(baseDateAndBaseTime.baseTime)&regId=\(regId)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
+//        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_MID_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&tmFc=\(baseDateAndBaseTime.baseDate)\(baseDateAndBaseTime.baseTime)&regId=\(regId)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
+        
+        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_MID_FORECAST)\(serviceName)?tmFc=\(baseDateAndBaseTime.baseDate)\(baseDateAndBaseTime.baseTime)&regId=\(regId)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
         
         return url;
     }

@@ -15,7 +15,10 @@ class KmaApiShortBase {
     public func makeCall( serviceName: String, baseDate: Date, kmaXY: KmaXY, callback:@escaping ( Array<[String:Any]>? ) -> Void ) {
         let url = getUrl(serviceName: serviceName, baseDate: baseDate, kmaXY: kmaXY);
         
-        guard let urlObjct = URL(string: url) else {
+        var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
+        encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
+        
+        guard let urlObjct = URL(string: encodedUrl) else {
             callback( nil );
             return;
         }
@@ -47,7 +50,9 @@ class KmaApiShortBase {
         
         let baseDateAndBaseTime = KmaUtils.getBaseDateAndBaseTime(date: baseDate);
         
-        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_SHORT_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&base_date=\(baseDateAndBaseTime.baseDate)&base_time=\(baseDateAndBaseTime.baseTime)&nx=\(kmaXY.x)&ny=\(kmaXY.y)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
+//        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_SHORT_FORECAST)\(serviceName)?ServiceKey=\(DataGoKrConfig.APP_KEY)&base_date=\(baseDateAndBaseTime.baseDate)&base_time=\(baseDateAndBaseTime.baseTime)&nx=\(kmaXY.x)&ny=\(kmaXY.y)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
+        
+        let url = "\(KmaApiUrlStruct.URL_ROOT)\(KmaApiUrlStruct.URL_SHORT_FORECAST)\(serviceName)?base_date=\(baseDateAndBaseTime.baseDate)&base_time=\(baseDateAndBaseTime.baseTime)&nx=\(kmaXY.x)&ny=\(kmaXY.y)&_type=\(RESULT_TYPE)&numOfRows=\(NUM_OF_ROWS)"
         
         return url;
     }
