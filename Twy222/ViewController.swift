@@ -78,19 +78,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         showTodayText( date: now );
         
-        getGridModelByLonLat( lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude, dateNow: now );
+        getGridModelByLonLat( dateNow: now, lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude );
     }
     
-    func getGridModelByLonLat( lon: Double, lat: Double, dateNow: Date ) {
-        KakaoApiService.shared.getGridModel(lon: lon, lat: lat) { ( model: GridModel? ) in
+    func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
+        func onComplete( model: IAddressModel? ) {
             guard let modelNotNil = model else {
                 return;
             }
             
-            GridManager.shared.setCurrentGridModel( gridModel: modelNotNil );
+            let gridModel = GridModel(lat: lat, lon: lon);
+            GridManager.shared.setCurrentGridModel( gridModel: gridModel );
+            
+            gridModel.setAddressModel(value: modelNotNil);
             
             self.getNowData(dateNow: dateNow);
         }
+        
+        KakaoApiManager.shared.getAddressData(dateNow: dateNow, lat: lat, lon: lon, callback: onComplete);
     }
     
     func getNowData( dateNow: Date ) {
@@ -163,8 +168,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let nowModel = gridModel.nowModel!;
         
         DispatchQueue.main.async {
-            // 타이틀 정보가 없으면 이전에 그냥 멈췄음. 나중에 바뀌면 오류를 발생 시키는 게 맞는 것 같음.
-            self.labelNowLocation.text = gridModel.getAddressTitle()!;
+            // 주소 정보가 없는 경우는 일어나지 않는 게 맞다. 혹여 실수하게 될 경우에 고치기 쉽게 하기 위해 빈 값을 표시하겠다.
+            self.labelNowLocation.text = gridModel.addressModel?.getAddressTitle() ?? "";
             
             let intTemperature = NumberUtil.roundToInt(value: nowModel.temperature);
             self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";

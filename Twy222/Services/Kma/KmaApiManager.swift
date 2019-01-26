@@ -119,7 +119,7 @@ final class KmaApiManager {
     }
     
     public func getForecastMidData( dateNow: Date, callback:@escaping ( ForecastMidListModel? ) -> Void ) {
-        guard let currentGridModel = GridManager.shared.getCurrentGridModel() else {
+        guard let gridModel = GridManager.shared.getCurrentGridModel() else {
             callback( nil );
             return ;
         }
@@ -134,7 +134,7 @@ final class KmaApiManager {
             
             modelTemperature = modelNotNil;
             
-            getForecastMidLand(dateNow: dateNow, addressSiDo: currentGridModel.addressSiDo, addressGu: currentGridModel.addressGu, callback: onCompleteLand);
+            getForecastMidLand(dateNow: dateNow, addressSiDo: gridModel.addressModel?.addressSiDo, addressGu: gridModel.addressModel?.addressGu, callback: onCompleteLand);
         }
         
         func onCompleteLand( model: KmaApiMidLandModel? ) {
@@ -168,7 +168,7 @@ final class KmaApiManager {
             callback( retMidModel );
         }
         
-        getForecastMidTemperature(dateNow: dateNow, addressSiDo: currentGridModel.addressSiDo, addressGu: currentGridModel.addressGu, callback: onCompleteTemperature);
+        getForecastMidTemperature(dateNow: dateNow, addressSiDo: gridModel.addressModel?.addressSiDo, addressGu: gridModel.addressModel?.addressGu, callback: onCompleteTemperature);
     }
     
     private func makeMidAfter3dayList( modelTemperature: KmaApiMidTemperatureModel, modelLand: KmaApiMidLandModel ) -> Array<DailyModel> {
