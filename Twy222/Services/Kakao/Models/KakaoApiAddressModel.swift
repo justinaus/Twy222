@@ -10,7 +10,7 @@
 import Foundation
 
 class KakaoApiAddressModel: IAddressModel {
-    public private(set) var dateBaseCalled:Date;
+    public private(set) var dateCalled:Date;
     
     public private(set) var regionCode: String;
     
@@ -29,7 +29,7 @@ class KakaoApiAddressModel: IAddressModel {
     
     
     init( dateBase: Date, regionCode:String, addressFull: String, tmX: Double, tmY: Double ) {
-        self.dateBaseCalled = dateBase;
+        self.dateCalled = dateBase;
         self.regionCode = regionCode;
         self.addressFull = addressFull;
         self.tmX = tmX;

@@ -9,6 +9,8 @@
 import Foundation
 
 protocol IAddressModel {
+    var dateCalled: Date { get };
+    
     var addressFull: String? { get };
     var addressSiDo: String? { get };
     var addressGu: String? { get };
