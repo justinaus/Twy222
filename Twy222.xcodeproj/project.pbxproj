@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E204CCE421FC8B5E006286FB /* AkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE321FC8B5E006286FB /* AkApiManager.swift */; };
+		E204CCE621FC8B92006286FB /* AkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE521FC8B92006286FB /* AkUtils.swift */; };
+		E204CCE821FC9A43006286FB /* AkApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE721FC9A43006286FB /* AkApiBase.swift */; };
+		E204CCEA21FC9DCB006286FB /* AkApiStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE921FC9DCB006286FB /* AkApiStation.swift */; };
+		E204CCEC21FC9EC0006286FB /* AkApiStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCEB21FC9EC0006286FB /* AkApiStationModel.swift */; };
+		E204CCEE21FC9EFB006286FB /* AkStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCED21FC9EFB006286FB /* AkStationModel.swift */; };
+		E204CCF021FCA0C0006286FB /* AirModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCEF21FCA0C0006286FB /* AirModel.swift */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -100,6 +107,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E204CCE321FC8B5E006286FB /* AkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiManager.swift; sourceTree = "<group>"; };
+		E204CCE521FC8B92006286FB /* AkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkUtils.swift; sourceTree = "<group>"; };
+		E204CCE721FC9A43006286FB /* AkApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiBase.swift; sourceTree = "<group>"; };
+		E204CCE921FC9DCB006286FB /* AkApiStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiStation.swift; sourceTree = "<group>"; };
+		E204CCEB21FC9EC0006286FB /* AkApiStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiStationModel.swift; sourceTree = "<group>"; };
+		E204CCED21FC9EFB006286FB /* AkStationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkStationModel.swift; sourceTree = "<group>"; };
+		E204CCEF21FCA0C0006286FB /* AirModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirModel.swift; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -205,6 +219,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E204CCE021FC8B1C006286FB /* AirKorea */ = {
+			isa = PBXGroup;
+			children = (
+				E204CCE221FC8B47006286FB /* Models */,
+				E204CCE121FC8B3F006286FB /* Api */,
+				E204CCE321FC8B5E006286FB /* AkApiManager.swift */,
+				E204CCE521FC8B92006286FB /* AkUtils.swift */,
+			);
+			path = AirKorea;
+			sourceTree = "<group>";
+		};
+		E204CCE121FC8B3F006286FB /* Api */ = {
+			isa = PBXGroup;
+			children = (
+				E204CCE721FC9A43006286FB /* AkApiBase.swift */,
+				E204CCE921FC9DCB006286FB /* AkApiStation.swift */,
+			);
+			path = Api;
+			sourceTree = "<group>";
+		};
+		E204CCE221FC8B47006286FB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E204CCEB21FC9EC0006286FB /* AkApiStationModel.swift */,
+				E204CCED21FC9EFB006286FB /* AkStationModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E220996E21EB17E100CDE9EA /* Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -403,6 +446,7 @@
 				E220997621F2DACD00CDE9EA /* ForecastMidListModel.swift */,
 				E220997821F2DAE400CDE9EA /* DailyModel.swift */,
 				E22D792021FC389C000C3C46 /* IAddressModel.swift */,
+				E204CCEF21FCA0C0006286FB /* AirModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -410,6 +454,7 @@
 		E2EF049121DF2518005C00EB /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E204CCE021FC8B1C006286FB /* AirKorea */,
 				E2EF04A221E2F547005C00EB /* Kakao */,
 				E2EF04A121E2F368005C00EB /* Kma */,
 				E2EF049721DF265A005C00EB /* ServiceConfig.swift */,
@@ -558,10 +603,12 @@
 				E220998521F447C700CDE9EA /* DailyTemperatureMaxMinModel.swift in Sources */,
 				E27AD5C321E5A2C100CD67B6 /* KmaApiActualModel.swift in Sources */,
 				E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */,
+				E204CCEA21FC9DCB006286FB /* AkApiStation.swift in Sources */,
 				E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */,
 				E29552B321E998470097480E /* KmaHourlyModel.swift in Sources */,
 				E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */,
 				E22D791921FC2AC9000C3C46 /* KakaoApiBase.swift in Sources */,
+				E204CCF021FCA0C0006286FB /* AirModel.swift in Sources */,
 				E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */,
 				E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */,
 				E27AD63221E6F09700CD67B6 /* TwyStructs.swift in Sources */,
@@ -580,6 +627,7 @@
 				E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */,
 				E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */,
 				E27AD5CD21E5B92B00CD67B6 /* ForecastHourListModel.swift in Sources */,
+				E204CCEE21FC9EFB006286FB /* AkStationModel.swift in Sources */,
 				E220998B21F6CEB800CDE9EA /* KmaXY.swift in Sources */,
 				E27AD5CB21E5B40900CD67B6 /* NowModel.swift in Sources */,
 				E220998721F4487900CDE9EA /* KmaApiMidLandModel.swift in Sources */,
@@ -587,7 +635,10 @@
 				E220997721F2DACD00CDE9EA /* ForecastMidListModel.swift in Sources */,
 				E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */,
 				E2EF04A821E30C4E005C00EB /* KmaUtils.swift in Sources */,
+				E204CCEC21FC9EC0006286FB /* AkApiStationModel.swift in Sources */,
+				E204CCE821FC9A43006286FB /* AkApiBase.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
+				E204CCE621FC8B92006286FB /* AkUtils.swift in Sources */,
 				E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */,
 				E22D792121FC389C000C3C46 /* IAddressModel.swift in Sources */,
 				E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */,
@@ -596,6 +647,7 @@
 				E29552B821E9AAEA0097480E /* CollectionViewCellShort.swift in Sources */,
 				E27AD63921E6F95700CD67B6 /* SegueFromRightToLeft.swift in Sources */,
 				E220998321F4477500CDE9EA /* KmaApiMidTemperatureModel.swift in Sources */,
+				E204CCE421FC8B5E006286FB /* AkApiManager.swift in Sources */,
 				E27AD63821E6F95700CD67B6 /* JUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

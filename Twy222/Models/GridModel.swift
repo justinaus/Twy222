@@ -13,7 +13,6 @@ class GridModel {
     public private(set) var longitude: Double;
     
     public private(set) var addressModel: IAddressModel?;
-    
     public private(set) var nowModel: NowModel?;
     public private(set) var forecastHourList: ForecastHourListModel?;
     public private(set) var forecastMidList: ForecastMidListModel?;
@@ -26,8 +25,6 @@ class GridModel {
     public func setAddressModel( value: IAddressModel ) {
         addressModel = value;
     }
-    
-    
     public func setNowModel( value: NowModel ) {
         nowModel = value;
     }
