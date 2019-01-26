@@ -16,6 +16,7 @@ class GridModel {
     public private(set) var nowModel: NowModel?;
     public private(set) var forecastHourList: ForecastHourListModel?;
     public private(set) var forecastMidList: ForecastMidListModel?;
+    public private(set) var airModel: AirModel?;
     
     init( lat: Double, lon: Double ) {
         self.latitude = lat;
@@ -33,6 +34,9 @@ class GridModel {
     }
     public func setForecastMidListModel( value: ForecastMidListModel ) {
         forecastMidList = value;
+    }
+    public func setAirModel( value: AirModel ) {
+        airModel = value;
     }
     
 //    public func resetAll() {

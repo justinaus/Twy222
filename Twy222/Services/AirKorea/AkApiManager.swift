@@ -25,11 +25,13 @@ final class AkApiManager {
                 return;
             }
             
-            // 일단 그냥 측정소 첫번째 거 쓰겠다.
-            guard let stationModel = modelNotNil.list[0] as? AkStationModel else {
+            if( modelNotNil.list.count == 0 ) {
                 callback( nil );
                 return;
             }
+            
+            // 일단 그냥 측정소 첫번째 거 쓰겠다.
+            let stationModel = modelNotNil.list[0];
             
             getAirPm(dateNow: dateNow, stationName: stationModel.stationName, callback: onCompleteAirPm);
         }

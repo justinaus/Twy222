@@ -23,6 +23,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     @IBOutlet var collectionViewShort: UICollectionView!
     @IBOutlet var collectionViewMid: UICollectionView!
     
+    @IBOutlet var viewAirQuality: UIView!
+    @IBOutlet var labelPm10: UILabel!
+    @IBOutlet var labelPm25: UILabel!
+    
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
     
@@ -113,19 +117,44 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         guard let gridModel = GridManager.shared.getCurrentGridModel() else {
             return;
         }
-        
         // 여기선 그냥 대충 막 하겠다.
         guard let kakaoAddressModel = gridModel.addressModel as? KakaoApiAddressModel else {
             return;
         }
         
         func onComplete( model: AirModel? ) {
-            print(model)
+            guard let modelNotNil = model else {
+                print("미세먼지 가져오기 실패. 아무것도 안함.");
+                return;
+            }
+            
+            gridModel.setAirModel(value: modelNotNil);
+            
+            drawAirData();
         }
         
         dateLastCalledAir = dateNow;
         
         AkApiManager.shared.getAirData(dateNow: dateNow, tmX: kakaoAddressModel.tmX, tmY: kakaoAddressModel.tmY, callback: onComplete);
+    }
+    
+    func drawAirData() {
+        guard let airModel = GridManager.shared.getCurrentGridModel()?.airModel else {
+            return;
+        }
+        
+        let pm10Grade = AkUtils.shared.getFineDustGrade(fineDustType: .pm10, value: airModel.pm10Value);
+        let pm25Grade = AkUtils.shared.getFineDustGrade(fineDustType: .pm25, value: airModel.pm25Value);
+        
+        DispatchQueue.main.async {
+            self.labelPm10.textColor = pm10Grade.color;
+            self.labelPm25.textColor = pm25Grade.color;
+            
+            self.labelPm10.text = "\(airModel.pm10Value) \(pm10Grade.text)";
+            self.labelPm25.text = "\(airModel.pm25Value) \(pm25Grade.text)";
+            
+            self.viewAirQuality.isHidden = false;
+        }
     }
     
     func getNowData( dateNow: Date ) {
@@ -252,10 +281,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         imageSkyStatus.isHidden = true;
 
         labelToday.text = "";
-//
-//        labelPm10.text = "";
-//        labelPm25.text = "";
-//        viewAirQuality.isHidden = true;
+
+        labelPm10.text = "";
+        labelPm25.text = "";
+        viewAirQuality.isHidden = true;
     }
     
     func showTodayText( date: Date ) {

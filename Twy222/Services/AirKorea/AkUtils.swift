@@ -7,6 +7,105 @@
 //
 
 import Foundation
+import UIKit
+
+public enum ColorEnum : UInt {
+    case blue = 0x2980b9;
+    case green = 0x579f2b;
+    case orange = 0xe7963b;
+    case red = 0xbe2813;
+    
+    case gray = 0xadb7be;
+    //case gray = 0x666666;
+}
+
+public enum FineDustGradeEnum : Int {
+    case good = 0;
+    case notBad, bad, danger
+    
+    var text: String {
+        switch self {
+        case .good:
+            return "좋음"
+        case .notBad:
+            return "보통"
+        case .bad:
+            return "나쁨"
+        case .danger:
+            return "매우나쁨"
+        }
+    }
+    
+    var color: UIColor {
+        var uintColor: UInt
+        
+        switch self {
+        case .good:
+            uintColor = ColorEnum.blue.rawValue;
+            break;
+        case .notBad:
+            uintColor = ColorEnum.green.rawValue;
+            break;
+        case .bad:
+            uintColor = ColorEnum.orange.rawValue;
+            break;
+        case .danger:
+            uintColor = ColorEnum.red.rawValue;
+            break;
+        }
+        
+        return ColorUtil.UIColorFromRGB(rgbValue: uintColor);
+    }
+}
+
+public enum FineDustTypeEnum {
+    case pm10
+    case pm25
+}
+
+public enum AirInfoProviderEnum {
+    // 환경부.
+    case koreaMinistryOfEnvironment
+    case WHO
+}
+
+class Range {
+    public var start:Int = 0;
+    public var end:Int = 0;
+    
+    init( _ start: Int, _ end : Int ) {
+        self.start = start;
+        self.end = end;
+    }
+}
+
+final class AkUtils {
+    static let shared = AkUtils();
+    
+    private let pm10WHORangeList =                          [ Range( 0,30 ), Range(31,50), Range(51,100), Range(101,999) ];
+    private let pm25WHORangeList =                          [ Range( 0,15 ), Range(16,25), Range(26,50), Range(51,999) ];
+    
+//    private let pm10KoreaMinistryOfEnvironmentRangeList =   [ Range( 0,30 ), Range(31,80), Range(81,150), Range(151,999) ];
+//    private let pm25KoreaMinistryOfEnvironmentRangeList =   [ Range( 0,15 ), Range(16,35), Range(36,75), Range(76,999) ];
+    
+    public func getFineDustGrade( fineDustType: FineDustTypeEnum, value: Int ) -> FineDustGradeEnum {
+        let rangeList = fineDustType == .pm10 ? pm10WHORangeList : pm25WHORangeList;
+        
+        var grade = rangeList.count - 1;
+        
+        for ( i, range ) in rangeList.enumerated() {
+            if( value >= range.start && value <= range.end ) {
+                grade = i;
+                
+                break;
+            }
+        }
+        
+        let gradeEnum = FineDustGradeEnum(rawValue: grade)!;
+        
+        return gradeEnum;
+    }
+}
 
 public enum AkApiErrorCode : String {
     case OK = "00";
@@ -42,10 +141,3 @@ public enum AkApiErrorCode : String {
     }
 }
 
-
-
-final class AkUtils {
-    static let shared = AkUtils();
-    
-    
-}
