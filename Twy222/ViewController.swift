@@ -26,10 +26,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
     
-    var dateLastCalled:Date?;
-    let LIMIT_INTERVAL_MINUTES_TO_CALL:Int = 5;
+    // 나중에 core data로 변경.
+    var dateLastCalledRegion:Date?;
+    var dateLastCalledAir:Date?;
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,16 +65,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     func tryStartToApiCall() {
         let now: Date = Date();
         
-        if( dateLastCalled != nil) {
-            let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalled!, to: now);
+        if( dateLastCalledRegion != nil) {
+            let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalledRegion!, to: now);
             
-            if( componenets.minute ?? 0 < LIMIT_INTERVAL_MINUTES_TO_CALL ) {
+            if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION ) {
 //                print("기존에 콜 한지 xx분도 안됨, 아무것도 안함")
                 return;
             }
         }
         
-        dateLastCalled = now;
+        dateLastCalledRegion = now;
         
         showTodayText( date: now );
         
@@ -92,10 +92,40 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             
             gridModel.setAddressModel(value: modelNotNil);
             
-            self.getNowData(dateNow: dateNow);
+            getNowData(dateNow: dateNow);
+            
+            getAirData(dateNow: dateNow);
         }
         
         KakaoApiManager.shared.getAddressData(dateNow: dateNow, lat: lat, lon: lon, callback: onComplete);
+    }
+    
+    func getAirData( dateNow: Date ) {
+        if( dateLastCalledAir != nil) {
+            let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalledAir!, to: dateNow);
+            
+            if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_AIR ) {
+                print("air 기존에 콜 한지 xx분도 안됨, 아무것도 안함")
+                return;
+            }
+        }
+        
+        guard let gridModel = GridManager.shared.getCurrentGridModel() else {
+            return;
+        }
+        
+        // 여기선 그냥 대충 막 하겠다.
+        guard let kakaoAddressModel = gridModel.addressModel as? KakaoApiAddressModel else {
+            return;
+        }
+        
+        func onComplete( model: AirModel? ) {
+            print(model)
+        }
+        
+        dateLastCalledAir = dateNow;
+        
+        AkApiManager.shared.getAirData(dateNow: dateNow, tmX: kakaoAddressModel.tmX, tmY: kakaoAddressModel.tmY, callback: onComplete);
     }
     
     func getNowData( dateNow: Date ) {

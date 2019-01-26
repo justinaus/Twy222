@@ -25,19 +25,45 @@ final class AkApiManager {
                 return;
             }
             
-            print(modelNotNil)
+            // 일단 그냥 측정소 첫번째 거 쓰겠다.
+            guard let stationModel = modelNotNil.list[0] as? AkStationModel else {
+                callback( nil );
+                return;
+            }
+            
+            getAirPm(dateNow: dateNow, stationName: stationModel.stationName, callback: onCompleteAirPm);
         }
         
-        getAirStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callback: onCompleteStation)
+        func onCompleteAirPm( model: AkApiAirPmModel? ) {
+            guard let modelNotNil = model else {
+                callback( nil );
+                return;
+            }
+            
+            let retModel = AirModel(dateBase: modelNotNil.dateCalled, pm10Value: modelNotNil.pm10, pm25Value: modelNotNil.pm25);
+            callback( retModel );
+        }
+        
+        getStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callback: onCompleteStation)
     }
     
-    private func getAirStation( dateNow: Date, tmX: Double, tmY: Double, callback:@escaping ( AkApiStationModel? ) -> Void ) {
+    private func getStation( dateNow: Date, tmX: Double, tmY: Double, callback:@escaping ( AkApiStationModel? ) -> Void ) {
         let api = AkApiStation.shared;
         
         func onComplete( model: AkApiStationModel? ) {
             callback( model );
         }
         
-        api.getData(dateNow: dateNow, tmX: tmX, tmY: tmY, callback: onComplete)
+        api.getData(dateNow: dateNow, tmX: tmX, tmY: tmY, callback: onComplete);
+    }
+    
+    private func getAirPm( dateNow: Date, stationName: String, callback:@escaping ( AkApiAirPmModel? ) -> Void ) {
+        let api = AkApiAirPm.shared;
+        
+        func onComplete( model: AkApiAirPmModel? ) {
+            callback( model );
+        }
+        
+        api.getData(dateNow: dateNow, stationName: stationName, callback: onComplete);
     }
 }

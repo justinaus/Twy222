@@ -10,7 +10,10 @@ import Foundation
 
 class AkApiBase {
     public func makeCall( url: String, callback:@escaping ( [String:Any]? ) -> Void ) {
-        guard let urlObjct = URL(string: url) else {
+        var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
+        encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
+        
+        guard let urlObjct = URL(string: encodedUrl) else {
             callback( nil );
             return;
         }

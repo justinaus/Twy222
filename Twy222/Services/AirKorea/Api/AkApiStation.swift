@@ -57,7 +57,7 @@ final class AkApiStation: AkApiBase {
         
         //http://openapi.airkorea.or.kr/openapi/services/rest/MsrstnInfoInqireSvc/getNearbyMsrstnList?serviceKey=it2bUsi%2BviI1KGItdbbUb46%2FssExfJqOAOPPODbKcA8Ytkkol1LIg5SG06Zd%2FzxmRH1Giyz%2FjWfDw1EMWEveDA%3D%3D&tmX=210035.68627433991&tmY=428925.15454860451
         
-        let url = "\(AkApiUrlStruct.URL_ROOT)\(AkApiUrlStruct.URL_STAION_INFO)\(URL_SERVICE)?ServiceKey=\(DataGoKrConfig.APP_KEY)&tmX=\(tmX)&tmY=\(tmY)&_returnType=json";
+        let url = "\(AkApiUrlStruct.URL_ROOT)\(AkApiUrlStruct.URL_STAION_INFO)\(URL_SERVICE)?tmX=\(tmX)&tmY=\(tmY)&_returnType=json";
         
         return url;
     }

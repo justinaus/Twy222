@@ -8,6 +8,21 @@
 
 import Foundation
 
+class AkStationModel {
+    public private(set) var stationName: String;
+    
+    //    public private(set) var addressFull: String;
+    public private(set) var distance: Double?;
+    
+    init( stationName: String ) {
+        self.stationName = stationName;
+    }
+    
+    public func setDistance( value: Double ) {
+        distance = value;
+    }
+}
+
 class AkApiStationModel {
     public private(set) var dateCalled:Date;
     
@@ -17,5 +32,4 @@ class AkApiStationModel {
     init( dateCalled: Date ) {
         self.dateCalled = dateCalled;
     }
-    
 }
