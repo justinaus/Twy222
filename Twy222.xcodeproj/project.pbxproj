@@ -15,6 +15,7 @@
 		E204CCF021FCA0C0006286FB /* AirModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCEF21FCA0C0006286FB /* AirModel.swift */; };
 		E204CCF221FCBB46006286FB /* AkApiAirPmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF121FCBB46006286FB /* AkApiAirPmModel.swift */; };
 		E204CCF421FCBC2B006286FB /* AkApiAirPm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF321FCBC2B006286FB /* AkApiAirPm.swift */; };
+		E204CCF721FD5E82006286FB /* VCAir.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF621FD5E82006286FB /* VCAir.swift */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -116,6 +117,7 @@
 		E204CCEF21FCA0C0006286FB /* AirModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirModel.swift; sourceTree = "<group>"; };
 		E204CCF121FCBB46006286FB /* AkApiAirPmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiAirPmModel.swift; sourceTree = "<group>"; };
 		E204CCF321FCBC2B006286FB /* AkApiAirPm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiAirPm.swift; sourceTree = "<group>"; };
+		E204CCF621FD5E82006286FB /* VCAir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCAir.swift; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -251,6 +253,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E204CCF521FD5E6A006286FB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E204CCF621FD5E82006286FB /* VCAir.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		E220996E21EB17E100CDE9EA /* Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +326,7 @@
 		E26C5F4221DF03B00061FF86 /* Twy222 */ = {
 			isa = PBXGroup;
 			children = (
+				E204CCF521FD5E6A006286FB /* ViewControllers */,
 				E29552B621E9AAA40097480E /* Views */,
 				E27AD63321E6F95700CD67B6 /* Justinaus */,
 				E27AD5D721E6709800CD67B6 /* Resources */,
@@ -643,6 +654,7 @@
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
 				E204CCE621FC8B92006286FB /* AkUtils.swift in Sources */,
 				E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */,
+				E204CCF721FD5E82006286FB /* VCAir.swift in Sources */,
 				E22D792121FC389C000C3C46 /* IAddressModel.swift in Sources */,
 				E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */,
 				E27AD63C21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift in Sources */,
