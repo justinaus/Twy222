@@ -69,6 +69,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     func tryStartToApiCall() {
         let now: Date = Date();
         
+        showTodayText( date: now );
+        
         if( dateLastCalledRegion != nil) {
             let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalledRegion!, to: now);
             
@@ -79,8 +81,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
         
         dateLastCalledRegion = now;
-        
-        showTodayText( date: now );
         
         getGridModelByLonLat( dateNow: now, lon: currentLocation!.coordinate.longitude, lat: currentLocation!.coordinate.latitude );
     }
@@ -95,6 +95,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             GridManager.shared.setCurrentGridModel( gridModel: gridModel );
             
             gridModel.setAddressModel(value: modelNotNil);
+            
+            DispatchQueue.main.async {
+                // 주소 정보가 없는 경우는 일어나지 않는 게 맞다. 혹여 실수하게 될 경우에 고치기 쉽게 하기 위해 빈 값을 표시하겠다.
+                self.labelNowLocation.text = gridModel.addressModel?.getAddressTitle() ?? "";
+            }
             
             getNowData(dateNow: dateNow);
             
@@ -227,9 +232,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let nowModel = gridModel.nowModel!;
         
         DispatchQueue.main.async {
-            // 주소 정보가 없는 경우는 일어나지 않는 게 맞다. 혹여 실수하게 될 경우에 고치기 쉽게 하기 위해 빈 값을 표시하겠다.
-            self.labelNowLocation.text = gridModel.addressModel?.getAddressTitle() ?? "";
-            
             let intTemperature = NumberUtil.roundToInt(value: nowModel.temperature);
             self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";
             
