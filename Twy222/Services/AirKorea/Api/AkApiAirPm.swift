@@ -20,14 +20,14 @@ final class AkApiAirPm: AkApiBase {
                 return;
             }
             
-            let model = makeModel(dateNow: dateNow, json: jsonNotNil);
+            let model = makeModel(dateNow: dateNow, stationName: stationName, json: jsonNotNil);
             callback( model );
         }
         
         makeCall(url: url, callback: onComplete)
     }
     
-    private func makeModel( dateNow: Date, json: [String:Any] ) -> AkApiAirPmModel? {
+    private func makeModel( dateNow: Date, stationName: String, json: [String:Any] ) -> AkApiAirPmModel? {
         guard let list = json[ "list" ] as? Array< [ String : Any ] > else {
             return nil;
         }
@@ -47,7 +47,7 @@ final class AkApiAirPm: AkApiBase {
             }
             
             // 제일 먼저 것만 쓰겠다.
-            let model = AkApiAirPmModel(dateCalled: dateNow, pm10: intPm10, pm25: intPm25);
+            let model = AkApiAirPmModel(dateCalled: dateNow, stationName: stationName, pm10: intPm10, pm25: intPm25);
             return model;
         }
         

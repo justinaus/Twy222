@@ -14,8 +14,11 @@ class AirModel {
     public private(set) var pm10Value: Int;
     public private(set) var pm25Value: Int;
     
-    init( dateBase: Date, pm10Value: Int, pm25Value: Int ) {
+    public private(set) var stationName: String;
+    
+    init( dateBase: Date, stationName: String, pm10Value: Int, pm25Value: Int ) {
         self.dateBaseToCall = dateBase;
+        self.stationName = stationName;
         self.pm10Value = pm10Value;
         self.pm25Value = pm25Value;
     }

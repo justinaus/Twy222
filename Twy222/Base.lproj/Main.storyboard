@@ -634,6 +634,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="A4X-5A-SvR"/>
                     </view>
+                    <connections>
+                        <outlet property="labelPm10Grade" destination="TBt-dh-4sZ" id="Lfe-IP-VlG"/>
+                        <outlet property="labelPm10Value" destination="tAI-iz-Seq" id="jGI-YD-eRa"/>
+                        <outlet property="labelPm25Grade" destination="ViS-cC-EcZ" id="0p2-JH-O5h"/>
+                        <outlet property="labelPm25Value" destination="kDD-bz-fGU" id="d0h-1i-3az"/>
+                        <outlet property="labelStation" destination="tBd-7a-qsj" id="GNv-hF-rad"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yb7-jw-1bq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="DAU-tN-aYI" userLabel="Exit" sceneMemberID="exit"/>

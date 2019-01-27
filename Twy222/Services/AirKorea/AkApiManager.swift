@@ -42,7 +42,7 @@ final class AkApiManager {
                 return;
             }
             
-            let retModel = AirModel(dateBase: modelNotNil.dateCalled, pm10Value: modelNotNil.pm10, pm25Value: modelNotNil.pm25);
+            let retModel = AirModel(dateBase: modelNotNil.dateCalled, stationName: modelNotNil.stationName, pm10Value: modelNotNil.pm10, pm25Value: modelNotNil.pm25);
             callback( retModel );
         }
         

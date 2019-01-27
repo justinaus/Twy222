@@ -91,7 +91,6 @@
 		E27AD62D21E6EAD100CD67B6 /* 42.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60321E6EAD100CD67B6 /* 42.png */; };
 		E27AD62E21E6EAD100CD67B6 /* 41.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60421E6EAD100CD67B6 /* 41.png */; };
 		E27AD62F21E6EAD100CD67B6 /* 40.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60521E6EAD100CD67B6 /* 40.png */; };
-		E27AD63221E6F09700CD67B6 /* TwyStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63121E6F09700CD67B6 /* TwyStructs.swift */; };
 		E27AD63821E6F95700CD67B6 /* JUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63421E6F95700CD67B6 /* JUtils.swift */; };
 		E27AD63921E6F95700CD67B6 /* SegueFromRightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63621E6F95700CD67B6 /* SegueFromRightToLeft.swift */; };
 		E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63721E6F95700CD67B6 /* SegueUnwindToRight.swift */; };
@@ -195,7 +194,6 @@
 		E27AD60321E6EAD100CD67B6 /* 42.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 42.png; sourceTree = "<group>"; };
 		E27AD60421E6EAD100CD67B6 /* 41.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 41.png; sourceTree = "<group>"; };
 		E27AD60521E6EAD100CD67B6 /* 40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 40.png; sourceTree = "<group>"; };
-		E27AD63121E6F09700CD67B6 /* TwyStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwyStructs.swift; sourceTree = "<group>"; };
 		E27AD63421E6F95700CD67B6 /* JUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JUtils.swift; sourceTree = "<group>"; };
 		E27AD63621E6F95700CD67B6 /* SegueFromRightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueFromRightToLeft.swift; sourceTree = "<group>"; };
 		E27AD63721E6F95700CD67B6 /* SegueUnwindToRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueUnwindToRight.swift; sourceTree = "<group>"; };
@@ -342,7 +340,6 @@
 				E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */,
 				E2EF049921E090A8005C00EB /* GridManager.swift */,
 				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
-				E27AD63121E6F09700CD67B6 /* TwyStructs.swift */,
 				E29552B421E9A1550097480E /* Settings.swift */,
 			);
 			path = Twy222;
@@ -625,7 +622,6 @@
 				E204CCF021FCA0C0006286FB /* AirModel.swift in Sources */,
 				E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */,
 				E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */,
-				E27AD63221E6F09700CD67B6 /* TwyStructs.swift in Sources */,
 				E22D791B21FC2B22000C3C46 /* KakaoApiAddressModel.swift in Sources */,
 				E27AD5BB21E342E900CD67B6 /* TwyUtils.swift in Sources */,
 				E220997921F2DAE400CDE9EA /* DailyModel.swift in Sources */,

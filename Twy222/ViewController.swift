@@ -148,8 +148,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             return;
         }
         
-        let pm10Grade = AkUtils.shared.getFineDustGrade(fineDustType: .pm10, value: airModel.pm10Value);
-        let pm25Grade = AkUtils.shared.getFineDustGrade(fineDustType: .pm25, value: airModel.pm25Value);
+        let pm10Grade = FineDustUtils.getFineDustGrade(fineDustType: .pm10, value: airModel.pm10Value);
+        let pm25Grade = FineDustUtils.getFineDustGrade(fineDustType: .pm25, value: airModel.pm25Value);
         
         DispatchQueue.main.async {
             self.labelPm10.textColor = pm10Grade.color;
@@ -376,7 +376,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     @IBAction func unwindToVC( _ unwindSegue: UIStoryboardSegue) {
-        print(123)
+        
     }
 }
 
