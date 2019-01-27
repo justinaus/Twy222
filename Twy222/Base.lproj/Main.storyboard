@@ -66,6 +66,9 @@
                                                 <state key="normal" title="&gt;">
                                                     <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <segue destination="aGs-3M-hqg" kind="custom" customClass="SegueFromRightToLeft" customModule="Twy222" customModuleProvider="target" id="VP1-6T-t8u"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -387,7 +390,7 @@
                                             <color key="titleColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="DAU-tN-aYI" kind="unwind" customClass="SegueUnwindToRight" customModule="TwySwift3" unwindAction="unwindToVC:" id="dJf-j8-9aW"/>
+                                            <segue destination="DAU-tN-aYI" kind="unwind" customClass="SegueUnwindToRight" customModule="Twy222" customModuleProvider="target" unwindAction="unwindToVC:" id="FKl-e1-X10"/>
                                         </connections>
                                     </button>
                                 </subviews>
