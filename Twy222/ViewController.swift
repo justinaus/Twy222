@@ -52,9 +52,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             locationManager.startUpdatingLocation()
         } else if status == .denied {
             print("denied")
-//            goJustDefaultTempLocation();
+            goJustTempLocation();
         }
     }
+    
+    func goJustTempLocation() {
+        // gps 사용 못할 경우 임의의 장소의 정보를 가져온다 - 테스트로 대치동으로 하겠다.
+        let lat = 37.496066;
+        let lon = 127.067405;
+//        let lat =
+        
+        currentLocation = CLLocation(latitude: lat, longitude: lon);
+        
+        tryStartToApiCall();
+        
+        AlertUtil.alert(vc: self, title: "위치 접근 허용 안함", message: "임시 장소 정보를 가져옵니다.\n설정에서 위치 접근을 허용해주세요.", buttonText: "확인", onSelect: nil);
+    }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {
