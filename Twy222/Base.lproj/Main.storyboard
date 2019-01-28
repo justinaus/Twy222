@@ -145,7 +145,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellShort" id="ViF-aB-WGB" customClass="CollectionViewCellShort" customModule="Twy222" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="5" width="50" height="100"/>
+                                        <rect key="frame" x="20" y="5" width="50" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="100"/>
@@ -203,7 +203,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cellMid" id="zSp-4E-xEJ" customClass="CollectionViewCellMid" customModule="Twy222" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="5" width="50" height="100"/>
+                                        <rect key="frame" x="20" y="5" width="50" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="100"/>
