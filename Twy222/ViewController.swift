@@ -103,6 +103,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
         func onComplete( model: IAddressModel? ) {
             guard let modelNotNil = model else {
+                AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil)
                 return;
             }
             
@@ -129,7 +130,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalledAir!, to: dateNow);
             
             if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_AIR ) {
-                print("air 기존에 콜 한지 xx분도 안됨, 아무것도 안함")
+//                print("air 기존에 콜 한지 xx분도 안됨, 아무것도 안함")
                 return;
             }
         }
@@ -144,7 +145,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         func onComplete( model: AirModel? ) {
             guard let modelNotNil = model else {
-                print("미세먼지 가져오기 실패. 아무것도 안함.");
+                AlertUtil.alert(vc: self, title: "error", message: "air api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
@@ -182,7 +183,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         func onComplete( model:NowModel? ) {
             guard let modelNotNil = model else {
-                print("현재 기온, 하늘 상태 가져오기 실패. 아무것도 안함.");
+                AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
@@ -200,7 +201,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     func getForecastHourlyData( dateNow: Date ) {
         func onComplete( model: ForecastHourListModel? ) {
             guard let modelNotNil = model else {
-                print("시간 별 예보 가져오기 실패. 이후 동작 안함.");
+                AlertUtil.alert(vc: self, title: "error", message: "hourly api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
@@ -222,7 +223,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     func getForecastMidData( dateNow: Date ) {
         func onComplete( model: ForecastMidListModel? ) {
             guard let modelNotNil = model else {
-                print("중기 예보 가져오기 실패. 이후 동작 안함.");
+                AlertUtil.alert(vc: self, title: "error", message: "mid api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
