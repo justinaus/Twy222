@@ -173,13 +173,15 @@ public class DateUtil {
 
 public class AlertUtil {
     public static func alert( vc:UIViewController, title:String, message:String, buttonText:String, onSelect: (() -> () )? ) {
-        let dialog = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: buttonText, style: UIAlertAction.Style.default);
-        
-        dialog.addAction(action)
-        
-        vc.present(dialog, animated: true, completion: onSelect);
+        DispatchQueue.main.async {
+            let dialog = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            let action = UIAlertAction(title: buttonText, style: UIAlertAction.Style.default);
+            
+            dialog.addAction(action)
+            
+            vc.present(dialog, animated: true, completion: onSelect);
+        }
     }
     
 //    public static func alertSelect( vc:UIViewController, title:String, message:String, good:String, bad:String, onSelect:@escaping (UIAlertAction) -> () ) {
