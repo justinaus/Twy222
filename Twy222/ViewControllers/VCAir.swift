@@ -17,6 +17,11 @@ class VCAir: UIViewController {
     
     @IBOutlet var labelStation: UILabel!
     
+    
+    @IBAction func myActionMethod(_ sender: UIGestureRecognizer) {
+        performSegue(withIdentifier: "unwindToRight", sender: nil);
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         
