@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaApiMidLandModel: ApiModelBase {
+class KmaApiMidLandModel {
     public private(set) var dateBaseCalled:Date;
     public private(set) var regId:String;
     

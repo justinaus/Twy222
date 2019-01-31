@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaApiForecastTimeVeryShortModel: ApiModelBase {
+class KmaApiForecastTimeVeryShortModel {
     public private(set) var dateBaseCalled:Date;
     public private(set) var kmaXY: KmaXY;
     

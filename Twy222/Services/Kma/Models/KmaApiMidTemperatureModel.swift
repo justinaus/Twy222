@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaApiMidTemperatureModel: ApiModelBase {
+class KmaApiMidTemperatureModel {
     public private(set) var dateBaseCalled:Date;
     public private(set) var regId:String;
     
