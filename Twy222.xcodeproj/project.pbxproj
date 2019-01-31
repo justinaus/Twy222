@@ -17,6 +17,7 @@
 		E204CCF221FCBB46006286FB /* AkApiAirPmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF121FCBB46006286FB /* AkApiAirPmModel.swift */; };
 		E204CCF421FCBC2B006286FB /* AkApiAirPm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF321FCBC2B006286FB /* AkApiAirPm.swift */; };
 		E204CCF721FD5E82006286FB /* VCAir.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF621FD5E82006286FB /* VCAir.swift */; };
+		E204CCFB22036442006286FB /* ApiModelBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCFA22036442006286FB /* ApiModelBase.swift */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -121,6 +122,7 @@
 		E204CCF121FCBB46006286FB /* AkApiAirPmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiAirPmModel.swift; sourceTree = "<group>"; };
 		E204CCF321FCBC2B006286FB /* AkApiAirPm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AkApiAirPm.swift; sourceTree = "<group>"; };
 		E204CCF621FD5E82006286FB /* VCAir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCAir.swift; sourceTree = "<group>"; };
+		E204CCFA22036442006286FB /* ApiModelBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiModelBase.swift; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -482,6 +484,7 @@
 				E220997821F2DAE400CDE9EA /* DailyModel.swift */,
 				E22D792021FC389C000C3C46 /* IAddressModel.swift */,
 				E204CCEF21FCA0C0006286FB /* AirModel.swift */,
+				E204CCFA22036442006286FB /* ApiModelBase.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -678,6 +681,7 @@
 				E22D791D21FC355C000C3C46 /* KakaoApiManager.swift in Sources */,
 				E27AD5C921E5AAD400CD67B6 /* KmaApiManager.swift in Sources */,
 				E27AD63E21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift in Sources */,
+				E204CCFB22036442006286FB /* ApiModelBase.swift in Sources */,
 				E27AD5C721E5A5E500CD67B6 /* KmaApiShortBase.swift in Sources */,
 				E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,

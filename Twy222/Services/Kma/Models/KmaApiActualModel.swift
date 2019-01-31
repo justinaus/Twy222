@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KmaApiActualModel: IDate {
+class KmaApiActualModel: ApiModelBase, IDate {
     public private(set) var date: Date;
     public private(set) var kmaXY: KmaXY;
     

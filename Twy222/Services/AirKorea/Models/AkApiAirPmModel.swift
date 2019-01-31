@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AkApiAirPmModel {
+class AkApiAirPmModel: ApiModelBase {
     public private(set) var dateCalled: Date;
     public private(set) var stationName: String;
     

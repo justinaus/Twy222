@@ -9,7 +9,7 @@
 
 import Foundation
 
-class KakaoApiAddressModel: IAddressModel {
+class KakaoApiAddressModel: ApiModelBase, IAddressModel {
     public private(set) var dateCalled:Date;
     
     public private(set) var regionCode: String;

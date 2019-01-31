@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AkStationModel {
+class AkStationModel: ApiModelBase {
     public private(set) var stationName: String;
     
     //    public private(set) var addressFull: String;
