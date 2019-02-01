@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class KmaApiMidTemperature: KmaApiMidBase {
     static let shared = KmaApiMidTemperature();
@@ -16,7 +17,7 @@ final class KmaApiMidTemperature: KmaApiMidBase {
         
 //        print("중기 기온 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( dictItem: [String:Any] ) {
+        func onComplete( dictItem: JSON ) {
             guard let model = makeModel( dateBase: dateBase, regId: regionId, dictItem: dictItem ) else {
                 callbackError( ErrorModel() );
                 return;
@@ -40,15 +41,15 @@ final class KmaApiMidTemperature: KmaApiMidBase {
         return false;
     }
     
-    private func makeModel( dateBase: Date, regId: String, dictItem: [String:Any] ) -> KmaApiMidTemperatureModel? {
+    private func makeModel( dateBase: Date, regId: String, dictItem: JSON ) -> KmaApiMidTemperatureModel? {
         let model = KmaApiMidTemperatureModel(dateBase: dateBase, regId: regId);
         
         // 3일 ~ 10일 제공. 근데 그냥 5개만 하자.
         for i in 2 ..< 7 {
-            guard let max = dictItem[ "taMax\(i+1)" ] as? Double else {
+            guard let max = dictItem[ "taMax\(i+1)" ].double else {
                 return nil;
             }
-            guard let min = dictItem[ "taMin\(i+1)" ] as? Double else {
+            guard let min = dictItem[ "taMin\(i+1)" ].double else {
                 return nil;
             }
             

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class AkApiAirPm: AkApiBase {
     static let shared = AkApiAirPm();
@@ -14,7 +15,7 @@ final class AkApiAirPm: AkApiBase {
     public func getData( dateNow: Date, stationName: String, callbackComplete:@escaping (AkApiAirPmModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let url = getUrl(stationName: stationName);
         
-        func onComplete( json: [String:Any] ) {
+        func onComplete( json: JSON ) {
             guard let model = makeModel(dateNow: dateNow, stationName: stationName, json: json) else {
                 callbackError( ErrorModel() );
                 return;
@@ -26,16 +27,16 @@ final class AkApiAirPm: AkApiBase {
         makeCall(url: url, callbackComplete: onComplete, callbackError: callbackError)
     }
     
-    private func makeModel( dateNow: Date, stationName: String, json: [String:Any] ) -> AkApiAirPmModel? {
-        guard let list = json[ "list" ] as? Array< [ String : Any ] > else {
+    private func makeModel( dateNow: Date, stationName: String, json: JSON ) -> AkApiAirPmModel? {
+        guard let list = json[ "list" ].array else {
             return nil;
         }
         
         for item in list {
-            guard let pm10Value = item[ "pm10Value" ] as? String else {
+            guard let pm10Value = item[ "pm10Value" ].string else {
                 continue;
             }
-            guard let pm25Value = item[ "pm25Value" ] as? String else {
+            guard let pm25Value = item[ "pm25Value" ].string else {
                 continue;
             }
             guard let intPm10 = NumberUtil.roundToInt(value: pm10Value) else {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class KmaApiMidLand: KmaApiMidBase {
     static let shared = KmaApiMidLand();
@@ -16,7 +17,7 @@ final class KmaApiMidLand: KmaApiMidBase {
         
 //        print("중기 육상 상태 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( dictItem: [String:Any] ) {
+        func onComplete( dictItem: JSON ) {
             guard let model = makeModel( dateBase: dateBase, regId: regionId, dictItem: dictItem ) else {
                 callbackError( ErrorModel() );
                 return;
@@ -40,14 +41,14 @@ final class KmaApiMidLand: KmaApiMidBase {
         return false;
     }
     
-    private func makeModel( dateBase: Date, regId: String, dictItem: [String:Any] ) -> KmaApiMidLandModel? {
+    private func makeModel( dateBase: Date, regId: String, dictItem: JSON ) -> KmaApiMidLandModel? {
         let model = KmaApiMidLandModel(dateBase: dateBase, regId: regId);
         
         for i in 2 ..< 7 {
-            guard let am = dictItem[ "wf\(i+1)Am" ] as? String else {
+            guard let am = dictItem[ "wf\(i+1)Am" ].string else {
                 return nil;
             }
-            guard let pm = dictItem[ "wf\(i+1)Pm" ] as? String else {
+            guard let pm = dictItem[ "wf\(i+1)Pm" ].string else {
                 return nil;
             }
             

@@ -7,43 +7,35 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 class KmaApiMidBase {
     
-    public func makeCall( serviceName: String, baseDate: Date, regId: String, callbackComplete:@escaping ([String:Any]) -> Void, callbackError: @escaping (ErrorModel) -> Void ) {
+    public func makeCall( serviceName: String, baseDate: Date, regId: String, callbackComplete:@escaping (JSON) -> Void, callbackError: @escaping (ErrorModel) -> Void ) {
         let url = getUrl(serviceName: serviceName, baseDate: baseDate, regId: regId);
         
         var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
         encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
         
-        guard let urlObjct = URL(string: encodedUrl) else {
-            callbackError( ErrorModel() );
-            return;
-        }
-        
-        var request = URLRequest(url: urlObjct );
-        request.httpMethod = "GET"
-        
-        let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
-            if (error != nil) {
-                print(error!);
+        Alamofire.request(encodedUrl, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value);
+                
+                guard let item = self.getItemDictionary(json: json) else {
+                    callbackError( ErrorModel() );
+                    return;
+                }
+                
+                callbackComplete( item );
+            case .failure(let error):
+                print(error)
                 callbackError( ErrorModel() );
-            } else {
-                guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
-                    callbackError( ErrorModel() );
-                    return;
-                }
-                
-                guard let dictItem = self.getItemDictionary( anyJson: json ) else {
-                    callbackError( ErrorModel() );
-                    return;
-                }
-                
-                callbackComplete( dictItem );
             }
         }
         
-        currentTask.resume();
+        
     }
     
     private func getUrl( serviceName: String, baseDate: Date, regId: String ) -> String {
@@ -59,34 +51,15 @@ class KmaApiMidBase {
         return url;
     }
     
-    private func getItemDictionary( anyJson: Any ) -> [ String : Any ]? {
-        guard let json = anyJson as? [String:Any] else {
-            return nil;
+    private func getItemDictionary( json: JSON ) -> JSON? {
+        if let resultCode = json[ "response" ][ "header" ][ "resultCode" ].string {
+            if( resultCode != "0000" ) {
+                print("resultCode : ", resultCode );
+                return nil;
+            }
         }
         
-        guard let response = json[ "response" ] as? [ String : Any ] else {
-            return nil;
-        }
-        guard let header = response[ "header" ] as? [ String : Any ] else {
-            return nil;
-        }
-        guard let resultCode = header[ "resultCode" ] as? String else {
-            return nil;
-        }
-        if( resultCode != "0000" ) {
-            print("resultCode : ", resultCode )
-            return nil;
-        }
-        guard let body = response[ "body" ] as? [ String : Any ] else {
-            return nil;
-        }
-        guard let items = body[ "items" ] as? [ String : Any ] else {
-            return nil;
-        }
-        guard let item = items[ "item" ] as? [ String : Any ] else {
-            return nil;
-        }
-        
+        let item = json["response"]["body"]["items"]["item"];
         return item;
     }
     

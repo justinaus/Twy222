@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class KakaoApiAddress: KakaoApiBase {
     static let shared = KakaoApiAddress();
@@ -14,7 +15,7 @@ final class KakaoApiAddress: KakaoApiBase {
     public func getData( dateNow: Date, lon: Double, lat: Double, callbackComplete: @escaping (KakaoApiAddressModel) -> Void, callbackError: @escaping (ErrorModel) -> Void ) {
         let URL_SERVICE = "coord2regioncode.json";
         
-        func onComplete( json: [String:Any] ) {
+        func onComplete( json: JSON ) {
             guard let model = makeModel(dateNow: dateNow, json: json) else {
                 callbackError( ErrorModel() );
                 return;
@@ -26,42 +27,39 @@ final class KakaoApiAddress: KakaoApiBase {
         makeCall(serviceName: URL_SERVICE, lat: lat, lon: lon, callbackComplete: onComplete, callbackError: callbackError);
     }
     
-    private func makeModel( dateNow: Date, json: [String:Any] ) -> KakaoApiAddressModel? {
-        guard let documents = json[ "documents" ] as? Array< [ String : Any ] > else {
+    private func makeModel( dateNow: Date, json: JSON ) -> KakaoApiAddressModel? {
+        guard let documents = json[ "documents" ].array else {
             return nil;
         }
         
         for item in documents {
-            guard let region_type = item[ "region_type" ] as? String else {
-                continue;
-            }
-            // 일단 법정 타입 데이터로.
-            if( region_type == "H" ) {
+            // 일단 법정 타입 데이터만 사용.
+            if( item[ "region_type" ].string != "B" ) {
                 continue;
             }
             
-            guard let code = item[ "code" ] as? String else {
+            guard let code = item[ "code" ].string else {
                 return nil;
             }
-            guard let x = item[ "x" ] as? Double else {
+            guard let x = item[ "x" ].double else {
                 return nil;
             }
-            guard let y = item[ "y" ] as? Double else {
+            guard let y = item[ "y" ].double else {
                 return nil;
             }
-            guard let address_name = item[ "address_name" ] as? String else {
+            guard let address_name = item[ "address_name" ].string else {
                 return nil;
             }
             
             let model = KakaoApiAddressModel(dateBase: dateNow, regionCode: code, addressFull: address_name, tmX: x, tmY: y);
             
-            if let region_1depth_name = item[ "region_1depth_name" ] as? String {
+            if let region_1depth_name = item[ "region_1depth_name" ].string {
                 model.setAddressSido(value: region_1depth_name);
             }
-            if let region_2depth_name = item[ "region_2depth_name" ] as? String {
+            if let region_2depth_name = item[ "region_2depth_name" ].string {
                 model.setAddressGu(value: region_2depth_name);
             }
-            if let region_3depth_name = item[ "region_3depth_name" ] as? String {
+            if let region_3depth_name = item[ "region_3depth_name" ].string {
                 model.setAddressDong(value: region_3depth_name);
             }
             

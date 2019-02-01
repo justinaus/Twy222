@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class KmaApiActual: KmaApiShortBase {
     static let shared = KmaApiActual();
@@ -17,7 +18,7 @@ final class KmaApiActual: KmaApiShortBase {
     public func getData( dateBase:Date, kmaXY: KmaXY, callbackComplete:@escaping (KmaApiActualModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
 //        print("지정 시간 날씨 basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( arrItem: Array<[String:Any]> ) {
+        func onComplete( arrItem: Array<JSON> ) {
             guard let model = makeModel( kmaXY: kmaXY, arrItem: arrItem ) else {
                 callbackError( ErrorModel() );
                 return;
@@ -48,7 +49,7 @@ final class KmaApiActual: KmaApiShortBase {
         return dateRet
     }
     
-    private func makeModel( kmaXY: KmaXY, arrItem: Array<[ String : Any ]> ) -> KmaApiActualModel? {
+    private func makeModel( kmaXY: KmaXY, arrItem: Array<JSON> ) -> KmaApiActualModel? {
         let len = arrItem.count;
 
         var dateBase: Date?;
@@ -57,16 +58,16 @@ final class KmaApiActual: KmaApiShortBase {
         for i in 0..<len {
             let obj = arrItem[ i ];
 
-            guard let category = obj[ "category" ] as? String else {
+            guard let category = obj[ "category" ].string else {
                 continue;
             }
 
             switch( category ) {
             case KmaCategoryCodeEnum.T1H.rawValue:
-                guard let obsrValue = obj[ "obsrValue" ] as? Double else {
+                guard let obsrValue = obj[ "obsrValue" ].double else {
                     return nil;
                 }
-                guard let dateBaseTemp = KmaUtils.getDateByDateAndTime(anyDate: obj[ "baseDate" ], anyTime: obj[ "baseTime" ]) else {
+                guard let dateBaseTemp = KmaUtils.getDateByDateAndTimeJSON(anyDate: obj[ "baseDate" ], anyTime: obj[ "baseTime" ]) else {
                     return nil;
                 }
                 

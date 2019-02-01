@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class AkApiStation: AkApiBase {
     static let shared = AkApiStation();
@@ -14,7 +15,8 @@ final class AkApiStation: AkApiBase {
     public func getData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AkApiStationModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let url = getUrl(tmX: tmX, tmY: tmY);
         
-        func onComplete( json: [String:Any] ) {
+//        func onComplete( json: [String:Any] ) {
+        func onComplete( json: JSON ) {
             guard let model = makeModel(dateNow: dateNow, json: json) else {
                 callbackError( ErrorModel() );
                 return;
@@ -26,22 +28,21 @@ final class AkApiStation: AkApiBase {
         makeCall(url: url, callbackComplete: onComplete, callbackError: callbackError)
     }
     
-    private func makeModel( dateNow: Date, json: [String:Any] ) -> AkApiStationModel? {
-        guard let list = json[ "list" ] as? Array< [ String : Any ] > else {
+    private func makeModel( dateNow: Date, json: JSON ) -> AkApiStationModel? {
+        guard let list = json[ "list" ].array else {
             return nil;
         }
         
         let model = AkApiStationModel(dateCalled: dateNow);
         
         for item in list {
-            guard let stationName = item[ "stationName" ] as? String else {
+            guard let stationName = item[ "stationName" ].string else {
                 continue;
             }
             
-            
             let stationModel = AkStationModel(stationName: stationName);
             
-            if let tm = item[ "tm" ] as? Double {
+            if let tm = item[ "tm" ].double {
                 stationModel.setDistance(value: tm);
             }
             

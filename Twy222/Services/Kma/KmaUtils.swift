@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct KmaApiUrlStruct {
     static let URL_ROOT = "http://newsky2.kma.go.kr/service/"
@@ -98,22 +99,22 @@ class KmaUtils {
         return ( baseDate: baseDate, baseTime: baseTime );
     }
     
-    public static func getDateByDateAndTime( anyDate: Any?, anyTime: Any? ) -> Date? {
+    public static func getDateByDateAndTimeJSON( anyDate: JSON, anyTime: JSON ) -> Date? {
         var strDate: String?;
         var strTime: String?;
         
         // string으로 들어오는지 int로 들어오는지 뭔가 이상함. 둘 다 대응하겠다.
-        if let baseDate = anyDate as? String {
+        if let baseDate = anyDate.string {
             strDate = baseDate;
-        } else if let baseDate = anyDate as? Int {
+        } else if let baseDate = anyDate.int {
             strDate = String(baseDate);
         } else {
             return nil;
         }
         
-        if let baseTime = anyTime as? String {
+        if let baseTime = anyTime.string {
             strTime = baseTime;
-        } else if let baseTime = anyTime as? Int {
+        } else if let baseTime = anyTime.int {
             strTime = String(baseTime);
         } else {
             return nil;
@@ -126,9 +127,41 @@ class KmaUtils {
         guard let dateBase = KmaUtils.createDate(kmaDate: strDate!, kmaTime: strTime!) else {
             return nil;
         }
-
+        
         return dateBase;
     }
+    
+//    public static func getDateByDateAndTime( anyDate: Any?, anyTime: Any? ) -> Date? {
+//        var strDate: String?;
+//        var strTime: String?;
+//        
+//        // string으로 들어오는지 int로 들어오는지 뭔가 이상함. 둘 다 대응하겠다.
+//        if let baseDate = anyDate as? String {
+//            strDate = baseDate;
+//        } else if let baseDate = anyDate as? Int {
+//            strDate = String(baseDate);
+//        } else {
+//            return nil;
+//        }
+//        
+//        if let baseTime = anyTime as? String {
+//            strTime = baseTime;
+//        } else if let baseTime = anyTime as? Int {
+//            strTime = String(baseTime);
+//        } else {
+//            return nil;
+//        }
+//        
+//        if( strDate == nil || strTime == nil ) {
+//            return nil;
+//        }
+//        
+//        guard let dateBase = KmaUtils.createDate(kmaDate: strDate!, kmaTime: strTime!) else {
+//            return nil;
+//        }
+//
+//        return dateBase;
+//    }
     
     public static func getStatusImageName( skyEnum: KmaSkyEnum, ptyEnum: KmaPtyEnum, isDay:Bool ) -> String {
         switch ptyEnum {

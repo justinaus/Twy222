@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
     static let shared = KmaApiForecastTimeVeryShort();
@@ -17,7 +18,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
         
 //        print("초단기 예보 호출 basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( arrItem: Array<[String:Any]> ) {
+        func onComplete( arrItem: Array<JSON> ) {
             guard let model = makeModel( dateNow: dateNow, dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem ) else {
                 callbackError( ErrorModel() );
                 return;
@@ -60,19 +61,15 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
         return dateRet
     }
     
-    private func makeModel( dateNow: Date, dateBase: Date, kmaXY: KmaXY, arrItem: Array<[ String : Any ]> ) -> KmaApiForecastTimeVeryShortModel? {
-        let len = arrItem.count;
-        
+    private func makeModel( dateNow: Date, dateBase: Date, kmaXY: KmaXY, arrItem: Array<JSON> ) -> KmaApiForecastTimeVeryShortModel? {
         var dateFcst: Date?;
         
         var temperature: Double?;
         var skyEnum: KmaSkyEnum?;
         var ptyEnum: KmaPtyEnum?;
         
-        for i in 0..<len {
-            let obj = arrItem[ i ];
-
-            guard let dateForecast = KmaUtils.getDateByDateAndTime(anyDate: obj["fcstDate"], anyTime: obj["fcstTime"]) else {
+        for obj in arrItem {
+            guard let dateForecast = KmaUtils.getDateByDateAndTimeJSON(anyDate: obj["fcstDate"], anyTime: obj["fcstTime"]) else {
                 continue;
             }
             
@@ -91,13 +88,13 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
                 dateFcst = dateForecast;
             }
             
-            guard let category = obj[ "category" ] as? String else {
+            guard let category = obj[ "category" ].string else {
                 continue;
             }
             
             switch( category ) {
             case KmaCategoryCodeEnum.T1H.rawValue:
-                guard let fcstValue = obj[ "fcstValue" ] as? Double else {
+                guard let fcstValue = obj[ "fcstValue" ].double else {
                     continue;
                 }
                 
@@ -105,7 +102,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
                 
                 break;
             case KmaCategoryCodeEnum.PTY.rawValue:
-                guard let fcstValue = obj[ "fcstValue" ] as? Int else {
+                guard let fcstValue = obj[ "fcstValue" ].int else {
                     continue;
                 }
                 guard let ptyEnumTemp = KmaPtyEnum(rawValue: fcstValue) else {
@@ -116,7 +113,7 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
                 
                 break;
             case KmaCategoryCodeEnum.SKY.rawValue:
-                guard let fcstValue = obj[ "fcstValue" ] as? Int else {
+                guard let fcstValue = obj[ "fcstValue" ].int else {
                     continue;
                 }
                 guard let skyEnumTemp = KmaSkyEnum(rawValue: fcstValue) else {

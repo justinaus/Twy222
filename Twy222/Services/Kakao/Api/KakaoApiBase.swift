@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import Alamofire
+import SwiftyJSON
 
 class KakaoApiBase {
-    public func makeCall( serviceName: String, lat: Double, lon: Double, callbackComplete:@escaping ([String:Any]) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func makeCall( serviceName: String, lat: Double, lon: Double, callbackComplete:@escaping (JSON) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let url = getUrl(serviceName: serviceName, lat: lat, lon: lon);
         
         let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
@@ -23,26 +25,37 @@ class KakaoApiBase {
         request.httpMethod = "GET"
         request.setValue("KakaoAK \(KakaoConfig.APP_KEY)", forHTTPHeaderField: "Authorization");
         
-        let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
-            if (error != nil) {
-                print(error!);
+        Alamofire.request(request).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                callbackComplete( json );
+            case .failure(let error):
+                print(error)
                 callbackError( ErrorModel() );
-            } else {
-                guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
-                    callbackError( ErrorModel() );
-                    return;
-                }
-                
-                guard let jsonStringAny = json as? [String:Any] else {
-                    callbackError( ErrorModel() );
-                    return;
-                }
-                
-                callbackComplete( jsonStringAny );
             }
         }
         
-        currentTask.resume();
+//        let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
+//            if (error != nil) {
+//                print(error!);
+//                callbackError( ErrorModel() );
+//            } else {
+//                guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
+//                    callbackError( ErrorModel() );
+//                    return;
+//                }
+//
+//                guard let jsonStringAny = json as? [String:Any] else {
+//                    callbackError( ErrorModel() );
+//                    return;
+//                }
+//
+//                callbackComplete( jsonStringAny );
+//            }
+//        }
+//
+//        currentTask.resume();
     }
     
     private func getUrl( serviceName: String, lat: Double, lon: Double ) -> String {

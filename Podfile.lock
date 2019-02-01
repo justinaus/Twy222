@@ -1,21 +1,29 @@
 PODS:
+  - Alamofire (4.8.1)
   - Crashlytics (3.12.0):
     - Fabric (~> 1.9.0)
   - Fabric (1.9.0)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
   - Crashlytics
   - Fabric
+  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Alamofire
     - Crashlytics
     - Fabric
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 8acf65decbad491cc1c810dce1edf18b9df968cc
+PODFILE CHECKSUM: 913393cf08554b6b21788a33de03da07adf85fa9
 
 COCOAPODS: 1.5.3
