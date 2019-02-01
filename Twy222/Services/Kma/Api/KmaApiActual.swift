@@ -14,20 +14,19 @@ final class KmaApiActual: KmaApiShortBase {
     
     let URL_SERVICE = "ForecastGrib";
     
-    public func getData( dateBase:Date, kmaXY: KmaXY, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
+    public func getData( dateBase:Date, kmaXY: KmaXY, callbackComplete:@escaping (KmaApiActualModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
 //        print("지정 시간 날씨 basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( arrItem: Array<[String:Any]>? ) {
-            if( arrItem == nil ) {
-                callback( nil );
+        func onComplete( arrItem: Array<[String:Any]> ) {
+            guard let model = makeModel( kmaXY: kmaXY, arrItem: arrItem ) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel( kmaXY: kmaXY, arrItem: arrItem! );
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callback: onComplete );
+        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callbackComplete: onComplete, callbackError: callbackError );
     }
     
     public func getBaseDate( dateNow: Date ) -> Date {

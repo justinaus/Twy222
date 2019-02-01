@@ -26,14 +26,14 @@ final class KmaApiManager {
     private var apiMidLandModel: KmaApiMidLandModel?;
     
     
-    public func getNowData( dateNow: Date, lat: Double, lon: Double, callback:@escaping ( NowModel? ) -> Void ) {
+    public func getNowData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (NowModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         var nowModel: NowModel?
         
         let kmaXY = KmaUtils.getKmaXY(lat: lat, lon: lon);
         
         func onCompleteVeryShort( model: KmaApiForecastTimeVeryShortModel? ) {
             guard let modelNotNil = model else {
-                callback( nil );
+                callbackComplete( nil );
                 return;
             }
             
@@ -47,25 +47,20 @@ final class KmaApiManager {
             apiTimeVeryShortModel = model;
             
             let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: modelNotNil.dateForecast)!;
-            getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callback: onCompleteYesterday);
+            getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callbackComplete: onCompleteYesterday, callbackError: callbackError );
         }
         
-        func onCompleteYesterday( model: KmaApiActualModel? ) {
-            guard let modelNotNil = model else {
-                callback( nowModel );
-                return;
-            }
-            
-            let resultDiff = nowModel!.temperature - modelNotNil.temperature;
+        func onCompleteYesterday( model: KmaApiActualModel ) {
+            let resultDiff = nowModel!.temperature - model.temperature;
             nowModel!.setDiffFromYesterday(value: resultDiff);
             
-            callback( nowModel );
+            callbackComplete( nowModel );
         }
         
-        getForecastVeryShort(dateNow: dateNow, kmaXY: kmaXY, callback: onCompleteVeryShort);
+        getForecastVeryShort(dateNow: dateNow, kmaXY: kmaXY, callbackComplete: onCompleteVeryShort, callbackError: callbackError);
     }
     
-    public func getForecastHourlyData( dateNow: Date, callback:@escaping ( ForecastHourListModel? ) -> Void, callbackYesterdayAll:@escaping () -> Void ) {
+    public func getForecastHourlyData( dateNow: Date, callbackComplete:@escaping (ForecastHourListModel?) -> Void, callbackYesterdayAll:@escaping () -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KmaApiForecastSpace3hours.shared;
         let dateBase = api.getBaseDate(dateNow: dateNow);
         let prevModel = apiSpace3HoursModel;
@@ -73,19 +68,14 @@ final class KmaApiManager {
         
         let hasToCall: Bool = prevModel == nil ? true : api.hasToCall(prevModel: prevModel!, newDateBase: dateBase, kmaXY: kmaXY);
         if( !hasToCall ) {
-            callback( nil );
+            callbackComplete( nil );
             return;
         }
         
         space3HourYesterdayList = [];
         var nYesterdayCompleteCount = 0;
         
-        func onComplete( model: KmaApiForecastSpace3hoursModel? ) {
-            guard let modelNotNil = model else {
-                callback( nil );
-                return;
-            }
-            
+        func onComplete( modelNotNil: KmaApiForecastSpace3hoursModel ) {
             apiSpace3HoursModel = modelNotNil;
             
             let retModel = ForecastHourListModel(dateBase: modelNotNil.dateBaseCalled);
@@ -101,10 +91,10 @@ final class KmaApiManager {
                 model = changeToCommonHourlyModel(kmaModel: kmaModel);
                 retModel.list.append(model);
                 
-                getYesterdayData(standardModel: model, kmaXY: kmaXY, callback: onCompleteYesterday);
+                getYesterdayData(standardModel: model, kmaXY: kmaXY, callbackComplete: onCompleteYesterday);
             }
 
-            callback( retModel );
+            callbackComplete( retModel );
         }
         
         func onCompleteYesterday() {
@@ -115,12 +105,32 @@ final class KmaApiManager {
             }
         }
         
-        api.getData(dateBase: dateBase, kmaXY: kmaXY, callback: onComplete);
+        api.getData(dateBase: dateBase, kmaXY: kmaXY, callbackComplete: onComplete, callbackError: callbackError);
     }
     
-    public func getForecastMidData( dateNow: Date, callback:@escaping ( ForecastMidListModel? ) -> Void ) {
+    private func getForecastVeryShort( dateNow: Date, kmaXY: KmaXY, callbackComplete:@escaping (KmaApiForecastTimeVeryShortModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+        let api = KmaApiForecastTimeVeryShort.shared;
+        let dateBase = api.getBaseDate(dateNow: dateNow);
+        let prevModel = apiTimeVeryShortModel;
+        
+        let hasToCall: Bool = prevModel == nil ? true : api.hasToCall(prevModel: prevModel!, newDateBase: dateBase, kmaXY: kmaXY);
+        if( !hasToCall ) {
+            callbackComplete( nil );
+            return;
+        }
+        
+        api.getData(dateNow: dateNow, dateBase: dateBase, kmaXY: kmaXY, callbackComplete: callbackComplete, callbackError: callbackError);
+    }
+    
+    private func getActualData( dateBase: Date, kmaXY: KmaXY, callbackComplete:@escaping (KmaApiActualModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+        let api = KmaApiActual.shared;
+        
+        api.getData(dateBase: dateBase, kmaXY: kmaXY, callbackComplete: callbackComplete, callbackError: callbackError);
+    }
+    
+    public func getForecastMidData( dateNow: Date, callbackComplete:@escaping (ForecastMidListModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         guard let gridModel = GridManager.shared.getCurrentGridModel() else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return ;
         }
         
@@ -128,18 +138,18 @@ final class KmaApiManager {
         
         func onCompleteTemperature( model: KmaApiMidTemperatureModel? ) {
             guard let modelNotNil = model else {
-                callback( nil );
+                callbackComplete( nil );
                 return;
             }
             
             modelTemperature = modelNotNil;
             
-            getForecastMidLand(dateNow: dateNow, addressSiDo: gridModel.addressModel?.addressSiDo, addressGu: gridModel.addressModel?.addressGu, callback: onCompleteLand);
+            getForecastMidLand(dateNow: dateNow, addressSiDo: gridModel.addressModel?.addressSiDo, addressGu: gridModel.addressModel?.addressGu, callbackComplete: onCompleteLand, callbackError: callbackError);
         }
         
         func onCompleteLand( model: KmaApiMidLandModel? ) {
             guard let modelNotNil = model else {
-                callback( nil );
+                callbackComplete( nil );
                 return;
             }
             
@@ -165,10 +175,10 @@ final class KmaApiManager {
 //                print( "\(DateUtil.getStringByDate(date: item.date))" )
 //            }
             
-            callback( retMidModel );
+            callbackComplete( retMidModel );
         }
         
-        getForecastMidTemperature(dateNow: dateNow, addressSiDo: gridModel.addressModel?.addressSiDo, addressGu: gridModel.addressModel?.addressGu, callback: onCompleteTemperature);
+        getForecastMidTemperature(dateNow: dateNow, addressSiDo: gridModel.addressModel?.addressSiDo, addressGu: gridModel.addressModel?.addressGu, callbackComplete: onCompleteTemperature, callbackError: callbackError);
     }
     
     private func makeMidAfter3dayList( modelTemperature: KmaApiMidTemperatureModel, modelLand: KmaApiMidLandModel ) -> Array<DailyModel> {
@@ -190,63 +200,33 @@ final class KmaApiManager {
         return arrRet;
     }
     
-    private func getYesterdayData( standardModel: HourlyModel, kmaXY: KmaXY, callback:@escaping () -> Void ) {
+    private func getYesterdayData( standardModel: HourlyModel, kmaXY: KmaXY, callbackComplete:@escaping () -> Void ) {
         let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: standardModel.date)!;
         
-        func onComplete( model: KmaApiActualModel? ) {
-            guard let modelNotNil = model else {
-                callback();
-                return;
-            }
+        func onComplete( model: KmaApiActualModel ) {
+            space3HourYesterdayList!.append(model);
             
-            space3HourYesterdayList!.append(modelNotNil);
-            
-            let yesterdayTemperature = modelNotNil.temperature;
+            let yesterdayTemperature = model.temperature;
             let resultDiff = standardModel.temperature - yesterdayTemperature;
             
             standardModel.setDiffFromYesterday(value: resultDiff );
             
-            callback();
+            callbackComplete();
         }
         
-        getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callback: onComplete);
+        func onError( errorModel: ErrorModel ) {
+            // 이거는 그냥 에러는 발생시키지 말자..
+            callbackComplete();
+        }
+        
+        getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callbackComplete: onComplete, callbackError:  onError);
     }
     
-    private func getForecastVeryShort( dateNow: Date, kmaXY: KmaXY, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
-        let api = KmaApiForecastTimeVeryShort.shared;
-        
-        let dateBase = api.getBaseDate(dateNow: dateNow);
-        
-        let prevModel = apiTimeVeryShortModel;
-        
-        let hasToCall: Bool = prevModel == nil ? true : api.hasToCall(prevModel: prevModel!, newDateBase: dateBase, kmaXY: kmaXY);
-        if( !hasToCall ) {
-            callback( nil );
-            return;
-        }
-        
-        func onComplete( model: KmaApiForecastTimeVeryShortModel? ) {
-            callback( model );
-        }
-        
-        api.getData(dateNow: dateNow, dateBase: dateBase, kmaXY: kmaXY, callback: onComplete);
-    }
-    
-    private func getActualData( dateBase: Date, kmaXY: KmaXY, callback:@escaping ( KmaApiActualModel? ) -> Void ) {
-        let api = KmaApiActual.shared;
-        
-        func onComplete( model: KmaApiActualModel? ) {
-            callback( model );
-        }
-        
-        api.getData(dateBase: dateBase, kmaXY: kmaXY, callback: onComplete);
-    }
-    
-    private func getForecastMidTemperature( dateNow:Date, addressSiDo: String?, addressGu: String?, callback:@escaping ( KmaApiMidTemperatureModel? ) -> Void ) {
+    private func getForecastMidTemperature( dateNow:Date, addressSiDo: String?, addressGu: String?, callbackComplete:@escaping (KmaApiMidTemperatureModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KmaApiMidTemperature.shared;
         
         guard let regId = api.getRegionId(addressSiDo: addressSiDo, addressGu: addressGu) else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return ;
         }
         
@@ -256,33 +236,25 @@ final class KmaApiManager {
         
         let hasToCall: Bool = prevModel == nil ? true : api.hasToCall(prevModel: prevModel!, newDateBase: dateBase, newRegId: regId);
         if( !hasToCall ) {
-            callback( nil );
+            callbackComplete( nil );
             return;
         }
         
-        func onComplete( model: KmaApiMidTemperatureModel? ) {
-            callback( model );
-        }
-        
-        api.getData(dateBase: dateBase, regionId: regId, callback: onComplete);
+        api.getData(dateBase: dateBase, regionId: regId, callbackComplete: callbackComplete, callbackError: callbackError);
     }
     
-    private func getForecastMidLand( dateNow:Date, addressSiDo: String?, addressGu: String?, callback:@escaping ( KmaApiMidLandModel? ) -> Void ) {
+    private func getForecastMidLand( dateNow:Date, addressSiDo: String?, addressGu: String?, callbackComplete:@escaping (KmaApiMidLandModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KmaApiMidLand.shared;
         
         guard let regId = api.getRegionId(addressSiDo: addressSiDo, addressGu: addressGu) else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return ;
         }
         
         let dateBase = api.getBaseDate(dateNow: dateNow);
         // 이건 그냥 hasToCall 체크 안하겠다.
         
-        func onComplete( model: KmaApiMidLandModel? ) {
-            callback( model );
-        }
-        
-        api.getData(dateBase: dateBase, regionId: regId, callback: onComplete)
+        api.getData(dateBase: dateBase, regionId: regId, callbackComplete: callbackComplete, callbackError: callbackError)
     }
     
     // 서비스에 종속적이지 않은 모델로 변환.

@@ -11,20 +11,19 @@ import Foundation
 final class KakaoApiAddress: KakaoApiBase {
     static let shared = KakaoApiAddress();
     
-    public func getData( dateNow: Date, lon: Double, lat: Double, callback:@escaping ( KakaoApiAddressModel? ) -> Void ) {
+    public func getData( dateNow: Date, lon: Double, lat: Double, callbackComplete: @escaping (KakaoApiAddressModel) -> Void, callbackError: @escaping (ErrorModel) -> Void ) {
         let URL_SERVICE = "coord2regioncode.json";
         
-        func onComplete( json: [String:Any]? ) {
-            guard let jsonNotNil = json else {
-                callback( nil );
+        func onComplete( json: [String:Any] ) {
+            guard let model = makeModel(dateNow: dateNow, json: json) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel(dateNow: dateNow, json: jsonNotNil);
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall(serviceName: URL_SERVICE, lat: lat, lon: lon, callback: onComplete);
+        makeCall(serviceName: URL_SERVICE, lat: lat, lon: lon, callbackComplete: onComplete, callbackError: callbackError);
     }
     
     private func makeModel( dateNow: Date, json: [String:Any] ) -> KakaoApiAddressModel? {

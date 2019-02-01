@@ -9,12 +9,12 @@
 import Foundation
 
 class AkApiBase {
-    public func makeCall( url: String, callback:@escaping ( [String:Any]? ) -> Void ) {
+    public func makeCall( url: String, callbackComplete:@escaping ([String:Any]) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
         encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
         
         guard let urlObjct = URL(string: encodedUrl) else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return;
         }
         
@@ -24,19 +24,19 @@ class AkApiBase {
         let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if (error != nil) {
                 print(error!);
-                callback( nil );
+                callbackError( ErrorModel() );
             } else {
                 guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
-                    callback( nil );
+                    callbackError( ErrorModel() );
                     return;
                 }
                 
                 guard let jsonStringAny = json as? [String:Any] else {
-                    callback( nil );
+                    callbackError( ErrorModel() );
                     return;
                 }
                 
-                callback( jsonStringAny );
+                callbackComplete( jsonStringAny );
             }
         }
         

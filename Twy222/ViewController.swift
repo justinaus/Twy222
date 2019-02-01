@@ -86,16 +86,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
-        func onComplete( model: IAddressModel? ) {
-            guard let modelNotNil = model else {
-                AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil)
-                return;
-            }
-            
+        func onComplete( model: IAddressModel ) {
             let gridModel = GridModel(lat: lat, lon: lon);
             GridManager.shared.setCurrentGridModel( gridModel: gridModel );
             
-            gridModel.setAddressModel(value: modelNotNil);
+            gridModel.setAddressModel(value: model);
             
             DispatchQueue.main.async {
                 // 주소 정보가 없는 경우는 일어나지 않는 게 맞다. 혹여 실수하게 될 경우에 고치기 쉽게 하기 위해 빈 값을 표시하겠다.
@@ -107,7 +102,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             getAirData(dateNow: dateNow);
         }
         
-        KakaoApiManager.shared.getAddressData(dateNow: dateNow, lat: lat, lon: lon, callback: onComplete);
+        func onError( errorModel: ErrorModel ) {
+            AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil);
+        }
+        
+        KakaoApiManager.shared.getAddressData(dateNow: dateNow, lat: lat, lon: lon, callbackComplete: onComplete, callbackError: onError);
     }
     
     func getAirData( dateNow: Date ) {
@@ -130,7 +129,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         func onComplete( model: AirModel? ) {
             guard let modelNotNil = model else {
-                AlertUtil.alert(vc: self, title: "error", message: "air api error", buttonText: "확인", onSelect: nil);
+                // 에러는 아닌데 쓸 값이 없다.
                 return;
             }
             
@@ -139,9 +138,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             drawAirData();
         }
         
+        func onError( errorModel: ErrorModel ) {
+            AlertUtil.alert(vc: self, title: "error", message: "air api error", buttonText: "확인", onSelect: nil);
+        }
+        
         dateLastCalledAir = dateNow;
         
-        AkApiManager.shared.getAirData(dateNow: dateNow, tmX: kakaoAddressModel.tmX, tmY: kakaoAddressModel.tmY, callback: onComplete);
+        AkApiManager.shared.getAirData(dateNow: dateNow, tmX: kakaoAddressModel.tmX, tmY: kakaoAddressModel.tmY, callbackComplete: onComplete, callbackError: onError);
     }
     
     func drawAirData() {
@@ -168,7 +171,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         func onComplete( model:NowModel? ) {
             guard let modelNotNil = model else {
-                AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
@@ -180,13 +182,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             getForecastHourlyData(dateNow: dateNow );
         }
         
-        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridModel.latitude, lon: gridModel.longitude, callback: onComplete );
+        func onError( errorModel: ErrorModel ) {
+            AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
+        }
+        
+        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridModel.latitude, lon: gridModel.longitude, callbackComplete: onComplete, callbackError: onError );
     }
     
     func getForecastHourlyData( dateNow: Date ) {
         func onComplete( model: ForecastHourListModel? ) {
             guard let modelNotNil = model else {
-                AlertUtil.alert(vc: self, title: "error", message: "hourly api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
@@ -202,13 +207,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             getForecastMidData(dateNow: dateNow);
         }
         
-        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, callback: onComplete, callbackYesterdayAll: onCompleteYesterdayAll);
+        func onError( errorModel: ErrorModel ) {
+            AlertUtil.alert(vc: self, title: "error", message: "hourly api error", buttonText: "확인", onSelect: nil);
+        }
+        
+        KmaApiManager.shared.getForecastHourlyData(dateNow: dateNow, callbackComplete: onComplete, callbackYesterdayAll: onCompleteYesterdayAll, callbackError: onError);
     }
     
     func getForecastMidData( dateNow: Date ) {
         func onComplete( model: ForecastMidListModel? ) {
             guard let modelNotNil = model else {
-                AlertUtil.alert(vc: self, title: "error", message: "mid api error", buttonText: "확인", onSelect: nil);
                 return;
             }
             
@@ -225,7 +233,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             }
         }
         
-        KmaApiManager.shared.getForecastMidData(dateNow: dateNow, callback: onComplete);
+        func onError( errorModel: ErrorModel ) {
+            AlertUtil.alert(vc: self, title: "error", message: "mid api error", buttonText: "확인", onSelect: nil);
+        }
+        
+        KmaApiManager.shared.getForecastMidData(dateNow: dateNow, callbackComplete: onComplete, callbackError: onError);
     }
     
     func drawNowData() {

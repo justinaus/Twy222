@@ -18,54 +18,36 @@ struct AkApiUrlStruct {
 final class AkApiManager {
     static let shared = AkApiManager();
     
-    public func getAirData( dateNow: Date, tmX: Double, tmY: Double, callback:@escaping ( AirModel? ) -> Void ) {
-        func onCompleteStation( model: AkApiStationModel? ) {
-            guard let modelNotNil = model else {
-                callback( nil );
-                return;
-            }
-            
-            if( modelNotNil.list.count == 0 ) {
-                callback( nil );
+    public func getAirData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AirModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+        func onCompleteStation( model: AkApiStationModel ) {
+            if( model.list.count == 0 ) {
+                callbackError( ErrorModel() );
                 return;
             }
             
             // 일단 그냥 측정소 첫번째 거 쓰겠다.
-            let stationModel = modelNotNil.list[0];
+            let stationModel = model.list[0];
             
-            getAirPm(dateNow: dateNow, stationName: stationModel.stationName, callback: onCompleteAirPm);
+            getAirPm(dateNow: dateNow, stationName: stationModel.stationName, callbackComplete: onCompleteAirPm, callbackError: callbackError);
         }
         
-        func onCompleteAirPm( model: AkApiAirPmModel? ) {
-            guard let modelNotNil = model else {
-                callback( nil );
-                return;
-            }
-            
-            let retModel = AirModel(dateBase: modelNotNil.dateCalled, stationName: modelNotNil.stationName, pm10Value: modelNotNil.pm10, pm25Value: modelNotNil.pm25);
-            callback( retModel );
+        func onCompleteAirPm( model: AkApiAirPmModel ) {
+            let retModel = AirModel(dateBase: model.dateCalled, stationName: model.stationName, pm10Value: model.pm10, pm25Value: model.pm25);
+            callbackComplete( retModel );
         }
         
-        getStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callback: onCompleteStation)
+        getStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callbackComplete: onCompleteStation, callbackError: callbackError)
     }
     
-    private func getStation( dateNow: Date, tmX: Double, tmY: Double, callback:@escaping ( AkApiStationModel? ) -> Void ) {
+    private func getStation( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AkApiStationModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = AkApiStation.shared;
         
-        func onComplete( model: AkApiStationModel? ) {
-            callback( model );
-        }
-        
-        api.getData(dateNow: dateNow, tmX: tmX, tmY: tmY, callback: onComplete);
+        api.getData(dateNow: dateNow, tmX: tmX, tmY: tmY, callbackComplete: callbackComplete, callbackError: callbackError);
     }
     
-    private func getAirPm( dateNow: Date, stationName: String, callback:@escaping ( AkApiAirPmModel? ) -> Void ) {
+    private func getAirPm( dateNow: Date, stationName: String, callbackComplete:@escaping (AkApiAirPmModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = AkApiAirPm.shared;
         
-        func onComplete( model: AkApiAirPmModel? ) {
-            callback( model );
-        }
-        
-        api.getData(dateNow: dateNow, stationName: stationName, callback: onComplete);
+        api.getData(dateNow: dateNow, stationName: stationName, callbackComplete: callbackComplete, callbackError: callbackError);
     }
 }

@@ -11,22 +11,21 @@ import Foundation
 final class KmaApiForecastSpace3hours: KmaApiShortBase {
     static let shared = KmaApiForecastSpace3hours();
     
-    public func getData( dateBase:Date, kmaXY: KmaXY, callback:@escaping ( KmaApiForecastSpace3hoursModel? ) -> Void ) {
+    public func getData( dateBase:Date, kmaXY: KmaXY, callbackComplete:@escaping (KmaApiForecastSpace3hoursModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let URL_SERVICE = "ForecastSpaceData";
         
 //        print( "3시간 예보 call base time", DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( arrItem: Array<[String:Any]>? ) {
-            if( arrItem == nil ) {
-                callback( nil );
+        func onComplete( arrItem: Array<[String:Any]> ) {
+            guard let model = makeModel( dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem ) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel( dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem! );
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callback: onComplete );
+        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callbackComplete: onComplete, callbackError: callbackError );
     }
     
     public func hasToCall( prevModel: KmaApiForecastSpace3hoursModel, newDateBase: Date, kmaXY: KmaXY) -> Bool {

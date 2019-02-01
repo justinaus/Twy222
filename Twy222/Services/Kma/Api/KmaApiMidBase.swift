@@ -10,14 +10,14 @@ import Foundation
 
 class KmaApiMidBase {
     
-    public func makeCall( serviceName: String, baseDate: Date, regId: String, callback:@escaping ( [String:Any]? ) -> Void ) {
+    public func makeCall( serviceName: String, baseDate: Date, regId: String, callbackComplete:@escaping ([String:Any]) -> Void, callbackError: @escaping (ErrorModel) -> Void ) {
         let url = getUrl(serviceName: serviceName, baseDate: baseDate, regId: regId);
         
         var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
         encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
         
         guard let urlObjct = URL(string: encodedUrl) else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return;
         }
         
@@ -27,15 +27,19 @@ class KmaApiMidBase {
         let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if (error != nil) {
                 print(error!);
-                callback( nil );
+                callbackError( ErrorModel() );
             } else {
                 guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
-                    callback( nil );
+                    callbackError( ErrorModel() );
                     return;
                 }
                 
-                let dictItem = self.getItemDictionary( anyJson: json );
-                callback( dictItem );
+                guard let dictItem = self.getItemDictionary( anyJson: json ) else {
+                    callbackError( ErrorModel() );
+                    return;
+                }
+                
+                callbackComplete( dictItem );
             }
         }
         

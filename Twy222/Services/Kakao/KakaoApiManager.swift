@@ -18,13 +18,13 @@ struct KakaoApiUrlStruct {
 final class KakaoApiManager {
     static let shared = KakaoApiManager();
     
-    public func getAddressData( dateNow: Date, lat: Double, lon: Double, callback:@escaping ( IAddressModel? ) -> Void ) {
+    public func getAddressData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (IAddressModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KakaoApiAddress.shared;
         
-        func onComplete( model: KakaoApiAddressModel? ) {
-            callback( model );
+        func onComplete( model: KakaoApiAddressModel ) {
+            callbackComplete( model );
         }
         
-        api.getData(dateNow: dateNow, lon: lon, lat: lat, callback: onComplete)
+        api.getData(dateNow: dateNow, lon: lon, lat: lat, callbackComplete: onComplete, callbackError: callbackError)
     }
 }

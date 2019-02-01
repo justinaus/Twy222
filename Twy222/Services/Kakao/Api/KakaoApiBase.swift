@@ -9,13 +9,13 @@
 import Foundation
 
 class KakaoApiBase {
-    public func makeCall( serviceName: String, lat: Double, lon: Double, callback:@escaping ( [String:Any]? ) -> Void ) {
+    public func makeCall( serviceName: String, lat: Double, lon: Double, callbackComplete:@escaping ([String:Any]) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let url = getUrl(serviceName: serviceName, lat: lat, lon: lon);
         
         let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
         
         guard let urlObjct = URL(string: encodedUrl) else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return;
         }
         
@@ -26,19 +26,19 @@ class KakaoApiBase {
         let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if (error != nil) {
                 print(error!);
-                callback( nil );
+                callbackError( ErrorModel() );
             } else {
                 guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
-                    callback( nil );
+                    callbackError( ErrorModel() );
                     return;
                 }
                 
                 guard let jsonStringAny = json as? [String:Any] else {
-                    callback( nil );
+                    callbackError( ErrorModel() );
                     return;
                 }
                 
-                callback( jsonStringAny );
+                callbackComplete( jsonStringAny );
             }
         }
         

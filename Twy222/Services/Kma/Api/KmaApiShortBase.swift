@@ -12,14 +12,14 @@
 import Foundation
 
 class KmaApiShortBase {
-    public func makeCall( serviceName: String, baseDate: Date, kmaXY: KmaXY, callback:@escaping ( Array<[String:Any]>? ) -> Void ) {
+    public func makeCall( serviceName: String, baseDate: Date, kmaXY: KmaXY, callbackComplete:@escaping (Array<[String:Any]>) -> Void, callbackError: @escaping (ErrorModel) -> Void) {
         let url = getUrl(serviceName: serviceName, baseDate: baseDate, kmaXY: kmaXY);
         
         var encodedUrl = url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!;
         encodedUrl += "&ServiceKey=\(DataGoKrConfig.APP_KEY)";
         
         guard let urlObjct = URL(string: encodedUrl) else {
-            callback( nil );
+            callbackError( ErrorModel() );
             return;
         }
         
@@ -29,15 +29,19 @@ class KmaApiShortBase {
         let currentTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if (error != nil) {
                 print(error!);
-                callback( nil );
+                callbackError( ErrorModel() );
             } else {
                 guard let json = try? JSONSerialization.jsonObject(with: data!, options: []) else {
-                    callback( nil );
+                    callbackError( ErrorModel() );
                     return;
                 }
                 
-                let arrItem = self.getItemArray( anyJson: json );
-                callback( arrItem );
+                guard let arrItem = self.getItemArray( anyJson: json ) else {
+                    callbackError( ErrorModel() );
+                    return;
+                }
+                
+                callbackComplete( arrItem );
             }
         }
         

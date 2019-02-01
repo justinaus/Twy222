@@ -11,20 +11,19 @@ import Foundation
 final class AkApiStation: AkApiBase {
     static let shared = AkApiStation();
     
-    public func getData( dateNow: Date, tmX: Double, tmY: Double, callback:@escaping ( AkApiStationModel? ) -> Void ) {
+    public func getData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AkApiStationModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let url = getUrl(tmX: tmX, tmY: tmY);
         
-        func onComplete( json: [String:Any]? ) {
-            guard let jsonNotNil = json else {
-                callback( nil );
+        func onComplete( json: [String:Any] ) {
+            guard let model = makeModel(dateNow: dateNow, json: json) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel(dateNow: dateNow, json: jsonNotNil);
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall(url: url, callback: onComplete)
+        makeCall(url: url, callbackComplete: onComplete, callbackError: callbackError)
     }
     
     private func makeModel( dateNow: Date, json: [String:Any] ) -> AkApiStationModel? {

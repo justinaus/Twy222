@@ -11,20 +11,19 @@ import Foundation
 final class AkApiAirPm: AkApiBase {
     static let shared = AkApiAirPm();
     
-    public func getData( dateNow: Date, stationName: String, callback:@escaping ( AkApiAirPmModel? ) -> Void ) {
+    public func getData( dateNow: Date, stationName: String, callbackComplete:@escaping (AkApiAirPmModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let url = getUrl(stationName: stationName);
         
-        func onComplete( json: [String:Any]? ) {
-            guard let jsonNotNil = json else {
-                callback( nil );
+        func onComplete( json: [String:Any] ) {
+            guard let model = makeModel(dateNow: dateNow, stationName: stationName, json: json) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel(dateNow: dateNow, stationName: stationName, json: jsonNotNil);
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall(url: url, callback: onComplete)
+        makeCall(url: url, callbackComplete: onComplete, callbackError: callbackError)
     }
     
     private func makeModel( dateNow: Date, stationName: String, json: [String:Any] ) -> AkApiAirPmModel? {

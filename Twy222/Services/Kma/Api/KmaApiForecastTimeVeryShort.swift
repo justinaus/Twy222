@@ -12,22 +12,21 @@ import Foundation
 final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
     static let shared = KmaApiForecastTimeVeryShort();
     
-    public func getData( dateNow: Date, dateBase:Date, kmaXY: KmaXY, callback:@escaping ( KmaApiForecastTimeVeryShortModel? ) -> Void ) {
+    public func getData( dateNow: Date, dateBase:Date, kmaXY: KmaXY, callbackComplete:@escaping (KmaApiForecastTimeVeryShortModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let URL_SERVICE = "ForecastTimeData";
         
 //        print("초단기 예보 호출 basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( arrItem: Array<[String:Any]>? ) {
-            if( arrItem == nil ) {
-                callback( nil );
+        func onComplete( arrItem: Array<[String:Any]> ) {
+            guard let model = makeModel( dateNow: dateNow, dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem ) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel( dateNow: dateNow, dateBase: dateBase, kmaXY: kmaXY, arrItem: arrItem! );
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callback: onComplete );
+        makeCall( serviceName: URL_SERVICE, baseDate: dateBase, kmaXY: kmaXY, callbackComplete: onComplete, callbackError: callbackError );
     }
     
     public func hasToCall( prevModel: KmaApiForecastTimeVeryShortModel, newDateBase: Date, kmaXY: KmaXY) -> Bool {

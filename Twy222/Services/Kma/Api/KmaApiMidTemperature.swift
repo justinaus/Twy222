@@ -11,22 +11,21 @@ import Foundation
 final class KmaApiMidTemperature: KmaApiMidBase {
     static let shared = KmaApiMidTemperature();
     
-    public func getData( dateBase:Date, regionId: String, callback:@escaping ( KmaApiMidTemperatureModel? ) -> Void ) {
+    public func getData( dateBase:Date, regionId: String, callbackComplete:@escaping (KmaApiMidTemperatureModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let URL_SERVICE = "getMiddleTemperature";
         
 //        print("중기 기온 call basetime   " + DateUtil.getStringByDate(date: dateBase) );
         
-        func onComplete( dictItem: [String:Any]? ) {
-            if( dictItem == nil ) {
-                callback( nil );
+        func onComplete( dictItem: [String:Any] ) {
+            guard let model = makeModel( dateBase: dateBase, regId: regionId, dictItem: dictItem ) else {
+                callbackError( ErrorModel() );
                 return;
             }
             
-            let model = makeModel( dateBase: dateBase, regId: regionId, dictItem: dictItem! );
-            callback( model );
+            callbackComplete( model );
         }
         
-        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, regId: regionId, callback: onComplete);
+        makeCall(serviceName: URL_SERVICE, baseDate: dateBase, regId: regionId, callbackComplete: onComplete, callbackError: callbackError);
     }
     
     public func hasToCall( prevModel: KmaApiMidTemperatureModel, newDateBase: Date, newRegId: String) -> Bool {
