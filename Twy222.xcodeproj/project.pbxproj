@@ -20,6 +20,10 @@
 		E204CCFF22036BE5006286FB /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCFE22036BE5006286FB /* ErrorModel.swift */; };
 		E204CD1D22042D0F006286FB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E204CD1C22042D0F006286FB /* Alamofire.framework */; };
 		E204CD1F22042DFE006286FB /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E204CD1E22042DFE006286FB /* SwiftyJSON.framework */; };
+		E204CD262204569D006286FB /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E204CD252204569D006286FB /* NotificationCenter.framework */; };
+		E204CD292204569D006286FB /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD282204569D006286FB /* TodayViewController.swift */; };
+		E204CD2C2204569D006286FB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E204CD2A2204569D006286FB /* MainInterface.storyboard */; };
+		E204CD302204569D006286FB /* TwyTodayExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E204CD242204569C006286FB /* TwyTodayExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -111,6 +115,30 @@
 		E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		E204CD2E2204569D006286FB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E26C5F3821DF03B00061FF86 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E204CD232204569C006286FB;
+			remoteInfo = TwyTodayExt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E204CD342204569D006286FB /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				E204CD302204569D006286FB /* TwyTodayExt.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		71B58E0A89DA541E5CB639AE /* Pods-Twy222.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twy222.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twy222/Pods-Twy222.release.xcconfig"; sourceTree = "<group>"; };
 		8F6D2E7D155B8B047BB68CA4 /* Pods-Twy222.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twy222.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twy222/Pods-Twy222.debug.xcconfig"; sourceTree = "<group>"; };
@@ -141,6 +169,11 @@
 		E204CD1A22042C14006286FB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E204CD1C22042D0F006286FB /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E204CD1E22042DFE006286FB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E204CD242204569C006286FB /* TwyTodayExt.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TwyTodayExt.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E204CD252204569D006286FB /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		E204CD282204569D006286FB /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		E204CD2B2204569D006286FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E204CD2D2204569D006286FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -235,6 +268,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E204CD212204569C006286FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E204CD262204569D006286FB /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E26C5F3D21DF03B00061FF86 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -268,6 +309,7 @@
 				E204CD0222042319006286FB /* Alamofire.framework */,
 				E204CD002204205F006286FB /* SwiftyJSON.framework */,
 				97B938B956C54BF0C7E71FDA /* Pods_Twy222.framework */,
+				E204CD252204569D006286FB /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -317,6 +359,16 @@
 				E204CCF621FD5E82006286FB /* VCAir.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E204CD272204569D006286FB /* TwyTodayExt */ = {
+			isa = PBXGroup;
+			children = (
+				E204CD282204569D006286FB /* TodayViewController.swift */,
+				E204CD2A2204569D006286FB /* MainInterface.storyboard */,
+				E204CD2D2204569D006286FB /* Info.plist */,
+			);
+			path = TwyTodayExt;
 			sourceTree = "<group>";
 		};
 		E220996E21EB17E100CDE9EA /* Api */ = {
@@ -369,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				E26C5F4221DF03B00061FF86 /* Twy222 */,
+				E204CD272204569D006286FB /* TwyTodayExt */,
 				E26C5F4121DF03B00061FF86 /* Products */,
 				C7941E7C4E510B796D648FCE /* Pods */,
 				13D8F98E6CDFB45CA1A027C7 /* Frameworks */,
@@ -379,6 +432,7 @@
 			isa = PBXGroup;
 			children = (
 				E26C5F4021DF03B00061FF86 /* Twy222.app */,
+				E204CD242204569C006286FB /* TwyTodayExt.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -561,6 +615,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E204CD232204569C006286FB /* TwyTodayExt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E204CD312204569D006286FB /* Build configuration list for PBXNativeTarget "TwyTodayExt" */;
+			buildPhases = (
+				E204CD202204569C006286FB /* Sources */,
+				E204CD212204569C006286FB /* Frameworks */,
+				E204CD222204569C006286FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TwyTodayExt;
+			productName = TwyTodayExt;
+			productReference = E204CD242204569C006286FB /* TwyTodayExt.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		E26C5F3F21DF03B00061FF86 /* Twy222 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E26C5F5521DF03B20061FF86 /* Build configuration list for PBXNativeTarget "Twy222" */;
@@ -570,10 +641,12 @@
 				E26C5F3D21DF03B00061FF86 /* Frameworks */,
 				E26C5F3E21DF03B00061FF86 /* Resources */,
 				854D9427D406948FB2407295 /* [CP] Embed Pods Frameworks */,
+				E204CD342204569D006286FB /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E204CD2F2204569D006286FB /* PBXTargetDependency */,
 			);
 			name = Twy222;
 			productName = Twy222;
@@ -590,6 +663,9 @@
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = justinaus;
 				TargetAttributes = {
+					E204CD232204569C006286FB = {
+						CreatedOnToolsVersion = 10.1;
+					};
 					E26C5F3F21DF03B00061FF86 = {
 						CreatedOnToolsVersion = 10.1;
 					};
@@ -609,11 +685,20 @@
 			projectRoot = "";
 			targets = (
 				E26C5F3F21DF03B00061FF86 /* Twy222 */,
+				E204CD232204569C006286FB /* TwyTodayExt */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E204CD222204569C006286FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E204CD2C2204569D006286FB /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E26C5F3E21DF03B00061FF86 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -719,6 +804,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E204CD202204569C006286FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E204CD292204569D006286FB /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E26C5F3C21DF03B00061FF86 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -781,7 +874,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		E204CD2F2204569D006286FB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E204CD232204569C006286FB /* TwyTodayExt */;
+			targetProxy = E204CD2E2204569D006286FB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		E204CD2A2204569D006286FB /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E204CD2B2204569D006286FB /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		E26C5F4721DF03B00061FF86 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -801,6 +910,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E204CD322204569D006286FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9NZC5VWKUT;
+				INFOPLIST_FILE = TwyTodayExt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.Twy222.TwyTodayExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E204CD332204569D006286FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9NZC5VWKUT;
+				INFOPLIST_FILE = TwyTodayExt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.Twy222.TwyTodayExt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		E26C5F5321DF03B20061FF86 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -921,6 +1068,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8F6D2E7D155B8B047BB68CA4 /* Pods-Twy222.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9NZC5VWKUT;
@@ -941,6 +1089,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 71B58E0A89DA541E5CB639AE /* Pods-Twy222.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9NZC5VWKUT;
@@ -960,6 +1109,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E204CD312204569D006286FB /* Build configuration list for PBXNativeTarget "TwyTodayExt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E204CD322204569D006286FB /* Debug */,
+				E204CD332204569D006286FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E26C5F3B21DF03B00061FF86 /* Build configuration list for PBXProject "Twy222" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
