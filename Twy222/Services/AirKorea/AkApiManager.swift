@@ -21,7 +21,7 @@ struct AkApiUrlStruct {
 final class AkApiManager {
     static let shared = AkApiManager();
     
-    public func getAirData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (Air) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func getAirData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AirEntity) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         func onCompleteStation( model: AkApiStationModel ) {
             if( model.list.count == 0 ) {
                 callbackError( ErrorModel() );
@@ -46,13 +46,13 @@ final class AkApiManager {
         getStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callbackComplete: onCompleteStation, callbackError: callbackError)
     }
     
-    private func makeCoreDataModel( model: AkApiAirPmModel ) -> Air? {
+    private func makeCoreDataModel( model: AkApiAirPmModel ) -> AirEntity? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil;
         }
         let context = appDelegate.persistentContainer.viewContext;
         
-        let newObject = Air(context: context);
+        let newObject = AirEntity(context: context);
         
         newObject.dateBaseCalled = model.dateCalled;
         newObject.pm10Value = Int16(model.pm10);

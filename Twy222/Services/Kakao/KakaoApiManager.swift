@@ -19,7 +19,7 @@ struct KakaoApiUrlStruct {
 final class KakaoApiManager {
     static let shared = KakaoApiManager();
     
-    public func getAddressData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (Address) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func getAddressData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (AddressEntity) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KakaoApiAddress.shared;
         
         func onComplete( model: KakaoApiAddressModel ) {
@@ -34,13 +34,13 @@ final class KakaoApiManager {
         api.getData(dateNow: dateNow, lon: lon, lat: lat, callbackComplete: onComplete, callbackError: callbackError)
     }
     
-    private func makeCoreDataModel( model: KakaoApiAddressModel ) -> Address? {
+    private func makeCoreDataModel( model: KakaoApiAddressModel ) -> AddressEntity? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil;
         }
         let context = appDelegate.persistentContainer.viewContext;
         
-        let newObject = Address(context: context);
+        let newObject = AddressEntity(context: context);
         
         newObject.dateCalled = model.dateCalled;
         newObject.addressFull = model.addressFull;

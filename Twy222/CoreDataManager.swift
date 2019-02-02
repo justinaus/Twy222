@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 import CoreData
 
+enum EntityEnum: String {
+    case Address = "Address";
+    case Air = "Air";
+    case Now = "Now";
+    case Grid = "Grid";
+    case Hourly = "Hourly";
+    case Daily = "Daily";
+}
+
 final class CoreDataManager {
     static let shared = CoreDataManager();
     
@@ -25,7 +34,7 @@ final class CoreDataManager {
         
         let context = appDelegate.persistentContainer.viewContext;
 
-        let newObject = Grid(context: context);
+        let newObject = GridEntity(context: context);
         
         newObject.setValue( lat, forKey: "latitude")
         newObject.setValue( lon, forKey: "longitude")
@@ -36,7 +45,7 @@ final class CoreDataManager {
         return true;
     }
     
-    func getCurrentGridData() -> Grid? {
+    func getCurrentGridData() -> GridEntity? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil;
         }
@@ -51,7 +60,7 @@ final class CoreDataManager {
         do {
             let result = try context.fetch(request);
             
-            return result[0] as? Grid;
+            return result[0] as? GridEntity;
         } catch {
             print("Failed")
             return nil;

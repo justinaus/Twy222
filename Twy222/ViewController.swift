@@ -96,7 +96,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
-        func onComplete( model: Address ) {
+        func onComplete( model: AddressEntity ) {
             let saveSuccess = CoreDataManager.shared.saveDataInCurrentGrid(model: model, strKey: "address")
             if( !saveSuccess ) {
                 return;
@@ -126,7 +126,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             return;
         }
         
-        func onComplete( model:Now? ) {
+        func onComplete( model:NowEntity? ) {
             guard let modelNotNil = model else {
                 return;
             }
@@ -212,10 +212,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let context = appDelegate.persistentContainer.viewContext;
         let grid = CoreDataManager.shared.getCurrentGridData()!;
         
-        var newDaily: Daily;
+        var newDaily: DailyEntity;
         
         for origin in arrOrigin {
-            newDaily = Daily(context: context);
+            newDaily = DailyEntity(context: context);
             
             newDaily.date = origin.date;
             newDaily.temperatureMax = origin.temperatureMax;
@@ -243,7 +243,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             return;
         }
         
-        func onComplete( model: Air ) {
+        func onComplete( model: AirEntity ) {
             let saveSuccess = CoreDataManager.shared.saveDataInCurrentGrid(model: model, strKey: "air");
             if( !saveSuccess ) {
                 return;
@@ -389,12 +389,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             return cell;
         }
         
-        let arrHourly = Array( hourly );
+        var arrHourly = Array( hourly );
+        arrHourly.sort(by: {
+            ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
+        })
         
 //        let gridModel = GridManager.shared.getCurrentGridModel()!;
 //        let model = gridModel.forecastHourList!.list[indexPath.item];
         
-        let model = arrHourly[ indexPath.item ] as! Hourly;
+        let model = arrHourly[ indexPath.item ] as! HourlyEntity;
         
         let hour = Calendar.current.component(.hour, from: model.date!)
         cell.setLabelHour(str: "\(hour)시");
@@ -434,9 +437,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             return cell;
         }
         
-        let arrDaily = Array( daily );
+        var arrDaily = Array( daily );
+        arrDaily.sort(by: {
+            ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
+        })
         
-        let model = arrDaily[ indexPath.item ] as! Daily;
+        let model = arrDaily[ indexPath.item ] as! DailyEntity;
         
 //        let gridModel = GridManager.shared.getCurrentGridModel()!;
 //        let model = gridModel.forecastMidList!.list[indexPath.item];

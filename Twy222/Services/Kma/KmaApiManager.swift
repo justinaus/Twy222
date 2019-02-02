@@ -27,10 +27,10 @@ final class KmaApiManager {
     private var apiMidLandModel: KmaApiMidLandModel?;
     
     
-    public func getNowData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (Now?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func getNowData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (NowEntity?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
 //        var nowModel: NowModel?
         
-        var coreData: Now?;
+        var coreData: NowEntity?;
         
         let kmaXY = KmaUtils.getKmaXY(lat: lat, lon: lon);
         
@@ -85,7 +85,7 @@ final class KmaApiManager {
         
         func onComplete( modelNotNil: KmaApiForecastSpace3hoursModel ) {
             apiSpace3HoursModel = modelNotNil;
-            var model: Hourly;
+            var model: HourlyEntity;
             
             for ( index, kmaModel ) in modelNotNil.list.enumerated() {
                 // 개수를 조절한다. 왜냐면 그 숫자만큼 어제 실황을 콜해야 하니깐...
@@ -93,7 +93,7 @@ final class KmaApiManager {
                 if( index > Settings.HOURLY_DATA_COUNT - 1 ) {
                     break;
                 }
-
+                
                 model = makeCoreDataHourly(kmaModel: kmaModel);
                 
                 grid.addToHourly(model);
@@ -115,7 +115,7 @@ final class KmaApiManager {
         api.getData(dateBase: dateBase, kmaXY: kmaXY, callbackComplete: onComplete, callbackError: callbackError);
     }
     
-    private func getYesterdayData( standardModel: Hourly, kmaXY: KmaXY, callbackComplete:@escaping () -> Void ) {
+    private func getYesterdayData( standardModel: HourlyEntity, kmaXY: KmaXY, callbackComplete:@escaping () -> Void ) {
         let dateYesterday = Calendar.current.date(byAdding: .day, value: -1, to: standardModel.date!)!;
         
         func onComplete( model: KmaApiActualModel ) {
@@ -139,11 +139,11 @@ final class KmaApiManager {
         getActualData(dateBase: dateYesterday, kmaXY: kmaXY, callbackComplete: onComplete, callbackError:  onError);
     }
     
-    private func makeCoreDataHourly( kmaModel: KmaHourlyModel ) -> Hourly {
+    private func makeCoreDataHourly( kmaModel: KmaHourlyModel ) -> HourlyEntity {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate;
         let context = appDelegate.persistentContainer.viewContext;
         
-        let newObject = Hourly(context: context);
+        let newObject = HourlyEntity(context: context);
         
         let hour = Calendar.current.component(.hour, from: kmaModel.date);
         let isDay = TwyUtils.getIsDay(hour: hour);
@@ -158,13 +158,13 @@ final class KmaApiManager {
         return newObject;
     }
     
-    private func makeCoreDataNow( model: KmaApiForecastTimeVeryShortModel ) -> Now? {
+    private func makeCoreDataNow( model: KmaApiForecastTimeVeryShortModel ) -> NowEntity? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return nil;
         }
         let context = appDelegate.persistentContainer.viewContext;
         
-        let newObject = Now(context: context);
+        let newObject = NowEntity(context: context);
         
         let hour = Calendar.current.component(.hour, from: model.dateForecast);
         let isDay = TwyUtils.getIsDay(hour: hour);

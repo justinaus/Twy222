@@ -24,7 +24,6 @@
 		E204CD292204569D006286FB /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD282204569D006286FB /* TodayViewController.swift */; };
 		E204CD2C2204569D006286FB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E204CD2A2204569D006286FB /* MainInterface.storyboard */; };
 		E204CD302204569D006286FB /* TwyTodayExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E204CD242204569C006286FB /* TwyTodayExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		E204CD5B2204B98E006286FB /* EntityEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5A2204B98E006286FB /* EntityEnum.swift */; };
 		E204CD5D2204CA36006286FB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5C2204CA36006286FB /* CoreDataManager.swift */; };
 		E204CD5F2204D586006286FB /* IAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5E2204D585006286FB /* IAddressModel.swift */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
@@ -176,7 +175,6 @@
 		E204CD282204569D006286FB /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		E204CD2B2204569D006286FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E204CD2D2204569D006286FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E204CD5A2204B98E006286FB /* EntityEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityEnum.swift; sourceTree = "<group>"; };
 		E204CD5C2204CA36006286FB /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E204CD5E2204D585006286FB /* IAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAddressModel.swift; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
@@ -461,7 +459,6 @@
 				E2EF049921E090A8005C00EB /* GridManager.swift */,
 				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
 				E29552B421E9A1550097480E /* Settings.swift */,
-				E204CD5A2204B98E006286FB /* EntityEnum.swift */,
 				E204CD5C2204CA36006286FB /* CoreDataManager.swift */,
 			);
 			path = Twy222;
@@ -845,7 +842,6 @@
 				E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E204CCFF22036BE5006286FB /* ErrorModel.swift in Sources */,
-				E204CD5B2204B98E006286FB /* EntityEnum.swift in Sources */,
 				E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */,
 				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
 				E220998D21FA157600CDE9EA /* IDate.swift in Sources */,
