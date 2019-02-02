@@ -111,7 +111,6 @@
 		E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E2EF048D21DF2124005C00EB /* GridModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048C21DF2124005C00EB /* GridModel.swift */; };
 		E2EF049821DF265A005C00EB /* ServiceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049721DF265A005C00EB /* ServiceConfig.swift */; };
-		E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049921E090A8005C00EB /* GridManager.swift */; };
 		E2EF04A821E30C4E005C00EB /* KmaUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A721E30C4E005C00EB /* KmaUtils.swift */; };
 		E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */; };
 /* End PBXBuildFile section */
@@ -264,7 +263,6 @@
 		E2EF048921DF1E9A005C00EB /* FronteerKr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FronteerKr.swift; sourceTree = "<group>"; };
 		E2EF048C21DF2124005C00EB /* GridModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridModel.swift; sourceTree = "<group>"; };
 		E2EF049721DF265A005C00EB /* ServiceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceConfig.swift; sourceTree = "<group>"; };
-		E2EF049921E090A8005C00EB /* GridManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridManager.swift; sourceTree = "<group>"; };
 		E2EF04A721E30C4E005C00EB /* KmaUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaUtils.swift; sourceTree = "<group>"; };
 		E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiForecastTimeVeryShort.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -464,7 +462,6 @@
 				E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */,
 				E26C5F5221DF03B20061FF86 /* Info.plist */,
 				E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */,
-				E2EF049921E090A8005C00EB /* GridManager.swift */,
 				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
 				E29552B421E9A1550097480E /* Settings.swift */,
 				E204CD5C2204CA36006286FB /* CoreDataManager.swift */,
@@ -851,7 +848,6 @@
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E204CCFF22036BE5006286FB /* ErrorModel.swift in Sources */,
 				E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */,
-				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
 				E220998D21FA157600CDE9EA /* IDate.swift in Sources */,
 				E204CCF221FCBB46006286FB /* AkApiAirPmModel.swift in Sources */,
 				E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */,

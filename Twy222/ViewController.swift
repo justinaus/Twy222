@@ -394,9 +394,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
         })
         
-//        let gridModel = GridManager.shared.getCurrentGridModel()!;
-//        let model = gridModel.forecastHourList!.list[indexPath.item];
-        
         let model = arrHourly[ indexPath.item ] as! HourlyEntity;
         
         let hour = Calendar.current.component(.hour, from: model.date!)
@@ -443,9 +440,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         })
         
         let model = arrDaily[ indexPath.item ] as! DailyEntity;
-        
-//        let gridModel = GridManager.shared.getCurrentGridModel()!;
-//        let model = gridModel.forecastMidList!.list[indexPath.item];
         
         cell.setImageSkyByFileName(imageFileName: model.skyStatusImageName!);
         
