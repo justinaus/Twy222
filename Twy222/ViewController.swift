@@ -122,7 +122,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     func getNowData( dateNow: Date ) {
-        guard let gridModel = CoreDataManager.shared.getCurrentGridData() else {
+        guard let gridEntity = CoreDataManager.shared.getCurrentGridData() else {
             return;
         }
         
@@ -146,11 +146,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
         }
         
-        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridModel.latitude, lon: gridModel.longitude, callbackComplete: onComplete, callbackError: onError );
+        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridEntity.latitude, lon: gridEntity.longitude, callbackComplete: onComplete, callbackError: onError );
     }
     
     func getForecastHourlyData( dateNow: Date ) {
-//        func onComplete( model: ForecastHourListModel? ) {
         func onComplete( model: NSSet? ) {
             if( model == nil ) {
                 return;
@@ -268,43 +267,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     func drawNowData() {
-        guard let nowModel = CoreDataManager.shared.getCurrentGridData()?.now else {
+        guard let nowEntity = CoreDataManager.shared.getCurrentGridData()?.now else {
             return;
         }
         
         DispatchQueue.main.async {
-            let intTemperature = NumberUtil.roundToInt(value: nowModel.temperature);
+            let intTemperature = NumberUtil.roundToInt(value: nowEntity.temperature);
             self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";
             
-            self.labelNowSkyStatus.text = nowModel.skyStatusText;
+            self.labelNowSkyStatus.text = nowEntity.skyStatusText;
             
-            self.imageSkyStatus.image = UIImage(named: nowModel.skyStatusImageName!);
+            self.imageSkyStatus.image = UIImage(named: nowEntity.skyStatusImageName!);
             self.imageSkyStatus.isHidden = false;
             
             // core data option 값이 문제가 있는 듯.
-            if( Int(nowModel.diffFromYesterday) == TwyUtils.NUMBER_NIL_TEMP ) {
+            if( Int(nowEntity.diffFromYesterday) == TwyUtils.NUMBER_NIL_TEMP ) {
                 self.labelNowCompareWithYesterday.text = "";
             } else {
-                let intTemperatureGap = NumberUtil.roundToInt(value: nowModel.diffFromYesterday);
+                let intTemperatureGap = NumberUtil.roundToInt(value: nowEntity.diffFromYesterday);
                 self.labelNowCompareWithYesterday.text = self.getTextCompareWithYesterday(intTemperatureGap: intTemperatureGap);
             }
         }
     }
     
     func drawAirData() {
-        guard let airModel = CoreDataManager.shared.getCurrentGridData()?.air else {
+        guard let airEntity = CoreDataManager.shared.getCurrentGridData()?.air else {
             return;
         }
         
-        let pm10Grade = FineDustUtils.getFineDustGrade(fineDustType: .pm10, value: Int(airModel.pm10Value));
-        let pm25Grade = FineDustUtils.getFineDustGrade(fineDustType: .pm25, value: Int(airModel.pm25Value));
+        let pm10Grade = FineDustUtils.getFineDustGrade(fineDustType: .pm10, value: Int(airEntity.pm10Value));
+        let pm25Grade = FineDustUtils.getFineDustGrade(fineDustType: .pm25, value: Int(airEntity.pm25Value));
         
         DispatchQueue.main.async {
             self.labelPm10.textColor = pm10Grade.color;
             self.labelPm25.textColor = pm25Grade.color;
             
-            self.labelPm10.text = "\(airModel.pm10Value) \(pm10Grade.text)";
-            self.labelPm25.text = "\(airModel.pm25Value) \(pm25Grade.text)";
+            self.labelPm10.text = "\(airEntity.pm10Value) \(pm10Grade.text)";
+            self.labelPm25.text = "\(airEntity.pm25Value) \(pm25Grade.text)";
             
             self.viewAirQuality.isHidden = false;
         }
@@ -358,18 +357,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let gridModel = CoreDataManager.shared.getCurrentGridData() else {
+        guard let gridEntity = CoreDataManager.shared.getCurrentGridData() else {
             return 0;
         }
         
         let isShortView = collectionView == collectionViewShort;
         
         if( isShortView ) {
-//            return gridModel.forecastHourList?.list.count ?? 0;
-            return gridModel.hourly?.count ?? 0;
+            return gridEntity.hourly?.count ?? 0;
         } else {
-//            return gridModel.forecastMidList?.list.count ?? 0;
-            return gridModel.daily?.count ?? 0;
+            return gridEntity.daily?.count ?? 0;
         }
     }
     

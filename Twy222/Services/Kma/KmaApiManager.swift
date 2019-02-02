@@ -5,7 +5,7 @@
 //  서비스에 종속적이지 않게끔 하려고 한다.
 //  viewcontroller는 각 서비스의 매니져하고만 얘기하고.
 //  각 서비스의 매니져는 종속적이지 않은 데이터로 리턴을 한다.
-//  얘까지는 밖의 정보에 접근할 수 있도록 하자. ex gridmanager.
+//  얘까지는 밖의 정보에 접근할 수 있도록 하자.
 //
 //  Created by Bonkook Koo on 09/01/2019.
 //  Copyright © 2019 justinaus. All rights reserved.
@@ -28,8 +28,6 @@ final class KmaApiManager {
     
     
     public func getNowData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (NowEntity?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
-//        var nowModel: NowModel?
-        
         var coreData: NowEntity?;
         
         let kmaXY = KmaUtils.getKmaXY(lat: lat, lon: lon);
@@ -232,8 +230,6 @@ final class KmaApiManager {
             apiMidTemperatureModel = modelTemperature!;
             apiMidLandModel = modelNotNil;
             
-            let retMidModel = ForecastMidListModel(dateBase: modelNotNil.dateBaseCalled);
-            
             let arrMidAfter3days = makeMidAfter3dayList(modelTemperature: modelTemperature!, modelLand: modelNotNil );
             
             var arrFromYesterday: [IDate] = space3HourYesterdayList!;
@@ -244,10 +240,9 @@ final class KmaApiManager {
             let arrDualByDay = KmaUtils.makeDualArrayByDay(dateNow: dateNow, arrOrigin: arrFromYesterday);
             let dailyModelBefore3days = KmaUtils.makeDailyModelList(arrDual: arrDualByDay);
             
-            let result = KmaUtils.concatNotOverlap(arrBase: arrMidAfter3days, arrAdd: dailyModelBefore3days);
-            retMidModel.list = result;
+            let arrDailyModel = KmaUtils.concatNotOverlap(arrBase: arrMidAfter3days, arrAdd: dailyModelBefore3days);
             
-            callbackComplete( result );
+            callbackComplete( arrDailyModel );
         }
         
         getForecastMidTemperature(dateNow: dateNow, addressSiDo: address.addressSiDo, addressGu: address.addressGu, callbackComplete: onCompleteTemperature, callbackError: callbackError);
