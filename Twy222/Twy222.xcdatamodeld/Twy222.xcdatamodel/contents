@@ -1,4 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Address" representedClassName="Address" syncable="YES" codeGenerationType="class">
+        <attribute name="addressDong" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressFull" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressGu" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="addressSiDo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dateCalled" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="tmX" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tmY" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="address" inverseEntity="Grid" syncable="YES"/>
+    </entity>
+    <entity name="Air" representedClassName="Air" syncable="YES" codeGenerationType="class">
+        <attribute name="dateBaseCalled" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="pm10Value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="pm25Value" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="stationName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="air" inverseEntity="Grid" syncable="YES"/>
+    </entity>
+    <entity name="Daily" representedClassName="Daily" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="skyStatusImageName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="skyStatusText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="temperatureMax" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="temperatureMin" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="daily" inverseEntity="Grid" syncable="YES"/>
+    </entity>
+    <entity name="Grid" representedClassName="Grid" syncable="YES" codeGenerationType="class">
+        <attribute name="dateCalled" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="latitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="longitude" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Address" inverseName="grid" inverseEntity="Address" syncable="YES"/>
+        <relationship name="air" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Air" inverseName="grid" inverseEntity="Air" syncable="YES"/>
+        <relationship name="daily" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Daily" inverseName="grid" inverseEntity="Daily" syncable="YES"/>
+        <relationship name="hourly" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hourly" inverseName="grid" inverseEntity="Hourly" syncable="YES"/>
+        <relationship name="now" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Now" inverseName="grid" inverseEntity="Now" syncable="YES"/>
+    </entity>
+    <entity name="Hourly" representedClassName="Hourly" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="diffFromYesterday" optional="YES" attributeType="Double" defaultValueString="999" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="skyStatusImageName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="skyStatusText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="hourly" inverseEntity="Grid" syncable="YES"/>
+    </entity>
+    <entity name="Now" representedClassName="Now" syncable="YES" codeGenerationType="class">
+        <attribute name="dateBaseCalled" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dateForecast" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="diffFromYesterday" optional="YES" attributeType="Double" defaultValueString="999" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="skyStatusImageName" attributeType="String" syncable="YES"/>
+        <attribute name="skyStatusText" attributeType="String" syncable="YES"/>
+        <attribute name="temperature" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="temperatureMax" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="temperatureMin" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="now" inverseEntity="Grid" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Address" positionX="9" positionY="126" width="128" height="165"/>
+        <element name="Air" positionX="27" positionY="144" width="128" height="120"/>
+        <element name="Daily" positionX="0" positionY="108" width="128" height="135"/>
+        <element name="Grid" positionX="-9" positionY="99" width="128" height="165"/>
+        <element name="Hourly" positionX="0" positionY="90" width="128" height="135"/>
+        <element name="Now" positionX="-36" positionY="9" width="128" height="180"/>
+    </elements>
 </model>

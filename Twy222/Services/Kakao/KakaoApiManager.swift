@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct KakaoApiUrlStruct {
     static let URL_GEO_ROOT = "https://dapi.kakao.com/v2/local/geo/"
@@ -18,13 +19,37 @@ struct KakaoApiUrlStruct {
 final class KakaoApiManager {
     static let shared = KakaoApiManager();
     
-    public func getAddressData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (IAddressModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func getAddressData( dateNow: Date, lat: Double, lon: Double, callbackComplete:@escaping (Address) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KakaoApiAddress.shared;
         
         func onComplete( model: KakaoApiAddressModel ) {
-            callbackComplete( model );
+            guard let coreDataModel = makeCoreDataModel(model: model) else {
+                callbackError( ErrorModel() );
+                return;
+            }
+            
+            callbackComplete( coreDataModel );
         }
         
         api.getData(dateNow: dateNow, lon: lon, lat: lat, callbackComplete: onComplete, callbackError: callbackError)
+    }
+    
+    private func makeCoreDataModel( model: KakaoApiAddressModel ) -> Address? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil;
+        }
+        let context = appDelegate.persistentContainer.viewContext;
+        
+        let newObject = Address(context: context);
+        
+        newObject.dateCalled = model.dateCalled;
+        newObject.addressFull = model.addressFull;
+        newObject.addressSiDo = model.addressSiDo;
+        newObject.addressGu = model.addressGu;
+        newObject.addressDong = model.addressDong;
+        newObject.tmX = model.tmX;
+        newObject.tmY = model.tmY;
+        
+        return newObject;
     }
 }

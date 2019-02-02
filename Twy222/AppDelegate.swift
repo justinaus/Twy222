@@ -88,6 +88,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    public func deleteAllInEntity( entityEnum: EntityEnum ) {
+        let context = persistentContainer.viewContext
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityEnum.rawValue)
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let result = try context.fetch(request)
+            for data in result as! [NSManagedObject] {
+                context.delete(data);
+            }
+        } catch {
+            print("Error with request: \(error)")
+        }
+    }
 }
 

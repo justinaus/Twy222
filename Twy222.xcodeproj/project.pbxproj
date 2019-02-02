@@ -24,6 +24,9 @@
 		E204CD292204569D006286FB /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD282204569D006286FB /* TodayViewController.swift */; };
 		E204CD2C2204569D006286FB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E204CD2A2204569D006286FB /* MainInterface.storyboard */; };
 		E204CD302204569D006286FB /* TwyTodayExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E204CD242204569C006286FB /* TwyTodayExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E204CD5B2204B98E006286FB /* EntityEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5A2204B98E006286FB /* EntityEnum.swift */; };
+		E204CD5D2204CA36006286FB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5C2204CA36006286FB /* CoreDataManager.swift */; };
+		E204CD5F2204D586006286FB /* IAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5E2204D585006286FB /* IAddressModel.swift */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -40,7 +43,6 @@
 		E22D791921FC2AC9000C3C46 /* KakaoApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791821FC2AC9000C3C46 /* KakaoApiBase.swift */; };
 		E22D791B21FC2B22000C3C46 /* KakaoApiAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791A21FC2B22000C3C46 /* KakaoApiAddressModel.swift */; };
 		E22D791D21FC355C000C3C46 /* KakaoApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791C21FC355C000C3C46 /* KakaoApiManager.swift */; };
-		E22D792121FC389C000C3C46 /* IAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D792021FC389C000C3C46 /* IAddressModel.swift */; };
 		E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4321DF03B00061FF86 /* AppDelegate.swift */; };
 		E26C5F4621DF03B00061FF86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4521DF03B00061FF86 /* ViewController.swift */; };
 		E26C5F4921DF03B00061FF86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E26C5F4721DF03B00061FF86 /* Main.storyboard */; };
@@ -174,6 +176,9 @@
 		E204CD282204569D006286FB /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		E204CD2B2204569D006286FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E204CD2D2204569D006286FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E204CD5A2204B98E006286FB /* EntityEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityEnum.swift; sourceTree = "<group>"; };
+		E204CD5C2204CA36006286FB /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E204CD5E2204D585006286FB /* IAddressModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAddressModel.swift; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -190,7 +195,6 @@
 		E22D791821FC2AC9000C3C46 /* KakaoApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiBase.swift; sourceTree = "<group>"; };
 		E22D791A21FC2B22000C3C46 /* KakaoApiAddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiAddressModel.swift; sourceTree = "<group>"; };
 		E22D791C21FC355C000C3C46 /* KakaoApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoApiManager.swift; sourceTree = "<group>"; };
-		E22D792021FC389C000C3C46 /* IAddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAddressModel.swift; sourceTree = "<group>"; };
 		E26C5F4021DF03B00061FF86 /* Twy222.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twy222.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E26C5F4321DF03B00061FF86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E26C5F4521DF03B00061FF86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -457,6 +461,8 @@
 				E2EF049921E090A8005C00EB /* GridManager.swift */,
 				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
 				E29552B421E9A1550097480E /* Settings.swift */,
+				E204CD5A2204B98E006286FB /* EntityEnum.swift */,
+				E204CD5C2204CA36006286FB /* CoreDataManager.swift */,
 			);
 			path = Twy222;
 			sourceTree = "<group>";
@@ -568,11 +574,11 @@
 				E2EF048C21DF2124005C00EB /* GridModel.swift */,
 				E220998421F447C700CDE9EA /* DailyTemperatureMaxMinModel.swift */,
 				E27AD5CA21E5B40900CD67B6 /* NowModel.swift */,
+				E204CD5E2204D585006286FB /* IAddressModel.swift */,
 				E27AD5CC21E5B92B00CD67B6 /* ForecastHourListModel.swift */,
 				E27AD5CE21E5B94900CD67B6 /* HourlyModel.swift */,
 				E220997621F2DACD00CDE9EA /* ForecastMidListModel.swift */,
 				E220997821F2DAE400CDE9EA /* DailyModel.swift */,
-				E22D792021FC389C000C3C46 /* IAddressModel.swift */,
 				E204CCEF21FCA0C0006286FB /* AirModel.swift */,
 				E204CCFE22036BE5006286FB /* ErrorModel.swift */,
 			);
@@ -839,6 +845,7 @@
 				E27AD5CF21E5B94900CD67B6 /* HourlyModel.swift in Sources */,
 				E2EF048A21DF1E9A005C00EB /* FronteerKr.swift in Sources */,
 				E204CCFF22036BE5006286FB /* ErrorModel.swift in Sources */,
+				E204CD5B2204B98E006286FB /* EntityEnum.swift in Sources */,
 				E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */,
 				E2EF049A21E090A8005C00EB /* GridManager.swift in Sources */,
 				E220998D21FA157600CDE9EA /* IDate.swift in Sources */,
@@ -854,12 +861,13 @@
 				E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */,
 				E2EF04A821E30C4E005C00EB /* KmaUtils.swift in Sources */,
 				E204CCEC21FC9EC0006286FB /* AkApiStationModel.swift in Sources */,
+				E204CD5F2204D586006286FB /* IAddressModel.swift in Sources */,
 				E204CCE821FC9A43006286FB /* AkApiBase.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
 				E204CCE621FC8B92006286FB /* AkUtils.swift in Sources */,
 				E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */,
+				E204CD5D2204CA36006286FB /* CoreDataManager.swift in Sources */,
 				E204CCF721FD5E82006286FB /* VCAir.swift in Sources */,
-				E22D792121FC389C000C3C46 /* IAddressModel.swift in Sources */,
 				E2EF04AA21E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift in Sources */,
 				E27AD63C21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift in Sources */,
 				E26C5F4421DF03B00061FF86 /* AppDelegate.swift in Sources */,

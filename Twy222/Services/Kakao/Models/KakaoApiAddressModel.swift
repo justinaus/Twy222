@@ -36,22 +36,6 @@ class KakaoApiAddressModel: IAddressModel {
         self.tmY = tmY;
     }
     
-    public func getAddressTitle() -> String? {
-        var strRet: String?;
-        
-        if( addressDong != nil ) {
-            strRet = addressDong;
-        } else if( addressGu != nil ) {
-            strRet = addressGu;
-        } else if( addressSiDo != nil ) {
-            strRet = addressSiDo;
-        } else if( addressFull != nil ) {
-            strRet = addressFull;
-        }
-        
-        return strRet;
-    }
-    
     public func setAddressSido( value: String ) {
         addressSiDo = value;
     }

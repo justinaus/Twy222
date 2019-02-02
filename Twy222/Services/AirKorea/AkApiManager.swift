@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import UIKit
+import CoreData
+
 
 struct AkApiUrlStruct {
     static let URL_ROOT = "http://openapi.airkorea.or.kr/openapi/services/rest/"
@@ -18,7 +21,7 @@ struct AkApiUrlStruct {
 final class AkApiManager {
     static let shared = AkApiManager();
     
-    public func getAirData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AirModel?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func getAirData( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (Air) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         func onCompleteStation( model: AkApiStationModel ) {
             if( model.list.count == 0 ) {
                 callbackError( ErrorModel() );
@@ -32,11 +35,31 @@ final class AkApiManager {
         }
         
         func onCompleteAirPm( model: AkApiAirPmModel ) {
-            let retModel = AirModel(dateBase: model.dateCalled, stationName: model.stationName, pm10Value: model.pm10, pm25Value: model.pm25);
-            callbackComplete( retModel );
+            guard let coreDataModel = makeCoreDataModel(model: model) else {
+                callbackError( ErrorModel() );
+                return;
+            }
+            
+            callbackComplete( coreDataModel );
         }
         
         getStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callbackComplete: onCompleteStation, callbackError: callbackError)
+    }
+    
+    private func makeCoreDataModel( model: AkApiAirPmModel ) -> Air? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return nil;
+        }
+        let context = appDelegate.persistentContainer.viewContext;
+        
+        let newObject = Air(context: context);
+        
+        newObject.dateBaseCalled = model.dateCalled;
+        newObject.pm10Value = Int16(model.pm10);
+        newObject.pm25Value = Int16(model.pm25);
+        newObject.stationName = model.stationName;
+        
+        return newObject;
     }
     
     private func getStation( dateNow: Date, tmX: Double, tmY: Double, callbackComplete:@escaping (AkApiStationModel) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {

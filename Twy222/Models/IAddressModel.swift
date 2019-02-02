@@ -16,5 +16,5 @@ protocol IAddressModel {
     var addressGu: String? { get };
     var addressDong: String? { get };
     
-    func getAddressTitle() -> String?;
+//    func getAddressTitle() -> String?;
 }
