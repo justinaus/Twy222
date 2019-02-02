@@ -373,6 +373,15 @@
 			path = TwyTodayExt;
 			sourceTree = "<group>";
 		};
+		E204CD602205DB92006286FB /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				E27AD63321E6F95700CD67B6 /* Justinaus */,
+				E2EF048821DF1E9A005C00EB /* FronteerKr */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
 		E220996E21EB17E100CDE9EA /* Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -442,9 +451,9 @@
 		E26C5F4221DF03B00061FF86 /* Twy222 */ = {
 			isa = PBXGroup;
 			children = (
+				E204CD602205DB92006286FB /* Libraries */,
 				E204CCF521FD5E6A006286FB /* ViewControllers */,
 				E29552B621E9AAA40097480E /* Views */,
-				E27AD63321E6F95700CD67B6 /* Justinaus */,
 				E27AD5D721E6709800CD67B6 /* Resources */,
 				E2EF049121DF2518005C00EB /* Services */,
 				E2EF048B21DF1F71005C00EB /* Models */,
@@ -453,7 +462,6 @@
 				E26C5F4721DF03B00061FF86 /* Main.storyboard */,
 				E26C5F4D21DF03B10061FF86 /* Assets.xcassets */,
 				E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */,
-				E2EF048821DF1E9A005C00EB /* FronteerKr */,
 				E26C5F5221DF03B20061FF86 /* Info.plist */,
 				E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */,
 				E2EF049921E090A8005C00EB /* GridManager.swift */,
