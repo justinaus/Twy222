@@ -17,15 +17,21 @@ class VCAir: UIViewController {
     
     @IBOutlet var labelStation: UILabel!
     
+    private var airEntity: AirEntity?;
+    
     
     @IBAction func myActionMethod(_ sender: UIGestureRecognizer) {
         performSegue(withIdentifier: "unwindToRight", sender: nil);
     }
     
+    public func setData( airEntity: AirEntity? ) {
+        self.airEntity = airEntity;
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated);
         
-        guard let airEntity = CoreDataManager.shared.getCurrentGridData()?.air else {
+        guard let airEntity = self.airEntity else {
             return;
         }
         

@@ -86,6 +86,20 @@ class Range {
 class TwyUtils {
     public static let NUMBER_NIL_TEMP = 999;
     
+    public static func getTextCompareWithYesterday( intTemperatureGap: Int ) -> String {
+        let uintTemperatureGap = abs(intTemperatureGap);
+        
+        var strComment = "어제와 같음";
+        
+        if( intTemperatureGap > 0 ) {
+            strComment = "어제보다 \(uintTemperatureGap)\(CharacterStruct.TEMPERATURE) 높음"
+        } else if( intTemperatureGap < 0 ) {
+            strComment = "어제보다 \(uintTemperatureGap)\(CharacterStruct.TEMPERATURE) 낮음"
+        }
+        
+        return strComment;
+    }
+    
     /// 해당 시간이 낮인지 여부를 리턴.
     /// 낮 기준을 06 ~ 18시로 잡겠다.
     public static func getIsDay( hour: Int ) -> Bool {

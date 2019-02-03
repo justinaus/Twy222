@@ -61,7 +61,7 @@ final class KmaApiManager {
         getForecastVeryShort(dateNow: dateNow, kmaXY: kmaXY, callbackComplete: onCompleteVeryShort, callbackError: callbackError);
     }
     
-    public func getForecastHourlyData( dateNow: Date, callbackComplete:@escaping (NSSet?) -> Void, callbackYesterdayAll:@escaping () -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
+    public func getForecastHourlyData( dateNow: Date, callbackComplete:@escaping ([HourlyEntity]?) -> Void, callbackYesterdayAll:@escaping () -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         let api = KmaApiForecastSpace3hours.shared;
         let dateBase = api.getBaseDate(dateNow: dateNow);
         let prevModel = apiSpace3HoursModel;
@@ -76,13 +76,10 @@ final class KmaApiManager {
         space3HourYesterdayList = [];
         var nYesterdayCompleteCount = 0;
         
-        guard let grid = CoreDataManager.shared.getCurrentGridData() else {
-            callbackError( ErrorModel() );
-            return;
-        }
-        
         func onComplete( modelNotNil: KmaApiForecastSpace3hoursModel ) {
             apiSpace3HoursModel = modelNotNil;
+            var retArray = [HourlyEntity]();
+            
             var model: HourlyEntity;
             
             for ( index, kmaModel ) in modelNotNil.list.enumerated() {
@@ -94,12 +91,14 @@ final class KmaApiManager {
                 
                 model = makeCoreDataHourly(kmaModel: kmaModel);
                 
-                grid.addToHourly(model);
+//                grid.addToHourly(model);
+                
+                retArray.append(model)
 
                 getYesterdayData(standardModel: model, kmaXY: kmaXY, callbackComplete: onCompleteYesterday);
             }
 
-            callbackComplete( grid.hourly );
+            callbackComplete( retArray );
         }
         
         func onCompleteYesterday() {
@@ -198,16 +197,7 @@ final class KmaApiManager {
         api.getData(dateBase: dateBase, kmaXY: kmaXY, callbackComplete: callbackComplete, callbackError: callbackError);
     }
     
-    public func getForecastMidData( dateNow: Date, callbackComplete:@escaping ([DailyModel]?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
-        guard let grid = CoreDataManager.shared.getCurrentGridData() else {
-            callbackError( ErrorModel() );
-            return;
-        }
-        guard let address = grid.address else {
-            callbackError( ErrorModel() );
-            return;
-        }
-        
+    public func getForecastMidData( dateNow: Date, address: AddressEntity, callbackComplete:@escaping ([DailyModel]?) -> Void, callbackError:@escaping (ErrorModel) -> Void ) {
         var modelTemperature: KmaApiMidTemperatureModel?
         
         func onCompleteTemperature( model: KmaApiMidTemperatureModel? ) {

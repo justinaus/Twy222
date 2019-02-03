@@ -17,6 +17,9 @@
         <attribute name="stationName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="air" inverseEntity="Grid" syncable="YES"/>
     </entity>
+    <entity name="Common" representedClassName="CommonEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="dateCompleteAll" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
     <entity name="Daily" representedClassName="DailyEntity" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="skyStatusImageName" optional="YES" attributeType="String" syncable="YES"/>
@@ -55,11 +58,12 @@
         <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Grid" inverseName="now" inverseEntity="Grid" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="9" positionY="126" width="128" height="165"/>
-        <element name="Air" positionX="27" positionY="144" width="128" height="120"/>
-        <element name="Daily" positionX="0" positionY="108" width="128" height="135"/>
-        <element name="Grid" positionX="-9" positionY="99" width="128" height="165"/>
-        <element name="Hourly" positionX="0" positionY="90" width="128" height="135"/>
-        <element name="Now" positionX="-36" positionY="9" width="128" height="180"/>
+        <element name="Address" positionX="270.125" positionY="127.625" width="128" height="165"/>
+        <element name="Air" positionX="-67.83984375" positionY="-87.453125" width="128" height="120"/>
+        <element name="Daily" positionX="-112.046875" positionY="379.21875" width="128" height="135"/>
+        <element name="Grid" positionX="-325.58984375" positionY="6.58984375" width="128" height="165"/>
+        <element name="Hourly" positionX="290.3828125" positionY="319.265625" width="128" height="135"/>
+        <element name="Now" positionX="240.33203125" positionY="-105.05859375" width="128" height="180"/>
+        <element name="Common" positionX="-311.05078125" positionY="272.11328125" width="128" height="58"/>
     </elements>
 </model>

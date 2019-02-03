@@ -1,6 +1,7 @@
 //
 //  ViewController.swift
 //  Twy222
+//  코어 데이터는 맨 처음에만 딱 한번 체크하고, 그 이후에는 체크하지 않는다. 저장만 하고.
 //
 //  Created by Bonkook Koo on 04/01/2019.
 //  Copyright © 2019 justinaus. All rights reserved.
@@ -17,7 +18,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     @IBOutlet var labelNowCompareWithYesterday: UILabel!
     @IBOutlet var labelNowSkyStatus: UILabel!
     @IBOutlet var imageSkyStatus: UIImageView!
-    
     @IBOutlet var labelToday: UILabel!
     @IBOutlet var labelTodayTemperature: UILabel!
     
@@ -31,14 +31,45 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     let locationManager: CLLocationManager = CLLocationManager();
     var currentLocation: CLLocation?;
     
-    // 나중에 core data로 변경.
-    var dateLastCalledRegion:Date?;
-    var dateLastCalledAir:Date?;
+    var gridEntity: GridEntity?;
+    
+    var dateRegionLastCalled: Date?
+    
+    // 전체 다 한바퀴 돌아서 완료했는지 여부 체크를 위해.
+    // 2가지 갈래가 있고, 결국 카운트가 2가 되면 다 완료 된 것임.
+    var nApiGroupCompleteCount = 0;
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         viewInit();
+        
+        // 기존 코어데이터가 정상적으로 있을 경우, 완료 된 시간과 현재 시간을 비교해서
+        // 얼마 안됐으면 그냥 콜을 하지 않고 기존 코어데이터로 그리고, 시간이 충분히 지났으면 정상적으로 api call 진행.
+        // 코어 데이터는 맨 처음에 딱 한번 체크하고, 그 이후에는 아예 체크하지 않는다. 저장만 하고.
+        if let coreDataDateComplete = CoreDataManager.shared.getCommonEntity()?.dateCompleteAll, let coreDataGridEntity = CoreDataManager.shared.getCurrentGridData() {
+            let now = Date();
+            
+            print("coredata 이전 콜 start 시간: \(DateUtil.getStringByDate(date: coreDataDateComplete))")
+            
+            let componenets = Calendar.current.dateComponents([.minute], from: coreDataDateComplete, to: now);
+            
+            if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION_BY_CORE_DATA ) {
+                print("coredata 기존에 콜 한지 xx분도 안됨, 콜 하지 말고 그리자.");
+                
+                dateRegionLastCalled = now;
+                
+                gridEntity = coreDataGridEntity;
+                
+                drawTodayText(date: now)
+                drawAddress();
+                drawAirData();
+                drawNowData();
+                drawHourlyList();
+                drawFromMid();
+            }
+        }
         
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
@@ -72,45 +103,53 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         drawTodayText( date: now );
         
-        if( dateLastCalledRegion != nil) {
-            let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalledRegion!, to: now);
+        if let dateLast = dateRegionLastCalled {
+            print("이전 콜 start 시간: \(DateUtil.getStringByDate(date: dateLast))")
+            
+            let componenets = Calendar.current.dateComponents([.minute], from: dateLast, to: now);
             
             if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION ) {
-//                print("기존에 콜 한지 xx분도 안됨, 아무것도 안함")
+                print("기존에 콜 한지 xx분도 안됨, 아무것도 안함")
                 return;
             }
         }
         
-        dateLastCalledRegion = now;
+        dateRegionLastCalled = now;
+        
+        nApiGroupCompleteCount = 0;
+        
+        print("호출 시작 \(DateUtil.getStringByDate(date: now))")
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+        
+        // 한개만 사용.
+        appDelegate.deleteAllInEntity(entityEnum: EntityEnum.Grid);
         
         let lat = currentLocation!.coordinate.latitude;
         let lon = currentLocation!.coordinate.longitude;
         
-        let saveSuccess = CoreDataManager.shared.saveGridData(dateNow: now, lon: lon, lat: lat);
+        let context = appDelegate.persistentContainer.viewContext;
         
-        if( saveSuccess ) {
-            getGridModelByLonLat( dateNow: now, lon: lon, lat: lat );
-        } else {
-            AlertUtil.alert(vc: self, title: "error", message: "core data error", buttonText: "확인", onSelect: nil);
-        }
+        gridEntity = GridEntity(context: context);
+        gridEntity!.latitude = lat;
+        gridEntity!.longitude = lon;
+        gridEntity!.dateCalled = now;
+        
+        appDelegate.saveContext();
+        
+        getGridModelByLonLat( dateNow: now, lon: lon, lat: lat );
     }
     
     func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
         func onComplete( model: AddressEntity ) {
-            let saveSuccess = CoreDataManager.shared.saveDataInCurrentGrid(model: model, strKey: "address")
-            if( !saveSuccess ) {
-                return;
-            }
-    
-            guard let addressTitle = CoreDataManager.shared.getAddressTitle() else {
-                return;
-            }
-            DispatchQueue.main.async {
-                self.labelNowLocation.text = addressTitle;
-            }
+            gridEntity?.address = model;
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+            appDelegate.saveContext();
+            
+            drawAddress();
             
             getNowData(dateNow: dateNow);
-            
+
             getAirData(dateNow: dateNow);
         }
         
@@ -122,22 +161,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     }
     
     func getNowData( dateNow: Date ) {
-        guard let gridEntity = CoreDataManager.shared.getCurrentGridData() else {
-            return;
-        }
-        
         func onComplete( model:NowEntity? ) {
             guard let modelNotNil = model else {
                 return;
             }
             
-            let saveSuccess = CoreDataManager.shared.saveDataInCurrentGrid(model: modelNotNil, strKey: "now")
-            if( !saveSuccess ) {
-                return;
-            }
-
+            gridEntity!.now = modelNotNil;
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+            appDelegate.saveContext();
+            
             drawNowData();
-
+            
             // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
             getForecastHourlyData(dateNow: dateNow );
         }
@@ -146,15 +180,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
         }
         
-        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridEntity.latitude, lon: gridEntity.longitude, callbackComplete: onComplete, callbackError: onError );
+        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridEntity!.latitude, lon: gridEntity!.longitude, callbackComplete: onComplete, callbackError: onError );
     }
     
     func getForecastHourlyData( dateNow: Date ) {
-        func onComplete( model: NSSet? ) {
-            if( model == nil ) {
+        func onComplete( model: [HourlyEntity]? ) {
+            guard let arrHourly = model else {
                 return;
             }
             
+            for hourly in arrHourly {
+                gridEntity!.addToHourly(hourly);
+            }
             let appDelegate = UIApplication.shared.delegate as! AppDelegate;
             appDelegate.saveContext();
             
@@ -163,7 +200,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         
         func onCompleteYesterdayAll() {
             drawHourlyList();
-
+            
             getForecastMidData(dateNow: dateNow);
         }
         
@@ -180,118 +217,81 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
                 return;
             }
             
-            guard let grid = CoreDataManager.shared.getCurrentGridData() else {
-                return;
-            }
-            
             // 오늘이 포함 되어 있다. 오늘을 자른다.
             let today = modelNotNil.removeFirst();
             
-            grid.now?.temperatureMax = today.temperatureMax;
-            grid.now?.temperatureMin = today.temperatureMin;
+            gridEntity!.now?.temperatureMax = today.temperatureMax;
+            gridEntity!.now?.temperatureMin = today.temperatureMin;
             
             saveDailyModelToDaily(arrOrigin: modelNotNil);
             
-            DispatchQueue.main.async {
-                self.labelTodayTemperature.text = "\(NumberUtil.roundToInt(value: today.temperatureMax)) / \(NumberUtil.roundToInt(value: today.temperatureMin))";
-
-                self.collectionViewMid.reloadData();
-            }
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+            appDelegate.saveContext();
+            
+            apiGroupComplete(dateNow: dateNow);
+            
+            drawFromMid();
         }
         
         func onError( errorModel: ErrorModel ) {
             AlertUtil.alert(vc: self, title: "error", message: "mid api error", buttonText: "확인", onSelect: nil);
         }
         
-        KmaApiManager.shared.getForecastMidData(dateNow: dateNow, callbackComplete: onComplete, callbackError: onError);
-    }
-    
-    private func saveDailyModelToDaily( arrOrigin: [DailyModel] ) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        let context = appDelegate.persistentContainer.viewContext;
-        let grid = CoreDataManager.shared.getCurrentGridData()!;
-        
-        var newDaily: DailyEntity;
-        
-        for origin in arrOrigin {
-            newDaily = DailyEntity(context: context);
-            
-            newDaily.date = origin.date;
-            newDaily.temperatureMax = origin.temperatureMax;
-            newDaily.temperatureMin = origin.temperatureMin;
-            newDaily.skyStatusImageName = origin.skyStatusImageName;
-            newDaily.skyStatusText = origin.skyStatusText;
-            
-            grid.addToDaily(newDaily);
-        }
-        
-        appDelegate.saveContext();
+        KmaApiManager.shared.getForecastMidData(dateNow: dateNow, address: gridEntity!.address!, callbackComplete: onComplete, callbackError: onError);
     }
     
     func getAirData( dateNow: Date ) {
-        //        if( dateLastCalledAir != nil) {
-        //            let componenets = Calendar.current.dateComponents([.minute], from: dateLastCalledAir!, to: dateNow);
-        //
-        //            if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_AIR ) {
-        ////                print("air 기존에 콜 한지 xx분도 안됨, 아무것도 안함")
-        //                return;
-        //            }
-        //        }
+        // 시간 체크 필요.
         
-        guard let address = CoreDataManager.shared.getCurrentGridData()?.address else {
+        guard let address = gridEntity?.address else {
             return;
         }
         
         func onComplete( model: AirEntity ) {
-            let saveSuccess = CoreDataManager.shared.saveDataInCurrentGrid(model: model, strKey: "air");
-            if( !saveSuccess ) {
-                return;
-            }
+            gridEntity?.air = model;
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+            appDelegate.saveContext();
+            
+            apiGroupComplete( dateNow: dateNow );
             
             drawAirData();
         }
-
+        
         func onError( errorModel: ErrorModel ) {
             AlertUtil.alert(vc: self, title: "error", message: "air api error", buttonText: "확인", onSelect: nil);
         }
         
-        //        dateLastCalledAir = dateNow;
-
         AkApiManager.shared.getAirData(dateNow: dateNow, tmX: address.tmX, tmY: address.tmY, callbackComplete: onComplete, callbackError: onError);
     }
     
-    func drawHourlyList() {
-        DispatchQueue.main.async {
-            self.collectionViewShort.reloadData();
+    func apiGroupComplete( dateNow: Date ) {
+        nApiGroupCompleteCount += 1;
+        
+        if( nApiGroupCompleteCount > 1 ) {
+            // 한 바퀴 완료.
+            CoreDataManager.shared.saveApiCompleteDate(dateComplete: dateNow);
         }
     }
     
-    func drawNowData() {
-        guard let nowEntity = CoreDataManager.shared.getCurrentGridData()?.now else {
+    func drawTodayText( date: Date ) {
+        let component = Calendar.current.dateComponents([.month, .day, .weekday], from: date);
+        let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
+        
+        labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
+    }
+    
+    func drawAddress() {
+        guard let addressTitle = CoreDataManager.shared.getAddressTitle(address: gridEntity?.address ) else {
             return;
         }
         
         DispatchQueue.main.async {
-            let intTemperature = NumberUtil.roundToInt(value: nowEntity.temperature);
-            self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";
-            
-            self.labelNowSkyStatus.text = nowEntity.skyStatusText;
-            
-            self.imageSkyStatus.image = UIImage(named: nowEntity.skyStatusImageName!);
-            self.imageSkyStatus.isHidden = false;
-            
-            // core data option 값이 문제가 있는 듯.
-            if( Int(nowEntity.diffFromYesterday) == TwyUtils.NUMBER_NIL_TEMP ) {
-                self.labelNowCompareWithYesterday.text = "";
-            } else {
-                let intTemperatureGap = NumberUtil.roundToInt(value: nowEntity.diffFromYesterday);
-                self.labelNowCompareWithYesterday.text = self.getTextCompareWithYesterday(intTemperatureGap: intTemperatureGap);
-            }
+            self.labelNowLocation.text = addressTitle;
         }
     }
     
     func drawAirData() {
-        guard let airEntity = CoreDataManager.shared.getCurrentGridData()?.air else {
+        guard let airEntity = gridEntity?.air else {
             return;
         }
         
@@ -309,25 +309,49 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
     }
     
-    func drawTodayText( date: Date ) {
-        let component = Calendar.current.dateComponents([.month, .day, .weekday], from: date);
-        let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
-        
-        labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
-    }
-    
-    private func getTextCompareWithYesterday( intTemperatureGap: Int ) -> String {
-        let uintTemperatureGap = abs(intTemperatureGap);
-        
-        var strComment = "어제와 같음";
-        
-        if( intTemperatureGap > 0 ) {
-            strComment = "어제보다 \(uintTemperatureGap)\(CharacterStruct.TEMPERATURE) 높음"
-        } else if( intTemperatureGap < 0 ) {
-            strComment = "어제보다 \(uintTemperatureGap)\(CharacterStruct.TEMPERATURE) 낮음"
+    func drawNowData() {
+        guard let nowEntity = gridEntity?.now else {
+            return;
         }
         
-        return strComment;
+        DispatchQueue.main.async {
+            let intTemperature = NumberUtil.roundToInt(value: nowEntity.temperature);
+            self.labelNowTemperature.text = "\(intTemperature)\(CharacterStruct.TEMPERATURE)";
+            
+            self.labelNowSkyStatus.text = nowEntity.skyStatusText;
+            
+            self.imageSkyStatus.image = UIImage(named: nowEntity.skyStatusImageName!);
+            self.imageSkyStatus.isHidden = false;
+            
+            // entity option 값이 문제가 있는 듯.
+            if( Int(nowEntity.diffFromYesterday) == TwyUtils.NUMBER_NIL_TEMP ) {
+                self.labelNowCompareWithYesterday.text = "";
+            } else {
+                let intTemperatureGap = NumberUtil.roundToInt(value: nowEntity.diffFromYesterday);
+                self.labelNowCompareWithYesterday.text = TwyUtils.getTextCompareWithYesterday(intTemperatureGap: intTemperatureGap);
+            }
+        }
+    }
+    
+    func drawHourlyList() {
+        DispatchQueue.main.async {
+            self.collectionViewShort.reloadData();
+        }
+    }
+    
+    private func drawFromMid() {
+        guard let temperatureMax = gridEntity?.now?.temperatureMax else {
+            return;
+        }
+        guard let temperatureMin = gridEntity?.now?.temperatureMin else {
+            return;
+        }
+        
+        DispatchQueue.main.async {
+            self.labelTodayTemperature.text = "\(NumberUtil.roundToInt(value: temperatureMax)) / \(NumberUtil.roundToInt(value: temperatureMin))";
+            
+            self.collectionViewMid.reloadData();
+        }
     }
     
     func viewInit() {
@@ -345,28 +369,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         viewAirQuality.isHidden = true;
     }
     
-    func goJustTempLocation() {
-        // gps 사용 못할 경우 임의의 장소의 정보를 가져온다 - 테스트로 대치동으로 하겠다.
-        let lat = 37.496066;
-        let lon = 127.067405;
-        currentLocation = CLLocation(latitude: lat, longitude: lon);
-        
-        tryStartToApiCall();
-        
-        AlertUtil.alert(vc: self, title: "위치 접근 허용 안함", message: "임시 장소 정보를 가져옵니다.\n설정에서 위치 접근을 허용해주세요.", buttonText: "확인", onSelect: nil);
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let gridEntity = CoreDataManager.shared.getCurrentGridData() else {
+        if( gridEntity == nil ) {
             return 0;
         }
         
         let isShortView = collectionView == collectionViewShort;
         
         if( isShortView ) {
-            return gridEntity.hourly?.count ?? 0;
+            return gridEntity!.hourly?.count ?? 0;
         } else {
-            return gridEntity.daily?.count ?? 0;
+            return gridEntity!.daily?.count ?? 0;
         }
     }
     
@@ -382,7 +395,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let reuseIdentifier = "cellShort";
         let cell = collectionViewShort.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCellShort;
         
-        guard let hourly = CoreDataManager.shared.getCurrentGridData()?.hourly else {
+        guard let hourly = gridEntity?.hourly else {
             return cell;
         }
         
@@ -427,7 +440,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         let reuseIdentifier = "cellMid";
         let cell = collectionViewMid.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCellMid;
         
-        guard let daily = CoreDataManager.shared.getCurrentGridData()?.daily else {
+        guard let daily = gridEntity?.daily else {
             return cell;
         }
         
@@ -449,6 +462,48 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         cell.setLabelWeekday(str: DateUtil.getWeekdayString( weekday, .koreanOneLetter) );
         
         return cell;
+    }
+    
+    private func saveDailyModelToDaily( arrOrigin: [DailyModel] ) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+        let context = appDelegate.persistentContainer.viewContext;
+        
+        var newDaily: DailyEntity;
+        
+        for origin in arrOrigin {
+            newDaily = DailyEntity(context: context);
+            
+            newDaily.date = origin.date;
+            newDaily.temperatureMax = origin.temperatureMax;
+            newDaily.temperatureMin = origin.temperatureMin;
+            newDaily.skyStatusImageName = origin.skyStatusImageName;
+            newDaily.skyStatusText = origin.skyStatusText;
+            
+            gridEntity!.addToDaily(newDaily);
+        }
+    }
+    
+    func goJustTempLocation() {
+        // gps 사용 못할 경우 임의의 장소의 정보를 가져온다 - 테스트로 대치동으로 하겠다.
+        let lat = 37.496066;
+        let lon = 127.067405;
+        currentLocation = CLLocation(latitude: lat, longitude: lon);
+        
+        tryStartToApiCall();
+        
+        AlertUtil.alert(vc: self, title: "위치 접근 허용 안함", message: "임시 장소 정보를 가져옵니다.\n설정에서 위치 접근을 허용해주세요.", buttonText: "확인", onSelect: nil);
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let dest = segue.destination;
+        
+        guard let vcAir = dest as? VCAir else {
+            return;
+        }
+        
+        vcAir.setData(airEntity: gridEntity?.air);
+        
+        super.prepare(for: segue, sender: sender)
     }
     
     @IBAction func unwindToVC( _ unwindSegue: UIStoryboardSegue) {
