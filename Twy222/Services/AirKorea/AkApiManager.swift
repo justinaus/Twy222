@@ -47,10 +47,7 @@ final class AkApiManager {
     }
     
     private func makeCoreDataModel( model: AkApiAirPmModel ) -> AirEntity? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil;
-        }
-        let context = appDelegate.persistentContainer.viewContext;
+        let context = CoreDataManager.shared.context!;
         
         let newObject = AirEntity(context: context);
         

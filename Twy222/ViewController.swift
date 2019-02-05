@@ -8,10 +8,9 @@
 //
 
 import UIKit
-import CoreLocation
 import CoreData
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet var labelNowLocation: UILabel!
     @IBOutlet var labelNowTemperature: UILabel!
@@ -28,20 +27,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
     @IBOutlet var labelPm10: UILabel!
     @IBOutlet var labelPm25: UILabel!
     
-    let locationManager: CLLocationManager = CLLocationManager();
-    var currentLocation: CLLocation?;
-    
-    var gridEntity: GridEntity?;
-    
-    var dateRegionLastCalled: Date?
-    
-    // 전체 다 한바퀴 돌아서 완료했는지 여부 체크를 위해.
-    // 2가지 갈래가 있고, 결국 카운트가 2가 되면 다 완료 된 것임.
-    var nApiGroupCompleteCount = 0;
-    
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+        let context = appDelegate.persistentContainer.viewContext;
+        
+        AppManager.shared.start(isMainApp: true);
+        CoreDataManager.shared.setContext(context: context);
+        
+        super.viewDidLoad();
         
         viewInit();
         
@@ -71,119 +65,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
             }
         }
         
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-//        locationManager.distanceFilter = 5;
-        
-        locationManager.requestWhenInUseAuthorization();
+        startLocationManager();
     }
     
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.delegate = self;
-            locationManager.startUpdatingLocation()
-        } else if status == .denied {
-            print("denied")
-            goJustTempLocation();
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else {
-            return;
-        }
-        
-        currentLocation = location;
-        
-        tryStartToApiCall();
-    }
-    
-    func tryStartToApiCall() {
-        let now: Date = Date();
-        
-        drawTodayText( date: now );
-        
-        if let dateLast = dateRegionLastCalled {
-            print("이전 콜 start 시간: \(DateUtil.getStringByDate(date: dateLast))")
-            
-            let componenets = Calendar.current.dateComponents([.minute], from: dateLast, to: now);
-            
-            if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION ) {
-                print("기존에 콜 한지 xx분도 안됨, 아무것도 안함")
-                return;
-            }
-        }
-        
-        dateRegionLastCalled = now;
-        
-        nApiGroupCompleteCount = 0;
-        
-        print("호출 시작 \(DateUtil.getStringByDate(date: now))")
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        
-        // 한개만 사용.
-        appDelegate.deleteAllInEntity(entityEnum: EntityEnum.Grid);
-        
-        let lat = currentLocation!.coordinate.latitude;
-        let lon = currentLocation!.coordinate.longitude;
-        
-        let context = appDelegate.persistentContainer.viewContext;
-        
-        gridEntity = GridEntity(context: context);
-        gridEntity!.latitude = lat;
-        gridEntity!.longitude = lon;
-        gridEntity!.dateCalled = now;
-        
-        appDelegate.saveContext();
-        
-        getGridModelByLonLat( dateNow: now, lon: lon, lat: lat );
-    }
-    
-    func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
-        func onComplete( model: AddressEntity ) {
-            gridEntity?.address = model;
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-            appDelegate.saveContext();
-            
-            drawAddress();
-            
-            getNowData(dateNow: dateNow);
-
-            getAirData(dateNow: dateNow);
-        }
-        
-        func onError( errorModel: ErrorModel ) {
-            AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil);
-        }
-        
-        KakaoApiManager.shared.getAddressData(dateNow: dateNow, lat: lat, lon: lon, callbackComplete: onComplete, callbackError: onError);
-    }
-    
-    func getNowData( dateNow: Date ) {
-        func onComplete( model:NowEntity? ) {
-            guard let modelNotNil = model else {
-                return;
-            }
-            
-            gridEntity!.now = modelNotNil;
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-            appDelegate.saveContext();
-            
-            drawNowData();
-            
-            // 동시 콜 x, 순서대로 하겠다. 디버깅 편하게 하기 위해.
-            getForecastHourlyData(dateNow: dateNow );
-        }
-        
-        func onError( errorModel: ErrorModel ) {
-            AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
-        }
-        
-        KmaApiManager.shared.getNowData(dateNow: dateNow, lat: gridEntity!.latitude, lon: gridEntity!.longitude, callbackComplete: onComplete, callbackError: onError );
-    }
-    
-    func getForecastHourlyData( dateNow: Date ) {
+    override func getForecastHourlyData( dateNow: Date ) {
         func onComplete( model: [HourlyEntity]? ) {
             guard let arrHourly = model else {
                 return;
@@ -240,47 +125,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         KmaApiManager.shared.getForecastMidData(dateNow: dateNow, address: gridEntity!.address!, callbackComplete: onComplete, callbackError: onError);
     }
     
-    func getAirData( dateNow: Date ) {
-        // 시간 체크 필요.
-        
-        guard let address = gridEntity?.address else {
-            return;
-        }
-        
-        func onComplete( model: AirEntity ) {
-            gridEntity?.air = model;
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-            appDelegate.saveContext();
-            
-            apiGroupComplete( dateNow: dateNow );
-            
-            drawAirData();
-        }
-        
-        func onError( errorModel: ErrorModel ) {
-            AlertUtil.alert(vc: self, title: "error", message: "air api error", buttonText: "확인", onSelect: nil);
-        }
-        
-        AkApiManager.shared.getAirData(dateNow: dateNow, tmX: address.tmX, tmY: address.tmY, callbackComplete: onComplete, callbackError: onError);
-    }
-    
-    func apiGroupComplete( dateNow: Date ) {
-        nApiGroupCompleteCount += 1;
-        
-        if( nApiGroupCompleteCount > 1 ) {
-            // 한 바퀴 완료.
-            CoreDataManager.shared.saveApiCompleteDate(dateComplete: dateNow);
-        }
-    }
-    
-    func drawTodayText( date: Date ) {
+    override func drawTodayText( date: Date ) {
         let component = Calendar.current.dateComponents([.month, .day, .weekday], from: date);
         let weekday = DateUtil.getWeekdayString( component.weekday!, .koreanWithBracket );
         
         labelToday.text = "\(component.month!)월 \(component.day!)일 \(weekday)";
     }
     
-    func drawAddress() {
+    override func drawAddress() {
         guard let addressTitle = CoreDataManager.shared.getAddressTitle(address: gridEntity?.address ) else {
             return;
         }
@@ -290,7 +142,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
     }
     
-    func drawAirData() {
+    override func drawAirData() {
         guard let airEntity = gridEntity?.air else {
             return;
         }
@@ -309,7 +161,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
     }
     
-    func drawNowData() {
+    override func drawNowData() {
         guard let nowEntity = gridEntity?.now else {
             return;
         }
@@ -333,13 +185,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         }
     }
     
-    func drawHourlyList() {
+    override func drawHourlyList() {
         DispatchQueue.main.async {
             self.collectionViewShort.reloadData();
         }
     }
     
-    private func drawFromMid() {
+    override func drawFromMid() {
         guard let temperatureMax = gridEntity?.now?.temperatureMax else {
             return;
         }
@@ -464,36 +316,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         return cell;
     }
     
-    private func saveDailyModelToDaily( arrOrigin: [DailyModel] ) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        let context = appDelegate.persistentContainer.viewContext;
-        
-        var newDaily: DailyEntity;
-        
-        for origin in arrOrigin {
-            newDaily = DailyEntity(context: context);
-            
-            newDaily.date = origin.date;
-            newDaily.temperatureMax = origin.temperatureMax;
-            newDaily.temperatureMin = origin.temperatureMin;
-            newDaily.skyStatusImageName = origin.skyStatusImageName;
-            newDaily.skyStatusText = origin.skyStatusText;
-            
-            gridEntity!.addToDaily(newDaily);
-        }
-    }
-    
-    func goJustTempLocation() {
-        // gps 사용 못할 경우 임의의 장소의 정보를 가져온다 - 테스트로 대치동으로 하겠다.
-        let lat = 37.496066;
-        let lon = 127.067405;
-        currentLocation = CLLocation(latitude: lat, longitude: lon);
-        
-        tryStartToApiCall();
-        
-        AlertUtil.alert(vc: self, title: "위치 접근 허용 안함", message: "임시 장소 정보를 가져옵니다.\n설정에서 위치 접근을 허용해주세요.", buttonText: "확인", onSelect: nil);
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let dest = segue.destination;
         
@@ -504,6 +326,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UICollectionV
         vcAir.setData(airEntity: gridEntity?.air);
         
         super.prepare(for: segue, sender: sender)
+    }
+    
+    override func getContext() -> NSManagedObjectContext {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+        return appDelegate.persistentContainer.viewContext;
+    }
+    
+    override func saveContext() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
+        appDelegate.saveContext();
     }
     
     @IBAction func unwindToVC( _ unwindSegue: UIStoryboardSegue) {

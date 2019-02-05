@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7BA6CD44D1EAE535350AD197 /* Pods_Twy222.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97B938B956C54BF0C7E71FDA /* Pods_Twy222.framework */; };
+		DE4BB555903B5025778A1A4A /* Pods_TwyTodayExt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FCDE87C5520862142ACA093C /* Pods_TwyTodayExt.framework */; };
 		E204CCE421FC8B5E006286FB /* AkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE321FC8B5E006286FB /* AkApiManager.swift */; };
 		E204CCE621FC8B92006286FB /* AkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE521FC8B92006286FB /* AkUtils.swift */; };
 		E204CCE821FC9A43006286FB /* AkApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE721FC9A43006286FB /* AkApiBase.swift */; };
@@ -24,6 +25,82 @@
 		E204CD2C2204569D006286FB /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E204CD2A2204569D006286FB /* MainInterface.storyboard */; };
 		E204CD302204569D006286FB /* TwyTodayExt.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E204CD242204569C006286FB /* TwyTodayExt.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E204CD5D2204CA36006286FB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5C2204CA36006286FB /* CoreDataManager.swift */; };
+		E204CD622206BA78006286FB /* ViewControllerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD612206BA78006286FB /* ViewControllerCore.swift */; };
+		E204CD642206CC48006286FB /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD632206CC48006286FB /* AppManager.swift */; };
+		E204CD65220991A4006286FB /* NanumGothic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5D921E6710900CD67B6 /* NanumGothic.ttf */; };
+		E204CD66220991B5006286FB /* 14.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5DC21E6EAD100CD67B6 /* 14.png */; };
+		E204CD67220991B5006286FB /* 28.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5DD21E6EAD100CD67B6 /* 28.png */; };
+		E204CD68220991B5006286FB /* 29.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5DE21E6EAD100CD67B6 /* 29.png */; };
+		E204CD69220991B5006286FB /* 01.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5DF21E6EAD100CD67B6 /* 01.png */; };
+		E204CD6A220991B5006286FB /* 15.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E021E6EAD100CD67B6 /* 15.png */; };
+		E204CD6B220991B5006286FB /* 03.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E121E6EAD100CD67B6 /* 03.png */; };
+		E204CD6C220991B5006286FB /* 17.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E221E6EAD100CD67B6 /* 17.png */; };
+		E204CD6D220991B5006286FB /* 16.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E321E6EAD100CD67B6 /* 16.png */; };
+		E204CD6E220991B5006286FB /* 02.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E421E6EAD100CD67B6 /* 02.png */; };
+		E204CD6F220991B5006286FB /* 06.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E521E6EAD100CD67B6 /* 06.png */; };
+		E204CD70220991B5006286FB /* 12.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E621E6EAD100CD67B6 /* 12.png */; };
+		E204CD71220991B5006286FB /* 13.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E721E6EAD100CD67B6 /* 13.png */; };
+		E204CD72220991B5006286FB /* 07.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E821E6EAD100CD67B6 /* 07.png */; };
+		E204CD73220991B5006286FB /* 39.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5E921E6EAD100CD67B6 /* 39.png */; };
+		E204CD74220991B5006286FB /* 11.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5EA21E6EAD100CD67B6 /* 11.png */; };
+		E204CD75220991B5006286FB /* 05.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5EB21E6EAD100CD67B6 /* 05.png */; };
+		E204CD76220991B5006286FB /* 04.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5EC21E6EAD100CD67B6 /* 04.png */; };
+		E204CD77220991B5006286FB /* 10.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5ED21E6EAD100CD67B6 /* 10.png */; };
+		E204CD78220991B5006286FB /* 38.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5EE21E6EAD100CD67B6 /* 38.png */; };
+		E204CD79220991B5006286FB /* 35.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5EF21E6EAD100CD67B6 /* 35.png */; };
+		E204CD7A220991B5006286FB /* 21.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F021E6EAD100CD67B6 /* 21.png */; };
+		E204CD7B220991B5006286FB /* 09.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F121E6EAD100CD67B6 /* 09.png */; };
+		E204CD7C220991B5006286FB /* 08.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F221E6EAD100CD67B6 /* 08.png */; };
+		E204CD7D220991B5006286FB /* 20.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F321E6EAD100CD67B6 /* 20.png */; };
+		E204CD7E220991B5006286FB /* 34.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F421E6EAD100CD67B6 /* 34.png */; };
+		E204CD7F220991B5006286FB /* 22.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F521E6EAD100CD67B6 /* 22.png */; };
+		E204CD80220991B5006286FB /* 36.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F621E6EAD100CD67B6 /* 36.png */; };
+		E204CD81220991B5006286FB /* 37.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F721E6EAD100CD67B6 /* 37.png */; };
+		E204CD82220991B5006286FB /* 23.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F821E6EAD100CD67B6 /* 23.png */; };
+		E204CD83220991B5006286FB /* 27.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5F921E6EAD100CD67B6 /* 27.png */; };
+		E204CD84220991B5006286FB /* 33.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5FA21E6EAD100CD67B6 /* 33.png */; };
+		E204CD85220991B5006286FB /* 32.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5FB21E6EAD100CD67B6 /* 32.png */; };
+		E204CD86220991B5006286FB /* 26.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5FC21E6EAD100CD67B6 /* 26.png */; };
+		E204CD87220991B5006286FB /* 18.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5FD21E6EAD100CD67B6 /* 18.png */; };
+		E204CD88220991B5006286FB /* 30.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5FE21E6EAD100CD67B6 /* 30.png */; };
+		E204CD89220991B5006286FB /* 24.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD5FF21E6EAD100CD67B6 /* 24.png */; };
+		E204CD8A220991B5006286FB /* 25.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60021E6EAD100CD67B6 /* 25.png */; };
+		E204CD8B220991B5006286FB /* 31.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60121E6EAD100CD67B6 /* 31.png */; };
+		E204CD8C220991B5006286FB /* 19.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60221E6EAD100CD67B6 /* 19.png */; };
+		E204CD8D220991B5006286FB /* 42.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60321E6EAD100CD67B6 /* 42.png */; };
+		E204CD8E220991B5006286FB /* 41.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60421E6EAD100CD67B6 /* 41.png */; };
+		E204CD8F220991B5006286FB /* 40.png in Resources */ = {isa = PBXBuildFile; fileRef = E27AD60521E6EAD100CD67B6 /* 40.png */; };
+		E204CD94220992B0006286FB /* ViewControllerCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD612206BA78006286FB /* ViewControllerCore.swift */; };
+		E204CD9522099752006286FB /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD632206CC48006286FB /* AppManager.swift */; };
+		E204CD9622099755006286FB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CD5C2204CA36006286FB /* CoreDataManager.swift */; };
+		E204CD9722099762006286FB /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29552B421E9A1550097480E /* Settings.swift */; };
+		E204CD9822099765006286FB /* TwyUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */; };
+		E204CD992209977A006286FB /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCFE22036BE5006286FB /* ErrorModel.swift */; };
+		E204CD9A2209978D006286FB /* ServiceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF049721DF265A005C00EB /* ServiceConfig.swift */; };
+		E204CD9B2209979E006286FB /* KmaApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C821E5AAD400CD67B6 /* KmaApiManager.swift */; };
+		E204CD9C220997A1006286FB /* KmaUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A721E30C4E005C00EB /* KmaUtils.swift */; };
+		E204CD9D220997A4006286FB /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
+		E204CD9E220997B0006286FB /* KmaXY.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998A21F6CEB800CDE9EA /* KmaXY.swift */; };
+		E204CD9F220997B0006286FB /* IDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998C21FA157600CDE9EA /* IDate.swift */; };
+		E204CDA0220997B7006286FB /* KmaApiForecastTimeVeryShortModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5D021E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift */; };
+		E204CDA2220997B7006286FB /* KmaApiActualModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C221E5A2C100CD67B6 /* KmaApiActualModel.swift */; };
+		E204CDA3220997C0006286FB /* KmaApiForecastTimeVeryShort.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */; };
+		E204CDA4220997C0006286FB /* KmaApiForecastSpace3hours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63D21E71C3B00CD67B6 /* KmaApiForecastSpace3hours.swift */; };
+		E204CDA5220997C0006286FB /* KmaApiActual.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C421E5A35000CD67B6 /* KmaApiActual.swift */; };
+		E204CDA6220997C0006286FB /* KmaApiShortBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5C621E5A5E500CD67B6 /* KmaApiShortBase.swift */; };
+		E204CDA7220997C6006286FB /* KakaoApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791C21FC355C000C3C46 /* KakaoApiManager.swift */; };
+		E204CDA8220997CD006286FB /* KakaoApiAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791621FC2A98000C3C46 /* KakaoApiAddress.swift */; };
+		E204CDA9220997CD006286FB /* KakaoApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791821FC2AC9000C3C46 /* KakaoApiBase.swift */; };
+		E204CDAA220997D2006286FB /* KakaoApiAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791A21FC2B22000C3C46 /* KakaoApiAddressModel.swift */; };
+		E204CDAB220997D7006286FB /* AkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE321FC8B5E006286FB /* AkApiManager.swift */; };
+		E204CDAC220997D7006286FB /* AkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE521FC8B92006286FB /* AkUtils.swift */; };
+		E204CDAD220997E1006286FB /* AkApiStationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCEB21FC9EC0006286FB /* AkApiStationModel.swift */; };
+		E204CDAE220997E1006286FB /* AkApiAirPmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF121FCBB46006286FB /* AkApiAirPmModel.swift */; };
+		E204CDAF220997E5006286FB /* AkApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE721FC9A43006286FB /* AkApiBase.swift */; };
+		E204CDB0220997E5006286FB /* AkApiStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCE921FC9DCB006286FB /* AkApiStation.swift */; };
+		E204CDB1220997E5006286FB /* AkApiAirPm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF321FCBC2B006286FB /* AkApiAirPm.swift */; };
+		E204CDB2220997F9006286FB /* JUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63421E6F95700CD67B6 /* JUtils.swift */; };
+		E204CDB3220997FD006286FB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -35,6 +112,17 @@
 		E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998821F634B300CDE9EA /* CollectionViewCellMid.swift */; };
 		E220998B21F6CEB800CDE9EA /* KmaXY.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998A21F6CEB800CDE9EA /* KmaXY.swift */; };
 		E220998D21FA157600CDE9EA /* IDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998C21FA157600CDE9EA /* IDate.swift */; };
+		E22668D622099EE20059EEB3 /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
+		E22668D722099EE20059EEB3 /* KmaApiMidLand.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998021F4458900CDE9EA /* KmaApiMidLand.swift */; };
+		E22668D822099EE20059EEB3 /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
+		E22668D922099EEC0059EEB3 /* KmaApiForecastSpace3hoursModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63B21E71BF400CD67B6 /* KmaApiForecastSpace3hoursModel.swift */; };
+		E22668DA22099EEC0059EEB3 /* KmaApiMidTemperatureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998221F4477500CDE9EA /* KmaApiMidTemperatureModel.swift */; };
+		E22668DB22099EEC0059EEB3 /* KmaApiMidLandModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998621F4487900CDE9EA /* KmaApiMidLandModel.swift */; };
+		E22668DC22099EEC0059EEB3 /* KmaHourlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29552B221E998470097480E /* KmaHourlyModel.swift */; };
+		E22668DD22099F050059EEB3 /* Twy222.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */; };
+		E22668DE22099F6F0059EEB3 /* DailyTemperatureMaxMinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220998421F447C700CDE9EA /* DailyTemperatureMaxMinModel.swift */; };
+		E22668DF22099F6F0059EEB3 /* HourlyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD5CE21E5B94900CD67B6 /* HourlyModel.swift */; };
+		E22668E022099F6F0059EEB3 /* DailyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997821F2DAE400CDE9EA /* DailyModel.swift */; };
 		E22D791721FC2A98000C3C46 /* KakaoApiAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791621FC2A98000C3C46 /* KakaoApiAddress.swift */; };
 		E22D791921FC2AC9000C3C46 /* KakaoApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791821FC2AC9000C3C46 /* KakaoApiBase.swift */; };
 		E22D791B21FC2B22000C3C46 /* KakaoApiAddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22D791A21FC2B22000C3C46 /* KakaoApiAddressModel.swift */; };
@@ -168,6 +256,10 @@
 		E204CD2B2204569D006286FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E204CD2D2204569D006286FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E204CD5C2204CA36006286FB /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E204CD612206BA78006286FB /* ViewControllerCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCore.swift; sourceTree = "<group>"; };
+		E204CD632206CC48006286FB /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
+		E204CD90220991D8006286FB /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E204CD92220991D8006286FB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -253,6 +345,9 @@
 		E2EF049721DF265A005C00EB /* ServiceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceConfig.swift; sourceTree = "<group>"; };
 		E2EF04A721E30C4E005C00EB /* KmaUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaUtils.swift; sourceTree = "<group>"; };
 		E2EF04A921E310EA005C00EB /* KmaApiForecastTimeVeryShort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiForecastTimeVeryShort.swift; sourceTree = "<group>"; };
+		F067B2E6CDEA81C0100A7918 /* Pods-TwyTodayExt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwyTodayExt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TwyTodayExt/Pods-TwyTodayExt.debug.xcconfig"; sourceTree = "<group>"; };
+		FCDE87C5520862142ACA093C /* Pods_TwyTodayExt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwyTodayExt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF12F56F0D369DE8B6E06E3F /* Pods-TwyTodayExt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwyTodayExt.release.xcconfig"; path = "Pods/Target Support Files/Pods-TwyTodayExt/Pods-TwyTodayExt.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E204CD262204569D006286FB /* NotificationCenter.framework in Frameworks */,
+				DE4BB555903B5025778A1A4A /* Pods_TwyTodayExt.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +376,8 @@
 		13D8F98E6CDFB45CA1A027C7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E204CD90220991D8006286FB /* Alamofire.framework */,
+				E204CD92220991D8006286FB /* SwiftyJSON.framework */,
 				E204CD1E22042DFE006286FB /* SwiftyJSON.framework */,
 				E204CD1C22042D0F006286FB /* Alamofire.framework */,
 				E204CD1822042C14006286FB /* Alamofire.framework */,
@@ -298,6 +396,7 @@
 				E204CD002204205F006286FB /* SwiftyJSON.framework */,
 				97B938B956C54BF0C7E71FDA /* Pods_Twy222.framework */,
 				E204CD252204569D006286FB /* NotificationCenter.framework */,
+				FCDE87C5520862142ACA093C /* Pods_TwyTodayExt.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -307,6 +406,8 @@
 			children = (
 				8F6D2E7D155B8B047BB68CA4 /* Pods-Twy222.debug.xcconfig */,
 				71B58E0A89DA541E5CB639AE /* Pods-Twy222.release.xcconfig */,
+				F067B2E6CDEA81C0100A7918 /* Pods-TwyTodayExt.debug.xcconfig */,
+				FF12F56F0D369DE8B6E06E3F /* Pods-TwyTodayExt.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -445,6 +546,7 @@
 				E2EF048B21DF1F71005C00EB /* Models */,
 				E26C5F4321DF03B00061FF86 /* AppDelegate.swift */,
 				E26C5F4521DF03B00061FF86 /* ViewController.swift */,
+				E204CD612206BA78006286FB /* ViewControllerCore.swift */,
 				E26C5F4721DF03B00061FF86 /* Main.storyboard */,
 				E26C5F4D21DF03B10061FF86 /* Assets.xcassets */,
 				E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */,
@@ -453,6 +555,7 @@
 				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
 				E29552B421E9A1550097480E /* Settings.swift */,
 				E204CD5C2204CA36006286FB /* CoreDataManager.swift */,
+				E204CD632206CC48006286FB /* AppManager.swift */,
 			);
 			path = Twy222;
 			sourceTree = "<group>";
@@ -609,6 +712,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E204CD312204569D006286FB /* Build configuration list for PBXNativeTarget "TwyTodayExt" */;
 			buildPhases = (
+				7FE395825FF2AA94A0750F3C /* [CP] Check Pods Manifest.lock */,
 				E204CD202204569C006286FB /* Sources */,
 				E204CD212204569C006286FB /* Frameworks */,
 				E204CD222204569C006286FB /* Resources */,
@@ -685,6 +789,49 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E204CD66220991B5006286FB /* 14.png in Resources */,
+				E204CD67220991B5006286FB /* 28.png in Resources */,
+				E204CD68220991B5006286FB /* 29.png in Resources */,
+				E204CD69220991B5006286FB /* 01.png in Resources */,
+				E204CD6A220991B5006286FB /* 15.png in Resources */,
+				E204CD6B220991B5006286FB /* 03.png in Resources */,
+				E204CD6C220991B5006286FB /* 17.png in Resources */,
+				E204CD6D220991B5006286FB /* 16.png in Resources */,
+				E204CD6E220991B5006286FB /* 02.png in Resources */,
+				E204CD6F220991B5006286FB /* 06.png in Resources */,
+				E204CD70220991B5006286FB /* 12.png in Resources */,
+				E204CD71220991B5006286FB /* 13.png in Resources */,
+				E204CD72220991B5006286FB /* 07.png in Resources */,
+				E204CD73220991B5006286FB /* 39.png in Resources */,
+				E204CD74220991B5006286FB /* 11.png in Resources */,
+				E204CD75220991B5006286FB /* 05.png in Resources */,
+				E204CD76220991B5006286FB /* 04.png in Resources */,
+				E204CD77220991B5006286FB /* 10.png in Resources */,
+				E204CD78220991B5006286FB /* 38.png in Resources */,
+				E204CD79220991B5006286FB /* 35.png in Resources */,
+				E204CD7A220991B5006286FB /* 21.png in Resources */,
+				E204CD7B220991B5006286FB /* 09.png in Resources */,
+				E204CD7C220991B5006286FB /* 08.png in Resources */,
+				E204CD7D220991B5006286FB /* 20.png in Resources */,
+				E204CD7E220991B5006286FB /* 34.png in Resources */,
+				E204CD7F220991B5006286FB /* 22.png in Resources */,
+				E204CD80220991B5006286FB /* 36.png in Resources */,
+				E204CD81220991B5006286FB /* 37.png in Resources */,
+				E204CD82220991B5006286FB /* 23.png in Resources */,
+				E204CD83220991B5006286FB /* 27.png in Resources */,
+				E204CD84220991B5006286FB /* 33.png in Resources */,
+				E204CD85220991B5006286FB /* 32.png in Resources */,
+				E204CD86220991B5006286FB /* 26.png in Resources */,
+				E204CD87220991B5006286FB /* 18.png in Resources */,
+				E204CD88220991B5006286FB /* 30.png in Resources */,
+				E204CD89220991B5006286FB /* 24.png in Resources */,
+				E204CD8A220991B5006286FB /* 25.png in Resources */,
+				E204CD8B220991B5006286FB /* 31.png in Resources */,
+				E204CD8C220991B5006286FB /* 19.png in Resources */,
+				E204CD8D220991B5006286FB /* 42.png in Resources */,
+				E204CD8E220991B5006286FB /* 41.png in Resources */,
+				E204CD8F220991B5006286FB /* 40.png in Resources */,
+				E204CD65220991A4006286FB /* NanumGothic.ttf in Resources */,
 				E204CD2C2204569D006286FB /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -745,6 +892,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7FE395825FF2AA94A0750F3C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TwyTodayExt-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		854D9427D406948FB2407295 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -798,7 +967,49 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E204CDA4220997C0006286FB /* KmaApiForecastSpace3hours.swift in Sources */,
+				E204CDA2220997B7006286FB /* KmaApiActualModel.swift in Sources */,
+				E204CDB2220997F9006286FB /* JUtils.swift in Sources */,
+				E204CDA6220997C0006286FB /* KmaApiShortBase.swift in Sources */,
+				E204CD992209977A006286FB /* ErrorModel.swift in Sources */,
+				E204CDAF220997E5006286FB /* AkApiBase.swift in Sources */,
+				E204CDB3220997FD006286FB /* FronteerKr.swift in Sources */,
+				E204CDAA220997D2006286FB /* KakaoApiAddressModel.swift in Sources */,
+				E22668DE22099F6F0059EEB3 /* DailyTemperatureMaxMinModel.swift in Sources */,
+				E204CDA7220997C6006286FB /* KakaoApiManager.swift in Sources */,
+				E204CDAC220997D7006286FB /* AkUtils.swift in Sources */,
+				E22668DB22099EEC0059EEB3 /* KmaApiMidLandModel.swift in Sources */,
+				E22668D922099EEC0059EEB3 /* KmaApiForecastSpace3hoursModel.swift in Sources */,
+				E204CD9822099765006286FB /* TwyUtils.swift in Sources */,
+				E204CD9522099752006286FB /* AppManager.swift in Sources */,
+				E22668D722099EE20059EEB3 /* KmaApiMidLand.swift in Sources */,
+				E22668D822099EE20059EEB3 /* KmaApiMidBase.swift in Sources */,
+				E204CDA3220997C0006286FB /* KmaApiForecastTimeVeryShort.swift in Sources */,
 				E204CD292204569D006286FB /* TodayViewController.swift in Sources */,
+				E204CD9622099755006286FB /* CoreDataManager.swift in Sources */,
+				E22668DA22099EEC0059EEB3 /* KmaApiMidTemperatureModel.swift in Sources */,
+				E204CDA8220997CD006286FB /* KakaoApiAddress.swift in Sources */,
+				E204CD9F220997B0006286FB /* IDate.swift in Sources */,
+				E204CDAD220997E1006286FB /* AkApiStationModel.swift in Sources */,
+				E204CDB0220997E5006286FB /* AkApiStation.swift in Sources */,
+				E22668DC22099EEC0059EEB3 /* KmaHourlyModel.swift in Sources */,
+				E204CDAE220997E1006286FB /* AkApiAirPmModel.swift in Sources */,
+				E204CD9C220997A1006286FB /* KmaUtils.swift in Sources */,
+				E204CD9A2209978D006286FB /* ServiceConfig.swift in Sources */,
+				E204CDA5220997C0006286FB /* KmaApiActual.swift in Sources */,
+				E22668DF22099F6F0059EEB3 /* HourlyModel.swift in Sources */,
+				E22668DD22099F050059EEB3 /* Twy222.xcdatamodeld in Sources */,
+				E204CD9B2209979E006286FB /* KmaApiManager.swift in Sources */,
+				E204CDAB220997D7006286FB /* AkApiManager.swift in Sources */,
+				E204CD9E220997B0006286FB /* KmaXY.swift in Sources */,
+				E22668D622099EE20059EEB3 /* KmaApiMidTemperature.swift in Sources */,
+				E204CDA9220997CD006286FB /* KakaoApiBase.swift in Sources */,
+				E204CD94220992B0006286FB /* ViewControllerCore.swift in Sources */,
+				E204CD9722099762006286FB /* Settings.swift in Sources */,
+				E22668E022099F6F0059EEB3 /* DailyModel.swift in Sources */,
+				E204CD9D220997A4006286FB /* KmaApiMidTemperatureRegionManager.swift in Sources */,
+				E204CDA0220997B7006286FB /* KmaApiForecastTimeVeryShortModel.swift in Sources */,
+				E204CDB1220997E5006286FB /* AkApiAirPm.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -833,6 +1044,7 @@
 				E27AD5D121E5F1AD00CD67B6 /* KmaApiForecastTimeVeryShortModel.swift in Sources */,
 				E27AD5C521E5A35000CD67B6 /* KmaApiActual.swift in Sources */,
 				E220998B21F6CEB800CDE9EA /* KmaXY.swift in Sources */,
+				E204CD622206BA78006286FB /* ViewControllerCore.swift in Sources */,
 				E220998721F4487900CDE9EA /* KmaApiMidLandModel.swift in Sources */,
 				E22D791721FC2A98000C3C46 /* KakaoApiAddress.swift in Sources */,
 				E220998921F634B300CDE9EA /* CollectionViewCellMid.swift in Sources */,
@@ -840,6 +1052,7 @@
 				E204CCEC21FC9EC0006286FB /* AkApiStationModel.swift in Sources */,
 				E204CCE821FC9A43006286FB /* AkApiBase.swift in Sources */,
 				E26C5F4C21DF03B00061FF86 /* Twy222.xcdatamodeld in Sources */,
+				E204CD642206CC48006286FB /* AppManager.swift in Sources */,
 				E204CCE621FC8B92006286FB /* AkUtils.swift in Sources */,
 				E27AD63A21E6F95700CD67B6 /* SegueUnwindToRight.swift in Sources */,
 				E204CD5D2204CA36006286FB /* CoreDataManager.swift in Sources */,
@@ -896,39 +1109,43 @@
 /* Begin XCBuildConfiguration section */
 		E204CD322204569D006286FB /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F067B2E6CDEA81C0100A7918 /* Pods-TwyTodayExt.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9NZC5VWKUT;
 				INFOPLIST_FILE = TwyTodayExt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.Twy222.TwyTodayExt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.twy.TwyTodayExt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		E204CD332204569D006286FB /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF12F56F0D369DE8B6E06E3F /* Pods-TwyTodayExt.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9NZC5VWKUT;
 				INFOPLIST_FILE = TwyTodayExt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.Twy222.TwyTodayExt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.twy.TwyTodayExt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1062,7 +1279,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.Twy222;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.twy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1083,7 +1300,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.Twy222;
+				PRODUCT_BUNDLE_IDENTIFIER = com.justinaus.twy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;

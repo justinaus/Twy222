@@ -23,17 +23,21 @@ enum EntityEnum: String {
 final class CoreDataManager {
     static let shared = CoreDataManager();
     
+    // 시작하자 마자 넘겨준다고 가정..
+    public private(set) var context: NSManagedObjectContext?;
+    
+    public func setContext( context: NSManagedObjectContext ) {
+        self.context = context;
+    }
+    
     func getCommonEntity() -> CommonEntity? {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        let context = appDelegate.persistentContainer.viewContext;
-        
         let entityEnum = EntityEnum.Common;
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityEnum.rawValue)
         request.returnsObjectsAsFaults = false
         
         do {
-            let result = try context.fetch(request);
+            let result = try context!.fetch(request);
             
             if( result.count == 0 ) {
                 return nil;
@@ -47,16 +51,13 @@ final class CoreDataManager {
     }
     
     func getCurrentGridData() -> GridEntity? {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        let context = appDelegate.persistentContainer.viewContext;
-        
         let entityEnum = EntityEnum.Grid;
         
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityEnum.rawValue)
         request.returnsObjectsAsFaults = false
         
         do {
-            let result = try context.fetch(request);
+            let result = try context!.fetch(request);
             
             if( result.count == 0 ) {
                 return nil;
@@ -69,28 +70,15 @@ final class CoreDataManager {
         }
     }
     
-    func saveDataInCurrentGrid( model: NSManagedObject, strKey: String ) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        
-        // 오류 내자 그냥.
-        
-        getCurrentGridData()?.setValue( model, forKey: strKey);
-        
-        appDelegate.saveContext();
-    }
-    
-    func saveApiCompleteDate( dateComplete: Date ) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        let context = appDelegate.persistentContainer.viewContext;
-        
+    func makeApiCompleteDate( dateComplete: Date ) {
         let entityEnum = EntityEnum.Common;
         
-        appDelegate.deleteAllInEntity(entityEnum: entityEnum);
+        deleteAllInEntity(entityEnum: entityEnum);
         
-        let newEntity = CommonEntity(context: context);
+        let newEntity = CommonEntity(context: context!);
         newEntity.dateCompleteAll = dateComplete;
         
-        appDelegate.saveContext();
+//        appDelegate.saveContext();
     }
     
     func getAddressTitle( address: AddressEntity? ) -> String? {
@@ -111,5 +99,20 @@ final class CoreDataManager {
         }
         
         return strAddress;
+    }
+    
+    public func deleteAllInEntity( entityEnum: EntityEnum ) {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityEnum.rawValue)
+        
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let result = try context!.fetch(request)
+            for data in result as! [NSManagedObject] {
+                context!.delete(data);
+            }
+        } catch {
+            print("Error with request: \(error)")
+        }
     }
 }

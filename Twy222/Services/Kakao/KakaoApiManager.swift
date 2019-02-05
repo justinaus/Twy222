@@ -35,10 +35,7 @@ final class KakaoApiManager {
     }
     
     private func makeCoreDataModel( model: KakaoApiAddressModel ) -> AddressEntity? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil;
-        }
-        let context = appDelegate.persistentContainer.viewContext;
+        let context = CoreDataManager.shared.context!;
         
         let newObject = AddressEntity(context: context);
         

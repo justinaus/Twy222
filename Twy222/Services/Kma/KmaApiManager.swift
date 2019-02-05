@@ -137,8 +137,7 @@ final class KmaApiManager {
     }
     
     private func makeCoreDataHourly( kmaModel: KmaHourlyModel ) -> HourlyEntity {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate;
-        let context = appDelegate.persistentContainer.viewContext;
+        let context = CoreDataManager.shared.context!;
         
         let newObject = HourlyEntity(context: context);
         
@@ -156,10 +155,7 @@ final class KmaApiManager {
     }
     
     private func makeCoreDataNow( model: KmaApiForecastTimeVeryShortModel ) -> NowEntity? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return nil;
-        }
-        let context = appDelegate.persistentContainer.viewContext;
+        let context = CoreDataManager.shared.context!;
         
         let newObject = NowEntity(context: context);
         
