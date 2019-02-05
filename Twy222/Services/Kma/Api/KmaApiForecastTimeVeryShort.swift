@@ -131,6 +131,9 @@ final class KmaApiForecastTimeVeryShort: KmaApiShortBase {
             return nil;
         }
         
+        
+//        print("실제 사용할 시간 \(DateUtil.getStringByDate(date: dateFcst!))")
+        
         let model: KmaApiForecastTimeVeryShortModel = KmaApiForecastTimeVeryShortModel(dateBase: dateBase, kmaXY: kmaXY, dateForecast: dateFcst!, temperature: temperature!, skyEnum: skyEnum!, ptyEnum: ptyEnum!)
         
         return model;

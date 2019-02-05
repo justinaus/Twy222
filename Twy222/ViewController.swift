@@ -42,27 +42,35 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         // 기존 코어데이터가 정상적으로 있을 경우, 완료 된 시간과 현재 시간을 비교해서
         // 얼마 안됐으면 그냥 콜을 하지 않고 기존 코어데이터로 그리고, 시간이 충분히 지났으면 정상적으로 api call 진행.
         // 코어 데이터는 맨 처음에 딱 한번 체크하고, 그 이후에는 아예 체크하지 않는다. 저장만 하고.
-        if let coreDataDateComplete = CoreDataManager.shared.getCommonEntity()?.dateCompleteAll, let coreDataGridEntity = CoreDataManager.shared.getCurrentGridData() {
-            let now = Date();
+        guard let coreDataDateComplete = CoreDataManager.shared.getCommonEntity()?.dateCompleteAll, let coreDataGridEntity = CoreDataManager.shared.getCurrentGridData() else {
+            startLocationManager();
+            return;
+        }
+        // 근데 기존에 있는 데이터가 today extenstion용 데이터이면 그냥 처음부터 api call 진행하겠다. 귀찮..
+        if( CoreDataManager.shared.getCommonEntity()?.isMainApp == false ) {
+            startLocationManager();
+            return;
+        }
+
+        let now = Date();
+        
+        print("coredata 이전 콜 start 시간: \(DateUtil.getStringByDate(date: coreDataDateComplete))")
+        
+        let componenets = Calendar.current.dateComponents([.minute], from: coreDataDateComplete, to: now);
+        
+        if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION_BY_CORE_DATA ) {
+            print("coredata 기존에 콜 한지 xx분도 안됨, 콜 하지 말고 그리자.");
             
-            print("coredata 이전 콜 start 시간: \(DateUtil.getStringByDate(date: coreDataDateComplete))")
+            dateRegionLastCalled = now;
             
-            let componenets = Calendar.current.dateComponents([.minute], from: coreDataDateComplete, to: now);
+            gridEntity = coreDataGridEntity;
             
-            if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION_BY_CORE_DATA ) {
-                print("coredata 기존에 콜 한지 xx분도 안됨, 콜 하지 말고 그리자.");
-                
-                dateRegionLastCalled = now;
-                
-                gridEntity = coreDataGridEntity;
-                
-                drawTodayText(date: now)
-                drawAddress();
-                drawAirData();
-                drawNowData();
-                drawHourlyList();
-                drawFromMid();
-            }
+            drawTodayText(date: now)
+            drawAddress();
+            drawAirData();
+            drawNowData();
+            drawHourlyList();
+            drawFromMid();
         }
         
         startLocationManager();

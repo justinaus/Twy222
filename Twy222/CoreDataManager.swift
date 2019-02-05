@@ -70,13 +70,14 @@ final class CoreDataManager {
         }
     }
     
-    func makeApiCompleteDate( dateComplete: Date ) {
+    func makeCommonEntityAferApiComplete( dateComplete: Date, isMainApp: Bool ) {
         let entityEnum = EntityEnum.Common;
         
         deleteAllInEntity(entityEnum: entityEnum);
         
         let newEntity = CommonEntity(context: context!);
         newEntity.dateCompleteAll = dateComplete;
+        newEntity.isMainApp = isMainApp;
         
 //        appDelegate.saveContext();
     }

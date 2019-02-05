@@ -144,7 +144,7 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         
         if( nApiGroupCompleteCount > 1 ) {
             // 한 바퀴 완료.
-            CoreDataManager.shared.makeApiCompleteDate(dateComplete: dateNow);
+            CoreDataManager.shared.makeCommonEntityAferApiComplete(dateComplete: dateNow, isMainApp: AppManager.shared.isMainApp!);
             saveContext();
         }
     }

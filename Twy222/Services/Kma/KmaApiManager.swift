@@ -55,6 +55,8 @@ final class KmaApiManager {
             let resultDiff = coreData!.temperature - model.temperature;
             coreData!.diffFromYesterday = resultDiff;
             
+//            print("오늘날씨 : \(coreData!.temperature), 어제날씨: \(model.temperature)")
+            
             callbackComplete( coreData! );
         }
         
