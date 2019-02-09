@@ -103,6 +103,10 @@
 		E204CDB3220997FD006286FB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
 		E21D4B94220E866E00E6B5B5 /* icontransp256.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4B93220E866E00E6B5B5 /* icontransp256.png */; };
 		E21D4B96220E867E00E6B5B5 /* JustrizLogoXamarinGray.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4B95220E867E00E6B5B5 /* JustrizLogoXamarinGray.png */; };
+		E21D4BA9220F2AA000E6B5B5 /* icons8-github-filled-90.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4BA8220F2AA000E6B5B5 /* icons8-github-filled-90.png */; };
+		E21D4BAB220F2B4800E6B5B5 /* icons8-menu-90.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4BAA220F2B4800E6B5B5 /* icons8-menu-90.png */; };
+		E21D4BAD220F2D2B00E6B5B5 /* icons8-new-post-90.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4BAC220F2D2B00E6B5B5 /* icons8-new-post-90.png */; };
+		E21D4BAF220F2E6800E6B5B5 /* icons8-apple-app-store-90.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4BAE220F2E6800E6B5B5 /* icons8-apple-app-store-90.png */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -264,6 +268,10 @@
 		E204CD92220991D8006286FB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E21D4B93220E866E00E6B5B5 /* icontransp256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icontransp256.png; sourceTree = "<group>"; };
 		E21D4B95220E867E00E6B5B5 /* JustrizLogoXamarinGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JustrizLogoXamarinGray.png; sourceTree = "<group>"; };
+		E21D4BA8220F2AA000E6B5B5 /* icons8-github-filled-90.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-github-filled-90.png"; sourceTree = "<group>"; };
+		E21D4BAA220F2B4800E6B5B5 /* icons8-menu-90.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-menu-90.png"; sourceTree = "<group>"; };
+		E21D4BAC220F2D2B00E6B5B5 /* icons8-new-post-90.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-new-post-90.png"; sourceTree = "<group>"; };
+		E21D4BAE220F2E6800E6B5B5 /* icons8-apple-app-store-90.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icons8-apple-app-store-90.png"; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -576,6 +584,10 @@
 			isa = PBXGroup;
 			children = (
 				E21D4B95220E867E00E6B5B5 /* JustrizLogoXamarinGray.png */,
+				E21D4BAC220F2D2B00E6B5B5 /* icons8-new-post-90.png */,
+				E21D4BAA220F2B4800E6B5B5 /* icons8-menu-90.png */,
+				E21D4BAE220F2E6800E6B5B5 /* icons8-apple-app-store-90.png */,
+				E21D4BA8220F2AA000E6B5B5 /* icons8-github-filled-90.png */,
 				E21D4B93220E866E00E6B5B5 /* icontransp256.png */,
 				E27AD5DB21E6EAD100CD67B6 /* weather_icons */,
 				E27AD5D821E670B000CD67B6 /* Fonts */,
@@ -860,12 +872,15 @@
 				E27AD62721E6EAD100CD67B6 /* 18.png in Resources */,
 				E27AD62B21E6EAD100CD67B6 /* 31.png in Resources */,
 				E27AD62521E6EAD100CD67B6 /* 32.png in Resources */,
+				E21D4BA9220F2AA000E6B5B5 /* icons8-github-filled-90.png in Resources */,
 				E27AD60E21E6EAD100CD67B6 /* 02.png in Resources */,
 				E27AD62121E6EAD100CD67B6 /* 37.png in Resources */,
+				E21D4BAB220F2B4800E6B5B5 /* icons8-menu-90.png in Resources */,
 				E27AD61221E6EAD100CD67B6 /* 07.png in Resources */,
 				E27AD60B21E6EAD100CD67B6 /* 03.png in Resources */,
 				E27AD60A21E6EAD100CD67B6 /* 15.png in Resources */,
 				E27AD62C21E6EAD100CD67B6 /* 19.png in Resources */,
+				E21D4BAF220F2E6800E6B5B5 /* icons8-apple-app-store-90.png in Resources */,
 				E27AD60621E6EAD100CD67B6 /* 14.png in Resources */,
 				E21D4B96220E867E00E6B5B5 /* JustrizLogoXamarinGray.png in Resources */,
 				E27AD61D21E6EAD100CD67B6 /* 20.png in Resources */,
@@ -893,6 +908,7 @@
 				E27AD62421E6EAD100CD67B6 /* 33.png in Resources */,
 				E27AD61921E6EAD100CD67B6 /* 35.png in Resources */,
 				E27AD62A21E6EAD100CD67B6 /* 25.png in Resources */,
+				E21D4BAD220F2D2B00E6B5B5 /* icons8-new-post-90.png in Resources */,
 				E27AD62F21E6EAD100CD67B6 /* 40.png in Resources */,
 				E21D4B94220E866E00E6B5B5 /* icontransp256.png in Resources */,
 				E27AD61321E6EAD100CD67B6 /* 39.png in Resources */,

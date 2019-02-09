@@ -27,6 +27,8 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     @IBOutlet var labelPm10: UILabel!
     @IBOutlet var labelPm25: UILabel!
     
+    @IBOutlet var buttonModal: UIButton!
+    @IBOutlet var viewMenu: UIView!
     
     override func viewDidLoad() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate;
@@ -214,6 +216,27 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         }
     }
     
+    @IBAction func onClickHamburger(_ sender: UIButton) {
+        buttonModal.isHidden = false;
+        viewMenu.isHidden = false;
+        
+        viewMenu.transform = CGAffineTransform(translationX: -viewMenu.frame.size.width, y: 0);
+        
+        UIView.animate(withDuration: 0.25,
+                       delay: 0.0,
+                       options: UIView.AnimationOptions.curveEaseInOut,
+                       animations: {
+                        self.viewMenu.transform = CGAffineTransform.identity
+        }, completion: { finished in
+            
+        });
+    }
+    
+    @IBAction func onClickModal(_ sender: UIButton) {
+        buttonModal.isHidden = true;
+        viewMenu.isHidden = true;
+    }
+    
     func viewInit() {
         labelNowLocation.text = "";
         labelNowSkyStatus.text = "";
@@ -227,6 +250,9 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         labelPm10.text = "";
         labelPm25.text = "";
         viewAirQuality.isHidden = true;
+        
+        buttonModal.isHidden = true;
+        viewMenu.isHidden = true;
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
