@@ -620,15 +620,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N5d-2P-Pc4">
-                                <rect key="frame" x="0.0" y="20" width="60" height="546"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="I0S-QO-dYS" appends="YES" id="A5P-9M-oyT"/>
-                                </connections>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UUU-vd-pcc">
                                 <rect key="frame" x="0.0" y="20" width="63" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -654,11 +645,6 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yb7-jw-1bq" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="DAU-tN-aYI" userLabel="Exit" sceneMemberID="exit"/>
-                <swipeGestureRecognizer direction="right" id="I0S-QO-dYS">
-                    <connections>
-                        <action selector="myActionMethod:" destination="aGs-3M-hqg" id="MjT-9A-RQK"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="853.125" y="135.21126760563379"/>
         </scene>

@@ -19,9 +19,19 @@ class VCAir: UIViewController {
     
     private var airEntity: AirEntity?;
     
+    override func viewDidLoad() {
+        super.viewDidLoad();
+        
+        let screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self,
+                                                                action: #selector(onScreenEdgeRecog))
+        screenEdgeRecognizer.edges = .left
+        view.addGestureRecognizer(screenEdgeRecognizer)
+    }
     
-    @IBAction func myActionMethod(_ sender: UIGestureRecognizer) {
-        performSegue(withIdentifier: "unwindToRight", sender: nil);
+    @objc func onScreenEdgeRecog(sender: UIScreenEdgePanGestureRecognizer) {
+        if sender.state == .recognized {
+            performSegue(withIdentifier: "unwindToRight", sender: nil);
+        }
     }
     
     public func setData( airEntity: AirEntity? ) {
