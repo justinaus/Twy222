@@ -101,6 +101,8 @@
 		E204CDB1220997E5006286FB /* AkApiAirPm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E204CCF321FCBC2B006286FB /* AkApiAirPm.swift */; };
 		E204CDB2220997F9006286FB /* JUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27AD63421E6F95700CD67B6 /* JUtils.swift */; };
 		E204CDB3220997FD006286FB /* FronteerKr.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EF048921DF1E9A005C00EB /* FronteerKr.swift */; };
+		E21D4B94220E866E00E6B5B5 /* icontransp256.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4B93220E866E00E6B5B5 /* icontransp256.png */; };
+		E21D4B96220E867E00E6B5B5 /* JustrizLogoXamarinGray.png in Resources */ = {isa = PBXBuildFile; fileRef = E21D4B95220E867E00E6B5B5 /* JustrizLogoXamarinGray.png */; };
 		E220997121EB18B100CDE9EA /* KmaApiMidBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */; };
 		E220997321EB1BC100CDE9EA /* KmaApiMidTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */; };
 		E220997521F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */; };
@@ -260,6 +262,8 @@
 		E204CD632206CC48006286FB /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		E204CD90220991D8006286FB /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E204CD92220991D8006286FB /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E21D4B93220E866E00E6B5B5 /* icontransp256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icontransp256.png; sourceTree = "<group>"; };
+		E21D4B95220E867E00E6B5B5 /* JustrizLogoXamarinGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = JustrizLogoXamarinGray.png; sourceTree = "<group>"; };
 		E220997021EB18B100CDE9EA /* KmaApiMidBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidBase.swift; sourceTree = "<group>"; };
 		E220997221EB1BC100CDE9EA /* KmaApiMidTemperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperature.swift; sourceTree = "<group>"; };
 		E220997421F2B7FC00CDE9EA /* KmaApiMidTemperatureRegionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KmaApiMidTemperatureRegionManager.swift; sourceTree = "<group>"; };
@@ -571,6 +575,8 @@
 		E27AD5D721E6709800CD67B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E21D4B95220E867E00E6B5B5 /* JustrizLogoXamarinGray.png */,
+				E21D4B93220E866E00E6B5B5 /* icontransp256.png */,
 				E27AD5DB21E6EAD100CD67B6 /* weather_icons */,
 				E27AD5D821E670B000CD67B6 /* Fonts */,
 			);
@@ -860,6 +866,7 @@
 				E27AD60A21E6EAD100CD67B6 /* 15.png in Resources */,
 				E27AD62C21E6EAD100CD67B6 /* 19.png in Resources */,
 				E27AD60621E6EAD100CD67B6 /* 14.png in Resources */,
+				E21D4B96220E867E00E6B5B5 /* JustrizLogoXamarinGray.png in Resources */,
 				E27AD61D21E6EAD100CD67B6 /* 20.png in Resources */,
 				E27AD60821E6EAD100CD67B6 /* 29.png in Resources */,
 				E27AD60F21E6EAD100CD67B6 /* 06.png in Resources */,
@@ -886,6 +893,7 @@
 				E27AD61921E6EAD100CD67B6 /* 35.png in Resources */,
 				E27AD62A21E6EAD100CD67B6 /* 25.png in Resources */,
 				E27AD62F21E6EAD100CD67B6 /* 40.png in Resources */,
+				E21D4B94220E866E00E6B5B5 /* icontransp256.png in Resources */,
 				E27AD61321E6EAD100CD67B6 /* 39.png in Resources */,
 				E26C5F5121DF03B20061FF86 /* LaunchScreen.storyboard in Resources */,
 				E27AD61A21E6EAD100CD67B6 /* 21.png in Resources */,
