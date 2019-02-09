@@ -469,6 +469,14 @@
 			path = Libraries;
 			sourceTree = "<group>";
 		};
+		E21D4B92220E84BD00E6B5B5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		E220996E21EB17E100CDE9EA /* Api */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +546,7 @@
 		E26C5F4221DF03B00061FF86 /* Twy222 */ = {
 			isa = PBXGroup;
 			children = (
+				E21D4B92220E84BD00E6B5B5 /* Utils */,
 				E204CD602205DB92006286FB /* Libraries */,
 				E204CCF521FD5E6A006286FB /* ViewControllers */,
 				E29552B621E9AAA40097480E /* Views */,
@@ -552,7 +561,6 @@
 				E26C5F4F21DF03B20061FF86 /* LaunchScreen.storyboard */,
 				E26C5F5221DF03B20061FF86 /* Info.plist */,
 				E26C5F4A21DF03B00061FF86 /* Twy222.xcdatamodeld */,
-				E27AD5BA21E342E900CD67B6 /* TwyUtils.swift */,
 				E29552B421E9A1550097480E /* Settings.swift */,
 				E204CD5C2204CA36006286FB /* CoreDataManager.swift */,
 				E204CD632206CC48006286FB /* AppManager.swift */,
