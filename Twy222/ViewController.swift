@@ -237,6 +237,42 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         viewMenu.isHidden = true;
     }
     
+    @IBAction func onClickMail(_ sender: UIButton) {
+        let email = "justriz81@gmail.com"
+        if let url = URL(string: "mailto:\(email)") {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    @IBAction func onClickAppleStore(_ sender: UIButton) {
+        let url = "https://itunes.apple.com/kr/app/%EC%96%B4%EC%A0%9C%EB%82%A0%EC%94%A8/id1141633564?mt=8";
+        openURL(strUrl: url);
+    }
+    
+    @IBAction func onClickGithub(_ sender: UIButton) {
+        let url = "https://github.com/justinaus";
+        openURL(strUrl: url);
+    }
+    
+    private func openURL( strUrl: String ) {
+        guard let url = URL(string: strUrl) else {
+            return;
+        }
+        
+        if UIApplication.shared.canOpenURL(url) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            } else {
+                // Fallback on earlier versions
+                UIApplication.shared.openURL(url)
+            };
+        }
+    }
+    
     func viewInit() {
         labelNowLocation.text = "";
         labelNowSkyStatus.text = "";
