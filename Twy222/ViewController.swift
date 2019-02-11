@@ -326,7 +326,10 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
             ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
         })
         
-        let model = arrHourly[ indexPath.item ] as! HourlyEntity;
+        guard let model = arrHourly[ indexPath.item ] as? HourlyEntity else {
+            return cell;
+        }
+//        let model = arrHourly[ indexPath.item ] as! HourlyEntity;
         
         let hour = Calendar.current.component(.hour, from: model.date!)
         cell.setLabelHour(str: "\(hour)시");
