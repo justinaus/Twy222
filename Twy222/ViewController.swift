@@ -371,7 +371,11 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
             ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
         })
         
-        let model = arrDaily[ indexPath.item ] as! DailyEntity;
+        guard let model = arrDaily[ indexPath.item ] as? DailyEntity else {
+            return cell;
+        }
+        // fabric crashed
+//        let model = arrDaily[ indexPath.item ] as! DailyEntity;
         
         cell.setImageSkyByFileName(imageFileName: model.skyStatusImageName!);
         
