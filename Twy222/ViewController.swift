@@ -41,6 +41,9 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         
         viewInit();
         
+//        goJustTempLocation();
+//        return;
+        
         // 기존 코어데이터가 정상적으로 있을 경우, 완료 된 시간과 현재 시간을 비교해서
         // 얼마 안됐으면 그냥 콜을 하지 않고 기존 코어데이터로 그리고, 시간이 충분히 지났으면 정상적으로 api call 진행.
         // 코어 데이터는 맨 처음에 딱 한번 체크하고, 그 이후에는 아예 체크하지 않는다. 저장만 하고.
@@ -292,16 +295,12 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if( gridEntity == nil ) {
-            return 0;
-        }
-        
         let isShortView = collectionView == collectionViewShort;
         
         if( isShortView ) {
-            return gridEntity!.hourly?.count ?? 0;
+            return gridEntity?.hourly?.count ?? 0;
         } else {
-            return gridEntity!.daily?.count ?? 0;
+            return gridEntity?.daily?.count ?? 0;
         }
     }
     
@@ -322,6 +321,11 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         }
         
         var arrHourly = Array( hourly );
+        
+        if( arrHourly.count <= indexPath.item ) {
+            return cell;
+        }
+        
         arrHourly.sort(by: {
             ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
         })
@@ -370,6 +374,11 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         }
         
         var arrDaily = Array( daily );
+        
+        if( arrDaily.count <= indexPath.item ) {
+            return cell;
+        }
+        
         arrDaily.sort(by: {
             ($0 as AnyObject).date.compare(($1 as AnyObject).date) == .orderedAscending
         })
