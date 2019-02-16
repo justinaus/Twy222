@@ -117,7 +117,7 @@ public class DateUtil {
     public static func getIsSameDateAndMinute( date0: Date, date1: Date ) -> Bool {
         let component = Calendar.current.dateComponents([.minute], from: date0, to: date1);
         
-        return component.minute != 0;
+        return component.minute == 0;
     }
     
     public static func getStringByDate( date: Date ) -> String {
