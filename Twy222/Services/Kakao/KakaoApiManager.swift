@@ -23,10 +23,12 @@ final class KakaoApiManager {
         let api = KakaoApiAddress.shared;
         
         func onComplete( model: KakaoApiAddressModel ) {
-            guard let coreDataModel = makeCoreDataModel(model: model) else {
-                callbackError( ErrorModel() );
-                return;
-            }
+//            guard let coreDataModel = makeCoreDataModel(model: model) else {
+//                callbackError( ErrorModel() );
+//                return;
+//            }
+            
+            let coreDataModel = makeCoreDataModel(model: model)
             
             callbackComplete( coreDataModel );
         }
@@ -34,7 +36,7 @@ final class KakaoApiManager {
         api.getData(dateNow: dateNow, lon: lon, lat: lat, callbackComplete: onComplete, callbackError: callbackError)
     }
     
-    private func makeCoreDataModel( model: KakaoApiAddressModel ) -> AddressEntity? {
+    private func makeCoreDataModel( model: KakaoApiAddressModel ) -> AddressEntity {
         let context = CoreDataManager.shared.context!;
         
         let newObject = AddressEntity(context: context);

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ErrorModel {
+class ErrorModel: Error {
     var errorCode: String?;
     var errorMessage: String?
 }

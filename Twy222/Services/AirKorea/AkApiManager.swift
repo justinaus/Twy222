@@ -35,10 +35,12 @@ final class AkApiManager {
         }
         
         func onCompleteAirPm( model: AkApiAirPmModel ) {
-            guard let coreDataModel = makeCoreDataModel(model: model) else {
-                callbackError( ErrorModel() );
-                return;
-            }
+//            guard let coreDataModel = makeCoreDataModel(model: model) else {
+//                callbackError( ErrorModel() );
+//                return;
+//            }
+            
+            let coreDataModel = makeCoreDataModel(model: model)
             
             callbackComplete( coreDataModel );
         }
@@ -46,7 +48,7 @@ final class AkApiManager {
         getStation(dateNow: dateNow, tmX: tmX, tmY: tmY, callbackComplete: onCompleteStation, callbackError: callbackError)
     }
     
-    private func makeCoreDataModel( model: AkApiAirPmModel ) -> AirEntity? {
+    private func makeCoreDataModel( model: AkApiAirPmModel ) -> AirEntity {
         let context = CoreDataManager.shared.context!;
         
         let newObject = AirEntity(context: context);

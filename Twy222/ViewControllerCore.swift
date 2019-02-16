@@ -62,12 +62,12 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         drawTodayText( date: now );
         
         if let dateLast = dateRegionLastCalled {
-            print("이전 콜 start 시간: \(DateUtil.getStringByDate(date: dateLast))")
+//            print("이전 콜 start 시간: \(DateUtil.getStringByDate(date: dateLast))")
             
             let componenets = Calendar.current.dateComponents([.minute], from: dateLast, to: now);
             
             if( componenets.minute! < Settings.LIMIT_INTERVAL_MINUTES_TO_CALL_REGION ) {
-                print("기존에 콜 한지 xx분도 안됨, 아무것도 안함")
+//                print("기존에 콜 한지 xx분도 안됨, 아무것도 안함")
                 return;
             }
         }
@@ -107,6 +107,7 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         }
         
         func onError( errorModel: ErrorModel ) {
+            ErrorRecorder.shared.record();
             AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil);
         }
         
@@ -133,6 +134,7 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         }
         
         func onError( errorModel: ErrorModel ) {
+            ErrorRecorder.shared.record();
             AlertUtil.alert(vc: self, title: "error", message: "now api error", buttonText: "확인", onSelect: nil);
         }
         
@@ -152,6 +154,7 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
     
     func getAirData( dateNow: Date ) {
         guard let address = gridEntity?.address else {
+            ErrorRecorder.shared.record();
             return;
         }
         
@@ -165,6 +168,7 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         }
         
         func onError( errorModel: ErrorModel ) {
+            ErrorRecorder.shared.record();
             AlertUtil.alert(vc: self, title: "error", message: "air api error", buttonText: "확인", onSelect: nil);
         }
         

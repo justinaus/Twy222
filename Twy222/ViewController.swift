@@ -103,6 +103,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         }
         
         func onError( errorModel: ErrorModel ) {
+            ErrorRecorder.shared.record();
             AlertUtil.alert(vc: self, title: "error", message: "hourly api error", buttonText: "확인", onSelect: nil);
         }
         
@@ -132,6 +133,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         }
         
         func onError( errorModel: ErrorModel ) {
+            ErrorRecorder.shared.record();
             AlertUtil.alert(vc: self, title: "error", message: "mid api error", buttonText: "확인", onSelect: nil);
         }
         
@@ -147,6 +149,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     
     override func drawAddress() {
         guard let addressTitle = CoreDataManager.shared.getAddressTitle(address: gridEntity?.address ) else {
+            ErrorRecorder.shared.record();
             return;
         }
         
@@ -157,6 +160,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     
     override func drawAirData() {
         guard let airEntity = gridEntity?.air else {
+            ErrorRecorder.shared.record();
             return;
         }
         
@@ -176,6 +180,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     
     override func drawNowData() {
         guard let nowEntity = gridEntity?.now else {
+            ErrorRecorder.shared.record();
             return;
         }
         
@@ -206,9 +211,11 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     
     override func drawFromMid() {
         guard let temperatureMax = gridEntity?.now?.temperatureMax else {
+            ErrorRecorder.shared.record();
             return;
         }
         guard let temperatureMin = gridEntity?.now?.temperatureMin else {
+            ErrorRecorder.shared.record();
             return;
         }
         
@@ -263,6 +270,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
     
     private func openURL( strUrl: String ) {
         guard let url = URL(string: strUrl) else {
+            ErrorRecorder.shared.record();
             return;
         }
         
@@ -406,6 +414,7 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         let dest = segue.destination;
         
         guard let vcAir = dest as? VCAir else {
+            ErrorRecorder.shared.record();
             return;
         }
         
