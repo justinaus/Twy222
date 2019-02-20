@@ -2,11 +2,11 @@
 날씨와 미세먼지를 한눈에
 
 <p align="left">
-<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-13 at 23.13.14.png"  width="180" /></kbd>
-<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-14 at 23.07.43.png"  width="180" /></kbd>
-<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 8 Plus - 2017-11-28 at 00.04.58.png"  width="180" /></kbd>
- <kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-12 at 00.43.33.png"  width="180" /></kbd>
-<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-14 at 23.07.48.png"  width="180" /></kbd>
+<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-13 at 23.13.14.png"  width="170" /></kbd>
+<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-14 at 23.07.43.png"  width="170" /></kbd>
+<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 8 Plus - 2017-11-28 at 00.04.58.png"  width="170" /></kbd>
+ <kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-12 at 00.43.33.png"  width="170" /></kbd>
+<kbd><img src="https://github.com/justinaus/Twy222/blob/master/screenshots/Simulator Screen Shot - iPhone 6s Plus - 2019-02-14 at 23.07.48.png"  width="170" /></kbd>
 </p>
 
 ## AppStore
