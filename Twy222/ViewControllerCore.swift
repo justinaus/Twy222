@@ -43,6 +43,8 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         } else if status == .denied {
             print("denied")
             goJustTempLocation();
+            
+            AlertUtil.alert(vc: self, title: "위치 접근 허용 안함", message: "임시 장소 정보를 가져옵니다.\n설정에서 위치 접근을 허용해주세요.", buttonText: "확인", onSelect: nil);
         }
     }
     
@@ -52,6 +54,10 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         }
         
         currentLocation = location;
+        
+//        let lat = 37.749678;
+//        let lon = -122.424215;
+//        currentLocation = CLLocation(latitude: lat, longitude: lon);
         
         tryStartToApiCall();
     }
@@ -108,7 +114,23 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         
         func onError( errorModel: ErrorModel ) {
             ErrorRecorder.shared.record();
-            AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil);
+//            AlertUtil.alert(vc: self, title: "error", message: "geo api error", buttonText: "확인", onSelect: nil);
+            // 국내 지역이 아닌 경우 kakao api error
+            let lat = 37.496066;
+            let lon = 127.067405;
+            
+            nApiGroupCompleteCount = 0;
+            
+            CoreDataManager.shared.deleteAllInEntity(entityEnum: EntityEnum.Grid);
+            
+            gridEntity = GridEntity(context: getContext());
+            gridEntity!.latitude = lat;
+            gridEntity!.longitude = lon;
+            gridEntity!.dateCalled = dateNow;
+            
+            saveContext();
+            
+            getGridModelByLonLat( dateNow: dateNow, lon: lon, lat: lat );
         }
         
         KakaoApiManager.shared.getAddressData(dateNow: dateNow, lat: lat, lon: lon, callbackComplete: onComplete, callbackError: onError);
@@ -198,8 +220,6 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         currentLocation = CLLocation(latitude: lat, longitude: lon);
         
         tryStartToApiCall();
-        
-        AlertUtil.alert(vc: self, title: "위치 접근 허용 안함", message: "임시 장소 정보를 가져옵니다.\n설정에서 위치 접근을 허용해주세요.", buttonText: "확인", onSelect: nil);
     }
     
     // ====================================================================
