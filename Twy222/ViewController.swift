@@ -9,6 +9,7 @@
 
 import UIKit
 import CoreData
+import Alamofire
 
 class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollectionViewDelegate {
     
@@ -40,6 +41,12 @@ class ViewController: ViewControllerCore, UICollectionViewDataSource, UICollecti
         super.viewDidLoad();
         
         viewInit();
+        
+        if( !NetworkReachabilityManager()!.isReachable ) {
+            AlertUtil.alert(vc: self, title: "network error", message: "네트워크 연결을 확인해주세요", buttonText: "확인", onSelect: nil);
+            
+            return;
+        }
         
 //        goJustTempLocation();
 //        return;
