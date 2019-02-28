@@ -88,13 +88,13 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
         
         let lat = currentLocation!.coordinate.latitude;
         let lon = currentLocation!.coordinate.longitude;
-        
-        gridEntity = GridEntity(context: getContext());
-        gridEntity!.latitude = lat;
-        gridEntity!.longitude = lon;
-        gridEntity!.dateCalled = now;
-        
-        saveContext();
+//
+//        gridEntity = GridEntity(context: getContext());
+//        gridEntity!.latitude = lat;
+//        gridEntity!.longitude = lon;
+//        gridEntity!.dateCalled = now;
+//
+//        saveContext();
         
         getGridModelByLonLat( dateNow: now, lon: lon, lat: lat );
     }
@@ -102,6 +102,11 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
     
     func getGridModelByLonLat( dateNow: Date, lon: Double, lat: Double ) {
         func onComplete( model: AddressEntity ) {
+            gridEntity = GridEntity(context: getContext());
+            gridEntity!.latitude = lat;
+            gridEntity!.longitude = lon;
+            gridEntity!.dateCalled = dateNow;
+            
             gridEntity?.address = model;
             saveContext();
             
@@ -121,14 +126,14 @@ class ViewControllerCore: UIViewController, CLLocationManagerDelegate {
             
             nApiGroupCompleteCount = 0;
             
-            CoreDataManager.shared.deleteAllInEntity(entityEnum: EntityEnum.Grid);
-            
-            gridEntity = GridEntity(context: getContext());
-            gridEntity!.latitude = lat;
-            gridEntity!.longitude = lon;
-            gridEntity!.dateCalled = dateNow;
-            
-            saveContext();
+//            CoreDataManager.shared.deleteAllInEntity(entityEnum: EntityEnum.Grid);
+//
+//            gridEntity = GridEntity(context: getContext());
+//            gridEntity!.latitude = lat;
+//            gridEntity!.longitude = lon;
+//            gridEntity!.dateCalled = dateNow;
+//
+//            saveContext();
             
             getGridModelByLonLat( dateNow: dateNow, lon: lon, lat: lat );
         }
